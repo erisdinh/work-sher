@@ -8,10 +8,10 @@
 </head>
 <body>
 <form action="RegisterUser" method="POST">
-	<label for="username">Username: </label><input type="text" id="username" name="username">
-	<label for="password">Password: </label><input type="text" id="password" name="password">
-	<label for="name">Full name: </label><input type="text" id="name" name="name">
-	<label for="email">Email: </label><input type="text" id="email" name="email">
+	<label for="username">Username: </label><input type="text" id="username" name="username"><br>
+	<label for="password">Password: </label><input type="text" id="password" name="password"><br>
+	<label for="name">Full name: </label><input type="text" id="name" name="name"><br>
+	<label for="email">Email: </label><input type="text" id="email" name="email"><br>
 	<input type="submit" value="Register">
 </form>
 </body>
