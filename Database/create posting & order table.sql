@@ -1,10 +1,5 @@
 USE `worksher_db`;
 
-
-INSERT INTO `usertest` VALUES 
-(2,'test2','test2','test2','test2','2018-12-02 00:00:00','user');
-
-
 create table posting(
 posting_id int(10) unsigned not null auto_increment,
 user_id int(10) unsigned not null,
@@ -13,6 +8,7 @@ description varchar(100),
 compensation varchar(30),
 status varchar(10),
 portfolio varchar(100),
+dateCreated date not null,
 primary key(posting_id),
 foreign key(user_id) references usertest(user_id)
 );
