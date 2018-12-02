@@ -8,6 +8,7 @@ description varchar(100),
 compensation varchar(30),
 status varchar(10),
 portfolio varchar(100),
+dateCreated date not null,
 primary key(posting_id),
 foreign key(user_id) references usertest(user_id)
 );
