@@ -35,4 +35,9 @@ public class UserDAO {
 			DBUtil.closeConnection(conn);
 		}
 	}
+
+	public static User getUserById(int userid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
