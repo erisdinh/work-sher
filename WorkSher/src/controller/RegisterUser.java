@@ -30,7 +30,6 @@ public class RegisterUser extends HttpServlet {
 		User user = new User(username, password, name, email);
 		
 		/* TO DO:
-		 * - Make sure usernames are unique
 		 * - Second password field to confirm password?
 		 */
 		

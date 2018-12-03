@@ -8,11 +8,11 @@ import model.User;
 import util.DBUtil;
 
 public class UserDAO {
+	private static Connection conn = null;
 	
 	// Method to add the user to the database
 	// TESTED - This works
-	public static void addUser(User user) {
-		Connection conn = null;		
+	public static void addUser(User user) {	
 		try {
 			conn = DBUtil.getConnection();
 			PreparedStatement pStmt = conn.prepareStatement("insert into usertest" 
@@ -24,6 +24,10 @@ public class UserDAO {
 			pStmt.setString(4, user.getEmail());
 			pStmt.setDate(5, new java.sql.Date (user.getDateJoined().getTime()));
 			pStmt.setString(6, user.getRole());
+			
+			/* TO DO:
+			 * - Make sure usernames are unique before updating
+			 */
 			pStmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

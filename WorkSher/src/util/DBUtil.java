@@ -16,8 +16,7 @@ public class DBUtil {
 			conn = DriverManager.getConnection(dbURL, username, password);
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		
+		}		
 		return conn;
 	}
 	
