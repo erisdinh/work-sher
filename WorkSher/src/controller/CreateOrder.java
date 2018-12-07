@@ -1,31 +1,26 @@
 package controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.ReviewDAO;
-import model.Review;
-
-@WebServlet("/LoadReviews")
-public class LoadReviews extends HttpServlet {
+@WebServlet("/CreateOrder")
+public class CreateOrder extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public LoadReviews() {
+    public CreateOrder() {
         super();
     }
 
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<Review> reviews = ReviewDAO.getReviewsByUserId(1);
-		
-		request.setAttribute("reviews", reviews);
-		
-		request.getRequestDispatcher("reviews.jsp").forward(request, response);
+		doGet(request, response);
 	}
 
 }
