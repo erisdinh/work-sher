@@ -21,11 +21,28 @@ public class LoadReviews extends HttpServlet {
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<Review> reviews = ReviewDAO.getReviewsByUserId(1);
 		
-		request.setAttribute("reviews", reviews);
+		String referer = request.getHeader("Referer");
+		System.out.println(referer);
 		
-		request.getRequestDispatcher("reviews.jsp").forward(request, response);
+		
+		// TODO: Make sure these redirect properly
+		// TODO: Get the userId from the session and the postingId from the request
+		if (referer.contains("profile.jsp")) {
+			ArrayList<Review> reviews = ReviewDAO.getReviewsByUserId(1);
+			System.out.println("In first condition");
+			request.setAttribute("reviews", reviews);
+			request.getRequestDispatcher("reviews.jsp").forward(request, response);
+		} else if (referer.contains("posting.jsp")) {
+			ArrayList<Review> reviews = ReviewDAO.getReviewsByPostingId(1);
+			System.out.println("In second condition");
+			request.setAttribute("reviews", reviews);
+			request.getRequestDispatcher("posting.jsp").forward(request, response);
+		} else {
+			System.out.println("In else condition");
+		}
+		
+		
 	}
 
 }

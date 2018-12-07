@@ -18,9 +18,9 @@ public class ReviewDAO {
 		try {
 			conn = DBUtil.getConnection();
 			
-			PreparedStatement stmt = conn.prepareStatement("INSERT INTO reviews (user_id, review_date, review_rating, review_text) VALUES (?, ?, ?, ?)");
+			PreparedStatement stmt = conn.prepareStatement("INSERT INTO reviews (user_id, posting_id, review_rating, review_text) VALUES (?, ?, ?, ?)");
 			stmt.setLong(1, review.getUserId());
-			stmt.setDate(2, (Date) review.getReviewDate());
+			stmt.setLong(2, review.getPostingId());
 			stmt.setInt(3, review.getReviewRating());
 			stmt.setString(4, review.getReviewText());
 			stmt.executeUpdate();
@@ -36,11 +36,10 @@ public class ReviewDAO {
 		try {
 			conn = DBUtil.getConnection();
 			
-			PreparedStatement stmt = conn.prepareStatement("UPDATE reviews SET review_date=?, review_rating=?, review_text=? WHERE review_id=?");
-			stmt.setDate(1, (Date) review.getReviewDate());
-			stmt.setInt(2, review.getReviewRating());
-			stmt.setString(3, review.getReviewText());
-			stmt.setLong(4, review.getReviewId());
+			PreparedStatement stmt = conn.prepareStatement("UPDATE reviews SET review_rating=?, review_text=? WHERE review_id=?");
+			stmt.setInt(1, review.getReviewRating());
+			stmt.setString(2, review.getReviewText());
+			stmt.setLong(3, review.getReviewId());
 			stmt.executeUpdate();
 		
 		} catch (SQLException e) {
@@ -77,7 +76,7 @@ public class ReviewDAO {
 			if (rs.next()) {
 				review.setReviewId(rs.getLong("review_id"));
 				review.setUserId(rs.getLong("user_id"));
-				review.setReviewDate(rs.getDate("review_date"));
+				review.setReviewDate(new Date(rs.getDate("review_date").getTime()));
 				review.setPostingId(rs.getLong("posting_id"));
 				review.setReviewRating(rs.getInt("review_rating"));
 				review.setReviewText(rs.getString("review_text"));
@@ -107,7 +106,7 @@ public class ReviewDAO {
 				review.setReviewId(rs.getLong("review_id"));
 				review.setUserId(rs.getLong("user_id"));
 				review.setPostingId(rs.getLong("posting_id"));
-				review.setReviewDate(rs.getDate("review_date"));
+				review.setReviewDate(new Date(rs.getDate("review_date").getTime()));
 				review.setReviewRating(rs.getInt("review_rating"));
 				review.setReviewText(rs.getString("review_text"));
 				reviews.add(review);
@@ -137,7 +136,7 @@ public class ReviewDAO {
 				review.setReviewId(rs.getLong("review_id"));
 				review.setUserId(rs.getLong("user_id"));
 				review.setPostingId(rs.getLong("posting_id"));
-				review.setReviewDate(rs.getDate("review_date"));
+				review.setReviewDate(new Date(rs.getDate("review_date").getTime()));
 				review.setReviewRating(rs.getInt("review_rating"));
 				review.setReviewText(rs.getString("review_text"));
 				reviews.add(review);

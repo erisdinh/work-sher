@@ -8,10 +8,19 @@
 </head>
 <body>
 
-	<!--  This is a temp test form for the review -->
+	<!--  These are temp test forms for the review. They are not representative of how reviews will actually be formatted -->
 	<form method="post" action="LoadReviews">
-		<input type="submit" value="Test" />
+		<input type="submit" value="Test LoadReviews" />
 	</form>
-	<!--  End of temp test form -->
+	<br>
+	<form method="post" action="CreateReview">
+		# of stars: <input type="number" min="1" max="5" name="reviewRating" required />
+		<br>
+		Review:
+		<br>
+		<textarea rows="5" cols="10" name="reviewText"></textarea>
+		<input type="submit" value="Test CreateReview" />
+	</form>
+	<!--  End of temp test forms -->
 </body>
 </html>
