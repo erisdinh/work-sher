@@ -32,6 +32,8 @@ public class UserDAO {
 		}
 	}
 
+	// from Quynh
+	// getUserByID will get user information based on the user ID
 	public static User getUserById(int userid) {
 		// TODO Auto-generated method stub
 		return null;

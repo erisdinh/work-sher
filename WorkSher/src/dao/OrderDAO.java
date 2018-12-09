@@ -13,6 +13,8 @@ import java.util.ArrayList;
 
 public class OrderDAO {
 
+	
+	// Tested - It works!! YEAH!!!!
 	public static void addOrder(Order order) throws SQLException {
 		
 		Connection connection = null;
@@ -20,10 +22,10 @@ public class OrderDAO {
 		try {
 			connection = DBUtil.getConnection();
 			
-			PreparedStatement pstmt = connection.prepareStatement("insert into orders (requestOrderUser_id, postOrderUser_id, posting_id, description, dateResponsed, dateCompleted, status) values"
+			PreparedStatement pstmt = connection.prepareStatement("insert into orders(requestOrderUser_id, postOrderUser_id, posting_id, description, dateResponsed, dateCompleted, status) values"
 					+ "(?, ?, ?, ?, ?, ?, ?);");
 			pstmt.setInt(1, order.getRequestUser().getUserid());
-			pstmt.setInt(2, order.getPostUser().getUserid());
+			pstmt.setInt(2, order.getPosting().getUser().getUserid());
 			pstmt.setInt(3, order.getPosting().getPostingid());
 			pstmt.setString(4, order.getDescription());
 			pstmt.setDate(5, order.getDateResponsed());

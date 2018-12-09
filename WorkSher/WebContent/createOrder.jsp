@@ -7,7 +7,7 @@
 <title>Create New Order</title>
 </head>
 <body>
-	<form action="CreateOrder" id="newOrder" method="post">
+	<form action="CreateOrder" id="newOrder">
 		<h1>Create New Order</h1>
 		</br>
 		<div>

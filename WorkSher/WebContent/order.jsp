@@ -7,6 +7,24 @@
 <title>Order</title>
 </head>
 <body>
-	NEW ORDER INFORMATION
+	<h1>Order Information:</h1>
+	<table border=1>
+		<tr>
+			<td>PostingID:</td>
+			<td>${posting.postingid}</td>
+		</tr>
+		<tr>
+			<td>Posted UserID:</td>
+			<td>${posting.user.userid}</td>
+		</tr>
+		<tr>
+			<td>Posted Username:</td>
+			<td>${posting.user.username}</td>
+		</tr>
+		<tr>
+			<td>Posted User Full Name:</td>
+			<td>${posting.user.name}</td>
+		</tr>
+	</table>
 </body>
 </html>
