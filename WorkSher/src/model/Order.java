@@ -9,6 +9,7 @@ public class Order implements Serializable{
 	private User requestUser;
 	private User postUser;
 	private Posting posting;
+	private String description;
 	private Date dateRequested;
 	private Date dateResponsed;
 	private Date dateCompleted;
@@ -57,6 +58,14 @@ public class Order implements Serializable{
 
 	public void setPosting(Posting posting) {
 		this.posting = posting;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public Date getDateRequested() {
