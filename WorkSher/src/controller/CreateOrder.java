@@ -27,7 +27,7 @@ public class CreateOrder extends HttpServlet {
 		// sample users and postings to test order creating
 		User user = new User(1, "test", "test", "test","test", "user");
 		User user2 = new User(2, "test2", "test2", "test2", "test2", "user");
-		Posting tempPost = new Posting(1, user2, "Design", "I can design posters", "2 cups of coffee", "active", "");
+		Posting tempPost = new Posting(1, user2, "Design", "I can design posters.", "2 cups of coffee", "active", "");
 		
 		// get session  from request
 		HttpSession session = request.getSession();

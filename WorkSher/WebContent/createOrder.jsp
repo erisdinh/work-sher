@@ -11,7 +11,7 @@
 		<h1>Create New Order</h1>
 		</br>
 		<div>
-			<table id="postingInformation">
+			<table id="postingInformation" border=1>
 				<tr>
 					<td>PostingID:</td>
 					<td>0000000001</td>
@@ -19,6 +19,10 @@
 				<tr>
 					<td>Posted User:</td>
 					<td>UserName</td>
+				</tr>
+				<tr>
+					<td>Posted User Full Name:</td>
+					<td>User Full Name</td>
 				</tr>
 				<tr>
 					<td>Category:</td>
@@ -36,14 +40,18 @@
 		</div>
 		</br>
 		<div>
-			<table id="newOrderInformation">
+			<table id="newOrderInformation" border=1>
 				<tr>
 					<td>Requested User:</td>
 					<td>UserName</td>
 				</tr>
 				<tr>
-					<td>Description:</td>
-					<td><textarea name="description" form="newOrder">Enter your order description here...</textarea></td>
+					<td>Requested User Full Name:</td>
+					<td>User Full Name</td>
+				</tr>
+				<tr>
+					<td>Order Description:</td>
+					<td><textarea style="resize:none;width: 400px;height:150px;" name="description" form="newOrder" placeholder="Enter your order description here..."></textarea></td>
 				</tr>
 			</table>
 		</div>
