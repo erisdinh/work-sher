@@ -8,5 +8,6 @@
 </head>
 <body>
 	<h1>this is a jsp</h1>
+	<a href="createOrder.jsp" ><button>Create New Order</button></a>
 </body>
 </html>
