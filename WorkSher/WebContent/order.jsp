@@ -7,6 +7,6 @@
 <title>Order</title>
 </head>
 <body>
-
+	NEW ORDER INFORMATION
 </body>
 </html>

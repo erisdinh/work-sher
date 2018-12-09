@@ -20,12 +20,12 @@ public class OrderDAO {
 		try {
 			connection = DBUtil.getConnection();
 			
-			PreparedStatement pstmt = connection.prepareStatement("insert into orders (requestOrderUser_id, postOrderUser_id, posting_id, dateRequested, dateResponsed, dateCompleted, status) values"
+			PreparedStatement pstmt = connection.prepareStatement("insert into orders (requestOrderUser_id, postOrderUser_id, posting_id, description, dateResponsed, dateCompleted, status) values"
 					+ "(?, ?, ?, ?, ?, ?, ?);");
 			pstmt.setInt(1, order.getRequestUser().getUserid());
 			pstmt.setInt(2, order.getPostUser().getUserid());
 			pstmt.setInt(3, order.getPosting().getPostingid());
-			pstmt.setDate(4, order.getDateRequested());
+			pstmt.setString(4, order.getDescription());
 			pstmt.setDate(5, order.getDateResponsed());
 			pstmt.setDate(6, order.getDateCompleted());
 			pstmt.setString(7, order.getStatus());
@@ -69,6 +69,7 @@ public class OrderDAO {
 				Posting posting = PostingDAO.getPostingById(postingid);
 				order.setPosting(posting);
 				
+				order.setDescription(rs.getString("description"));
 				order.setDateRequested(rs.getDate("dateRequested"));
 				order.setDateResponsed(rs.getDate("dateResponsed"));
 				order.setDateCompleted(rs.getDate("dateCompleted"));
@@ -117,6 +118,7 @@ public class OrderDAO {
 				Posting posting = PostingDAO.getPostingById(postingid);
 				order.setPosting(posting);
 				
+				order.setDescription(rs.getString("description"));
 				order.setDateRequested(rs.getDate("dateRequested"));
 				order.setDateResponsed(rs.getDate("dateResponsed"));
 				order.setDateCompleted(rs.getDate("dateCompleted"));
@@ -124,7 +126,7 @@ public class OrderDAO {
 			}
 			
 		} catch(SQLException e) {
-			
+			e.getMessage();
 		} finally {
 			connection.close();
 		}
