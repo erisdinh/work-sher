@@ -41,9 +41,8 @@
 	<button id="prev-button" onclick="previous()">Prev</button> <button id="next-button" onclick="next()">Next</button>
 	<!--  End of Load Profile Reviews  -->
 	
-	</br>
+	</br></br>
 	<!-- Link to manage all user's order in user mode -->
-	<a href="manageOrder.jsp">Manage Order</a>
-	
+	<a href="viewOrders.jsp">View Orders</a>
 </body>
 </html>

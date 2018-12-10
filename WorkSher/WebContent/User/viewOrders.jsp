@@ -14,10 +14,10 @@
 	<div>
 		<table>
 			<tr>
-				<td><a href="../ManageOrder?mode=user&action=received">Received Orders</a></td>
+				<td><a href="../LoadOrders?mode=user&action=received">Received Orders</a></td>
 			</tr>
 			<tr>
-				<td><a href="../ManageOrder?mode=user&action=requested">Requested Orders</a></td>
+				<td><a href="../LoadOrders?mode=user&action=requested">Requested Orders</a></td>
 			</tr>
 		</table>
 	</div>
@@ -26,7 +26,7 @@
 		<c:if test="${action=='received'}">
 			<c:forEach items="${receivedOrders}" var="order">
 				<div border=1>
-					<h3><c:out value="OrderID: ${order.orderid }"/></h3></br>
+					<a href="../LoadOrder?mode=user&orderid=${order.orderid}"><h3><c:out value="OrderID: ${order.orderid }"/></h3></a></br>
 					<c:out value="PostingID: ${order.posting.postingid }"/></br>
 					<c:out value="Post User: ${order.postUser.username }"/></br>
 					<c:out value="Requested Date: ${order.dateRequested}"/></br>
@@ -39,7 +39,7 @@
 				<c:if test="${action=='requested'}">
 			<c:forEach items="${requestedOrders}" var="order">
 				<div border=1>
-					<h3><c:out value="OrderID: ${order.orderid }"/></h3></br>
+					<a href="../LoadOrder?mode=user&orderid=${order.orderid}"><h3><c:out value="OrderID: ${order.orderid }"/></h3></a></br>
 					<c:out value="PostingID: ${order.posting.postingid }"/></br>
 					<c:out value="Post User: ${order.postUser.username }"/></br>
 					<c:out value="Requested Date: ${order.dateRequested}"/></br>

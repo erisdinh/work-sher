@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,22 +12,19 @@ import javax.servlet.http.HttpSession;
 
 import dao.OrderDAO;
 import model.Order;
-import model.Posting;
 import model.User;
 
-import java.util.ArrayList;
-
-@WebServlet("/ManageOrder")
-public class ManageOrder extends HttpServlet {
+@WebServlet("/LoadOrders")
+public class LoadOrders extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public ManageOrder() {
+    public LoadOrders() {
         super();
         // TODO Auto-generated constructor stub
     }
-    
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("in ManageOrder");
+		System.out.println("in LoadOrders");
 		
 		// get request session
 		HttpSession session = request.getSession();
@@ -57,10 +56,13 @@ public class ManageOrder extends HttpServlet {
 				session.setAttribute("requestedOrders", requestedOrders);
 				System.out.println("Requested Orders");
 			}
-			response.sendRedirect("User/manageOrder.jsp");
+			response.sendRedirect("User/viewOrders.jsp");
 		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
+
 }
