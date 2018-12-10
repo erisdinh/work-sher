@@ -9,11 +9,11 @@
 </head>
 <body>
 	<table id="reviews-table">
-		<c:forEach var="review" items="${reviews}">
+		<c:forEach var="review" items="${reviews}" begin=0 end=10>
 			<tr>
 				<td><c:out value="${review.userId}" /></td>
 				<td><c:out value="${review.reviewDate}" /></td>
-				<td><c:out value="${review.reviewRating}" /></td>
+				<td><img src=<c:out value="images/ + ${reviewImages.index}" /> /></td>
 			</tr>
 			<tr>
 				<td><c:out value="${review.reviewText}" /></td>

@@ -28,7 +28,7 @@ public class CreateReview extends HttpServlet {
 		
 		long userId = 1; // TODO: Get from session
 		long postingId = 1; // TODO: Get from request
-		int reviewRating = Integer.parseInt(request.getParameter("reviewRating"));
+		double reviewRating = Double.parseDouble(request.getParameter("reviewRating"));
 		String reviewText = request.getParameter("reviewText");
 		
 		review.setUserId(userId);

@@ -16,17 +16,34 @@
 	</form>
 	<br>
 	<form method="post" action="CreateReview">
-		# of stars: <input type="number" min="1" max="5" name="reviewRating" required />
+		Rating: <input type="number" min="1" max="5" step="0.5" name="reviewRating" required />
 		<br>
 		Review:
 		<br>
-		<textarea rows="5" cols="10" name="reviewText"></textarea>
+		<textarea rows="5" cols="50" name="reviewText"></textarea>
 		<input type="submit" value="Test CreateReview" />
 	</form>
 	<!--  End of temp test forms -->
+	<!--  Load Profile Reviews  -->
+		<table id="reviews-table">
+		<c:forEach var="review" items="${reviews}" varStatus="status">
+			<tr>
+				<td><c:out value="${review.username}" /></td>
+				<td><img src="images/${reviewImages[status.index]}" width="50px"/></td>
+				<td><c:out value="${review.reviewDate}" /></td>
+			</tr>
+			<tr>
+				<td><c:out value="${review.reviewText}" /></td>
+			</tr>
+		</c:forEach>
+	</table>
+	
+	<button id="prev-button" onclick="previous()">Prev</button> <button id="next-button" onclick="next()">Next</button>
+	<!--  End of Load Profile Reviews  -->
 	
 	</br>
 	<!-- Link to manage all user's order -->
 	<a href="manageOrder.jsp">Manage Order</a>
+	
 </body>
 </html>

@@ -5,7 +5,7 @@ create table reviews (
     user_id int(10) unsigned not null,
     posting_id int(10) unsigned not null, 
     review_date timestamp not null default current_timestamp on update current_timestamp,
-    review_rating tinyint not null,
+    review_rating decimal(2,1) not null,
     review_text text,
     primary key (review_id),
     foreign key (user_id) references usertest(user_id)

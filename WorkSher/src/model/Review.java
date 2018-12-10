@@ -5,10 +5,11 @@ import java.util.Date;
 
 public class Review implements Serializable {
 	private long userId;
+	private String username;
 	private long postingId;
 	private long reviewId;
 	private Date reviewDate;
-	private int reviewRating;
+	private double reviewRating;
 	private String reviewText;
 
 	public Review() {
@@ -20,7 +21,7 @@ public class Review implements Serializable {
 		reviewText = "";
 	}
 
-	public Review(long reviewId, long userId, long postingId, Date reviewDate, int reviewRating, String reviewText) {
+	public Review(long reviewId, long userId, long postingId, Date reviewDate, double reviewRating, String reviewText) {
 		super();
 		this.reviewId = reviewId;
 		this.userId = userId;
@@ -36,6 +37,14 @@ public class Review implements Serializable {
 
 	public void setUserId(long userId) {
 		this.userId = userId;
+	}
+	
+	public String getUsername() {
+		return username;
+	}
+	
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public long getPostingId() {
@@ -62,11 +71,11 @@ public class Review implements Serializable {
 		this.reviewDate = reviewDate;
 	}
 
-	public int getReviewRating() {
+	public double getReviewRating() {
 		return reviewRating;
 	}
 
-	public void setReviewRating(int reviewRating) {
+	public void setReviewRating(double reviewRating) {
 		this.reviewRating = reviewRating;
 	}
 

@@ -21,7 +21,7 @@ public class ReviewDAO {
 			PreparedStatement stmt = conn.prepareStatement("INSERT INTO reviews (user_id, posting_id, review_rating, review_text) VALUES (?, ?, ?, ?)");
 			stmt.setLong(1, review.getUserId());
 			stmt.setLong(2, review.getPostingId());
-			stmt.setInt(3, review.getReviewRating());
+			stmt.setDouble(3, review.getReviewRating());
 			stmt.setString(4, review.getReviewText());
 			stmt.executeUpdate();
 		
@@ -37,7 +37,7 @@ public class ReviewDAO {
 			conn = DBUtil.getConnection();
 			
 			PreparedStatement stmt = conn.prepareStatement("UPDATE reviews SET review_rating=?, review_text=? WHERE review_id=?");
-			stmt.setInt(1, review.getReviewRating());
+			stmt.setDouble(1, review.getReviewRating());
 			stmt.setString(2, review.getReviewText());
 			stmt.setLong(3, review.getReviewId());
 			stmt.executeUpdate();
@@ -78,7 +78,7 @@ public class ReviewDAO {
 				review.setUserId(rs.getLong("user_id"));
 				review.setReviewDate(new Date(rs.getDate("review_date").getTime()));
 				review.setPostingId(rs.getLong("posting_id"));
-				review.setReviewRating(rs.getInt("review_rating"));
+				review.setReviewRating(rs.getDouble("review_rating"));
 				review.setReviewText(rs.getString("review_text"));
 			}
 			
@@ -97,7 +97,8 @@ public class ReviewDAO {
 		try {
 			conn = DBUtil.getConnection();
 			
-			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM reviews WHERE user_id=?");
+			PreparedStatement stmt = conn.prepareStatement("SELECT usertest.username, reviews.* FROM reviews "
+					+ "INNER JOIN usertest ON usertest.user_id=reviews.user_id WHERE usertest.user_id=? ORDER BY review_date DESC");
 			stmt.setLong(1, userId);
 			ResultSet rs = stmt.executeQuery();
 			
@@ -105,9 +106,10 @@ public class ReviewDAO {
 				Review review = new Review();
 				review.setReviewId(rs.getLong("review_id"));
 				review.setUserId(rs.getLong("user_id"));
+				review.setUsername(rs.getString("username"));
 				review.setPostingId(rs.getLong("posting_id"));
 				review.setReviewDate(new Date(rs.getDate("review_date").getTime()));
-				review.setReviewRating(rs.getInt("review_rating"));
+				review.setReviewRating(rs.getDouble("review_rating"));
 				review.setReviewText(rs.getString("review_text"));
 				reviews.add(review);
 			}
@@ -137,7 +139,7 @@ public class ReviewDAO {
 				review.setUserId(rs.getLong("user_id"));
 				review.setPostingId(rs.getLong("posting_id"));
 				review.setReviewDate(new Date(rs.getDate("review_date").getTime()));
-				review.setReviewRating(rs.getInt("review_rating"));
+				review.setReviewRating(rs.getDouble("review_rating"));
 				review.setReviewText(rs.getString("review_text"));
 				reviews.add(review);
 			}
@@ -149,4 +151,5 @@ public class ReviewDAO {
 		
 		return reviews;
 	}
+
 }
