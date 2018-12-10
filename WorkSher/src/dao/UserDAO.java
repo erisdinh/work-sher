@@ -16,7 +16,7 @@ public class UserDAO {
 	public static void addUser(User user) {	
 		try {
 			conn = DBUtil.getConnection();
-			PreparedStatement pStmt = conn.prepareStatement("insert into usertest" 
+			PreparedStatement pStmt = conn.prepareStatement("INSERT INTO usertest" 
 														+ "(username, user_pass, name, email, date_joined, role)"
 														+ " values (?, ?, ?, ?, ?, ? )");					
 			pStmt.setString(1, user.getUsername());
@@ -43,7 +43,7 @@ public class UserDAO {
 		
 		try {
 			conn = DBUtil.getConnection();			
-			PreparedStatement pstmt = conn.prepareStatement("select * from usertest where user_id = ?");			
+			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM usertest WHERE user_id = ?");			
 			pstmt.setInt(1, userid);		
 			ResultSet rs = pstmt.executeQuery();
 			
@@ -52,7 +52,38 @@ public class UserDAO {
 				user.setUsername(rs.getString("username"));
 				user.setName(rs.getString("name"));
 				user.setEmail(rs.getString("email"));
+				user.setRole(rs.getString("role"));
 			}			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.closeConnection(conn);
+		}
+		
+		return user;
+	}
+	
+	// Method used for authenticating users during login
+	// TESTED - This works
+	public static User authenticateUser(String username, String password) {
+		User user = new User();
+		
+		try {
+			conn = DBUtil.getConnection();			
+			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM usertest WHERE username = ? AND user_pass = ?");			
+			pstmt.setString(1, username);
+			pstmt.setString(2, password);
+			ResultSet rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				user.setUserid(rs.getInt("user_id"));
+				user.setUsername(rs.getString("username"));
+				user.setName(rs.getString("name"));
+				user.setEmail(rs.getString("email"));
+				user.setRole(rs.getString("role"));
+			} else {
+				user = null;
+			}	
 		} catch(SQLException e) {
 			e.printStackTrace();
 		} finally {

@@ -9,7 +9,7 @@
 <body>
 <form action="RegisterUser" method="POST">
 	<label for="username">Username: </label><input type="text" id="username" name="username"><br>
-	<label for="password">Password: </label><input type="text" id="password" name="password"><br>
+	<label for="password">Password: </label><input type="password" id="password" name="password"><br>
 	<label for="name">Full name: </label><input type="text" id="name" name="name"><br>
 	<label for="email">Email: </label><input type="text" id="email" name="email"><br>
 	<input type="submit" value="Register">
