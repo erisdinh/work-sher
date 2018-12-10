@@ -8,6 +8,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
+<script src="javascript/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+	
+</script>
 </head>
 <body>
 	<!--  These are temp test forms for the review. They are not representative of how reviews will actually be formatted -->
