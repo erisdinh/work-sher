@@ -42,7 +42,7 @@
 	<!--  End of Load Profile Reviews  -->
 	
 	</br>
-	<!-- Link to manage all user's order -->
+	<!-- Link to manage all user's order in user mode -->
 	<a href="manageOrder.jsp">Manage Order</a>
 	
 </body>

@@ -25,7 +25,7 @@ public class CreateOrder extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// sample users and postings to test order creating
-		User user = new User(1, "test", "test", "test","test", "user");
+		User tempCurrentUser = new User(1, "test", "test", "test","test", "user");
 		User user2 = new User(2, "test2", "test2", "test2", "test2", "user");
 		Posting tempPost = new Posting(1, user2, "Design", "I can design posters.", "2 cups of coffee", "active", "");
 		
@@ -33,12 +33,12 @@ public class CreateOrder extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		// set sample users and posting to session to test order
-		session.setAttribute("currentUser", user);
+		session.setAttribute("currentUser", tempCurrentUser);
 		session.setAttribute("postUser", user2);
 		session.setAttribute("posting", tempPost);
 		
 		// get attributes from current session
-		User requestUser = (User) session.getAttribute("currentUser");
+		User currentUser = (User) session.getAttribute("currentUser");
 		User postUser = (User) session.getAttribute("postUser");
 		Posting posting = (Posting) session.getAttribute("posting");
 		String orderDescription = request.getParameter("description");
@@ -47,18 +47,15 @@ public class CreateOrder extends HttpServlet {
 		
 		// create new order
 		Order order = new Order();
-		order.setRequestUser(requestUser);
+		order.setRequestUser(currentUser);
 		order.setPosting(posting);
 		order.setDescription(orderDescription);
 		order.setStatus("pending");
 		
-		try {
-			OrderDAO.addOrder(order);
-		}
-		catch (SQLException e) {
-			e.getMessage();
-		}
+		// add new order to database
+		OrderDAO.addOrder(order);
 		
+		// set new order as an attribute to request
 		session.setAttribute("newOrder", order);
 		response.sendRedirect("/order.jsp");
 		
