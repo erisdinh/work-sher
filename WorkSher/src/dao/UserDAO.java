@@ -37,34 +37,26 @@ public class UserDAO {
 		}
 	}
 
-	// from Quynh
-	// getUserByID will get user information based on the user ID
-	// Sample method to test order
-	// Please feel free to change anything in here
+	// Method to get user info from database by UserID
 	public static User getUserById(int userid) {
-		Connection connection = null;
 		User user = new User();
 		
 		try {
-			connection = DBUtil.getConnection();
-			
-			PreparedStatement pstmt = connection.prepareStatement("select * from usertest where user_id = ?");
-			
-			pstmt.setInt(1, userid);
-			
+			conn = DBUtil.getConnection();			
+			PreparedStatement pstmt = conn.prepareStatement("select * from usertest where user_id = ?");			
+			pstmt.setInt(1, userid);		
 			ResultSet rs = pstmt.executeQuery();
 			
-			while(rs.next()) {
+			if (rs.next()) {
 				user.setUserid(rs.getInt("user_id"));
 				user.setUsername(rs.getString("username"));
 				user.setName(rs.getString("name"));
 				user.setEmail(rs.getString("email"));
-			}
-			
+			}			
 		} catch(SQLException e) {
-			e.getMessage();
+			e.printStackTrace();
 		} finally {
-			DBUtil.closeConnection(connection);
+			DBUtil.closeConnection(conn);
 		}
 		
 		return user;
