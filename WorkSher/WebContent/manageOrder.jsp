@@ -7,9 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>this is a jsp</h1>
-	
-	<!-- a button to create order for the current posting -->
-	<a href="User/createOrder.jsp" ><button>Create New Order</button></a>
+	<jsp:forward page="/ManageOrder?action=user"/>
 </body>
 </html>

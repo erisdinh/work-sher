@@ -4,12 +4,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>WorSher | Manager Order | ${currentUser.username}</title>
 </head>
 <body>
-	<h1>this is a jsp</h1>
-	
-	<!-- a button to create order for the current posting -->
-	<a href="User/createOrder.jsp" ><button>Create New Order</button></a>
+	<h1>Manage Orders</h1>
+	<table>
+		<td>Received Orders</td>
+		<td>Requested Orders</td>
+	</table>
 </body>
 </html>

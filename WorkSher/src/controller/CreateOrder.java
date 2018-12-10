@@ -60,7 +60,7 @@ public class CreateOrder extends HttpServlet {
 		}
 		
 		session.setAttribute("newOrder", order);
-		response.sendRedirect("order.jsp");
+		response.sendRedirect("/order.jsp");
 		
 	}
 
