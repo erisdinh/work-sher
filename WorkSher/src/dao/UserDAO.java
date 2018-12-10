@@ -2,6 +2,7 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import model.User;
@@ -36,8 +37,36 @@ public class UserDAO {
 		}
 	}
 
+	// from Quynh
+	// getUserByID will get user information based on the user ID
+	// Sample method to test order
+	// Please feel free to change anything in here
 	public static User getUserById(int userid) {
-		// TODO Auto-generated method stub
-		return null;
+		Connection connection = null;
+		User user = new User();
+		
+		try {
+			connection = DBUtil.getConnection();
+			
+			PreparedStatement pstmt = connection.prepareStatement("select * from usertest where user_id = ?");
+			
+			pstmt.setInt(1, userid);
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				user.setUserid(rs.getInt("user_id"));
+				user.setUsername(rs.getString("username"));
+				user.setName(rs.getString("name"));
+				user.setEmail(rs.getString("email"));
+			}
+			
+		} catch(SQLException e) {
+			e.getMessage();
+		} finally {
+			DBUtil.closeConnection(connection);
+		}
+		
+		return user;
 	}
 }

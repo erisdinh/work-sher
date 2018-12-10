@@ -15,6 +15,19 @@ public class Posting implements Serializable {
 	private Date dateCreated;
 	
 	public Posting() {}
+	
+	// constructors with arguments
+	// Please feel free to change it
+	public Posting(int postingid, User user, String jobCategory, String desscription, String compensation, String status, String portfolio) {
+		this.postingid = postingid;
+		this.user = user;
+		this.jobCategory = jobCategory;
+		this.description = desscription;
+		this.compensation = compensation;
+		this.status = status;
+		this.portfolio = portfolio;
+		this.dateCreated = dateCreated;
+	}
 
 	public int getPostingid() {
 		return postingid;
