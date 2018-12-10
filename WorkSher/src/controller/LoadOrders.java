@@ -35,27 +35,30 @@ public class LoadOrders extends HttpServlet {
 		
 		// get parameters and attributes from request
 		String mode = request.getParameter("mode");
-		String action = request.getParameter("action");
+		String load = request.getParameter("load");
 		User currentUser = (User) session.getAttribute("currentUser");
 		
 		// set action to session
-		session.setAttribute("action", action);
+		session.setAttribute("load", load);
 		
 		// if in user mode
 		if(mode.equals("user")) {
-			
+			ArrayList<Order> orders = new ArrayList<>();			
 			// if action is received, load all received orders
-			if(action.equals("received")) {
-				ArrayList<Order> receivedOrders = OrderDAO.getReceivedOrders(currentUser.getUserid());
-				session.setAttribute("receivedOrders", receivedOrders);
-				System.out.println("Received Orders");
+			if(load.equals("received")) {
+				orders = OrderDAO.getReceivedOrders(currentUser.getUserid());
 				
 				// if action is requested, load all requested orders
-			} else if (action.equals("requested")) {
-				ArrayList<Order> requestedOrders = OrderDAO.getRequestedOrders(currentUser.getUserid());
-				session.setAttribute("requestedOrders", requestedOrders);
-				System.out.println("Requested Orders");
+			} else if (load.equals("requested")) {
+				orders = OrderDAO.getRequestedOrders(currentUser.getUserid());
 			}
+			
+			session.setAttribute("orders", orders);
+			
+			int numberOfOrderPage = (int) Math.ceil((orders.size() / 5));
+			
+			session.setAttribute("ordersSize", orders.size());
+			session.setAttribute("numberOfOrderPages", numberOfOrderPage);
 			response.sendRedirect("User/viewOrders.jsp");
 		}
 	}
