@@ -32,7 +32,7 @@ public class Login extends HttpServlet {
 			// Create a new session and associate it with the user
 			HttpSession session = request.getSession();
 			session.setAttribute("currentUser", user);	
-			response.sendRedirect("login.jsp"); // ** TO BE CHANGED TO DASHBOARD
+			response.sendRedirect("homepage.jsp");
 			
 		// If invalid, go to registration page
 		} else {
