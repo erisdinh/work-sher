@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
@@ -10,6 +10,53 @@
 <title>Insert title here</title>
 <script src="javascript/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
+	$(document).ready(function() {
+		
+		var index = 2;
+		
+		var indexString = "LoadReviews?index=" + index;
+		console.log(indexString);
+
+		$("#prev-button").on("click", function() {
+			console.log("Prev button clicked.");
+			if (index > 0) {
+				$.ajax({
+					type: "get",
+					dataType: "json",
+					url: indexString,
+					success: function(data) {
+						console.log(data);
+						
+						for (var i = 0; i < data.features.length; i++) {
+							$("#reviews-table").append("<tr><td>" + data[i].username + "</td><td>" + data[i].date + "</td><td>" + data[i].rating + "</td></tr>");
+							$("#reviews-table").append("<tr><td>" + data[i].text + "</td></tr>");
+						}
+					},
+					error: function(x, status, error) {
+						console.log(error);
+					}
+				})
+			}
+		})
+		
+		$("next-button").on("click", function() {
+			console.log("Next button clicked.");
+			if (index < ${reviews.size()}) {
+				$.ajax({
+					type: "get",
+					dataType: "json",
+					url: indexString,
+					success: function(data) {
+						console.log(data);
+					},
+					error: function(x, status, error) {
+						console.log(error);
+					}
+				})
+			}
+		})
+	})
+	
 	
 </script>
 </head>
@@ -20,32 +67,24 @@
 	</form>
 	<br>
 	<form method="post" action="CreateReview">
-		Rating: <input type="number" min="1" max="5" step="0.5" name="reviewRating" required />
-		<br>
-		Review:
-		<br>
+		Rating: <input type="number" min="1" max="5" step="0.5"
+			name="reviewRating" required /> <br> Review: <br>
 		<textarea rows="5" cols="50" name="reviewText"></textarea>
 		<input type="submit" value="Test CreateReview" />
 	</form>
 	<!--  End of temp test forms -->
 	<!--  Load Profile Reviews  -->
-		<table id="reviews-table">
-		<c:forEach var="review" items="${reviews}" varStatus="status">
-			<tr>
-				<td><c:out value="${review.username}" /></td>
-				<td><img src="images/${reviewImages[status.index]}" width="50px"/></td>
-				<td><c:out value="${review.reviewDate}" /></td>
-			</tr>
-			<tr>
-				<td><c:out value="${review.reviewText}" /></td>
-			</tr>
-		</c:forEach>
+	<table id="reviews-table">
+		<tr id="reviews-table-head"></tr>
+		<tr id="reviews-table-text"></tr>
 	</table>
-	
-	<button id="prev-button" onclick="previous()">Prev</button> <button id="next-button" onclick="next()">Next</button>
+
+	<button id="prev-button">Prev</button>
+	<button id="next-button">Next</button>
 	<!--  End of Load Profile Reviews  -->
-	
-	</br></br>
+
+	</br>
+	</br>
 	<!-- Link to manage all user's order in user mode -->
 	<a href="viewOrders.jsp">View Orders</a>
 </body>

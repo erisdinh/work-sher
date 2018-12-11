@@ -122,6 +122,44 @@ public class ReviewDAO {
 		return reviews;
 
 	}
+	
+	public static ArrayList<Review> getReviewsByUserId(long userId, int startIndex, int numPerPage) {
+		ArrayList<Review> reviews = new ArrayList<>();
+		
+		int endIndex = startIndex + numPerPage;
+		
+		try {
+			conn = DBUtil.getConnection();
+			
+			PreparedStatement stmt = conn.prepareStatement("SELECT usertest.username, reviews.* FROM reviews "
+					+ "INNER JOIN usertest ON usertest.user_id=reviews.user_id WHERE usertest.user_id=? "
+					+ "ORDER BY review_date DESC LIMIT ?, ?");
+			stmt.setLong(1, userId);
+			stmt.setInt(2, startIndex);
+			stmt.setInt(3, endIndex);
+
+			ResultSet rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				Review review = new Review();
+				review.setReviewId(rs.getLong("review_id"));
+				review.setUserId(rs.getLong("user_id"));
+				review.setUsername(rs.getString("username"));
+				review.setPostingId(rs.getLong("posting_id"));
+				review.setReviewDate(new Date(rs.getDate("review_date").getTime()));
+				review.setReviewRating(rs.getDouble("review_rating"));
+				review.setReviewText(rs.getString("review_text"));
+				reviews.add(review);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.closeConnection(conn);
+		}
+		
+		return reviews;
+
+	}
 
 	public static ArrayList<Review> getReviewsByPostingId(long postingId) {
 		ArrayList<Review> reviews = new ArrayList<>();

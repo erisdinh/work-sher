@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -22,7 +23,7 @@ public class LoadReviews extends HttpServlet {
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		System.out.println("in LoadReviews doPost");
 		String referer = request.getHeader("Referer");
 		System.out.println(referer);
 		
@@ -77,6 +78,35 @@ public class LoadReviews extends HttpServlet {
 		request.setAttribute("reviews", reviews);
 		request.setAttribute("reviewImages", reviewImages);
 		request.getRequestDispatcher(forwardUrl).forward(request, response);
+	}
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("In LoadReviews doGet");
+		int index = Integer.parseInt(request.getParameter("index"));
+		System.out.println("Index: " + index);
+		
+		ArrayList<Review> reviews = ReviewDAO.getReviewsByUserId(1, index, 5);
+		
+		response.setContentType("application/json");
+		PrintWriter writer = response.getWriter();
+		
+		writer.print("[");
+		
+		int i = 0;
+		
+		for (Review review : reviews) {
+			String object = "{\"username\" : \"" + review.getUsername() + "\", \"rating\" : \"" + review.getReviewRating() + "\", \"date\" : \"" + review.getReviewDate() + "\", \"text\" : \"" + review.getReviewText() + "\"}";
+			if (i < reviews.size() - 1) {
+				object = object + ",";
+			}
+			i++;
+			System.out.println(object);
+			writer.println(object);
+		}
+		
+		writer.print("]");
+		writer.close();
+		
 	}
 
 }
