@@ -1,26 +1,33 @@
 package model;
 
 import java.io.Serializable;
+import java.net.URL;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+import model.User;
 
 public class Posting implements Serializable {
 
-	private int postingid;
-	private User user;
+	private int postingId;
+	private int userId;
 	private String jobCategory;
+	private String title;
 	private String description;
 	private String compensation;
 	private String status;
 	private String portfolio;
 	private Date dateCreated;
 	
-	public Posting() {}
+	public Posting() {
+		//portfolio = new ArrayList<>();
+	}
 	
 	// constructors with arguments
 	// Please feel free to change it
 	public Posting(int postingid, User user, String jobCategory, String desscription, String compensation, String status, String portfolio) {
-		this.postingid = postingid;
-		this.user = user;
+		this.postingId = postingid;
+		this.userId = user.getUserid();
 		this.jobCategory = jobCategory;
 		this.description = desscription;
 		this.compensation = compensation;
@@ -29,20 +36,20 @@ public class Posting implements Serializable {
 		this.dateCreated = dateCreated;
 	}
 
-	public int getPostingid() {
-		return postingid;
+	public int getPostingId() {
+		return postingId;
 	}
 
-	public void setPostingid(int postingid) {
-		this.postingid = postingid;
+	public void setPostingId(int postingId) {
+		this.postingId = postingId;
 	}
 
-	public User getUser() {
-		return user;
+	public int getUserId() {
+		return userId;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
 	public String getJobCategory() {
@@ -51,6 +58,14 @@ public class Posting implements Serializable {
 
 	public void setJobCategory(String jobCategory) {
 		this.jobCategory = jobCategory;
+	}
+	
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public String getDescription() {
