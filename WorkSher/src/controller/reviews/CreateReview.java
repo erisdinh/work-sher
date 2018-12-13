@@ -1,4 +1,4 @@
-package controller;
+package controller.reviews;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -11,9 +11,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.ReviewDAO;
 import model.Review;
+import model.User;
 
 @WebServlet("/CreateReview")
 public class CreateReview extends HttpServlet {
@@ -26,12 +28,18 @@ public class CreateReview extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Review review = new Review();
 		
-		long userId = 1; // TODO: Get from session
+		HttpSession session = request.getSession();
+		
+		User user = (User) session.getAttribute("currentUser");
+		
+		long fromUserId = user.getUserid();
+		long forUserId = 1; // TODO: Get from page
 		long postingId = 1; // TODO: Get from request
 		double reviewRating = Double.parseDouble(request.getParameter("reviewRating"));
 		String reviewText = request.getParameter("reviewText");
 		
-		review.setUserId(userId);
+		review.setForUserId(forUserId);
+		review.setFromUserId(fromUserId);
 		review.setPostingId(postingId);
 		review.setReviewRating(reviewRating);
 		review.setReviewText(reviewText);
