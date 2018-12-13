@@ -14,7 +14,7 @@
 	request.setAttribute("categories", categories);
 %>
 <body>
-	<form action = "PostingController" method = "POST">
+	<form action = "PostingController" method = "POST" enctype ="multipart/form-data" >
 		<input hidden name = "postingId" value = "<c:out value = "${posting.postingId }"/>"/>
 		Category: <% System.out.println(categories.get(0).getJobCategoryDesc()); %>
 		<select name = "jobCategory">
@@ -41,6 +41,7 @@
 			<option value = "inactive">Inactive</option>
 		</select>
 		</c:if>
+		<input type = "file" name = "portfolio" accept = "image/*">
 		<input type = "submit" value = "Sher!">
 	</form>
 </body>
