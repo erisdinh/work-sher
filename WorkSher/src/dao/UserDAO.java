@@ -63,6 +63,28 @@ public class UserDAO {
 		return user;
 	}
 	
+	// Method to get user id number from username (member usernames may change)
+	// Returns -1 if user does not exist
+	public static int getIdOfUser(String username) {		
+		int userId = -1;
+		
+		try {
+			conn = DBUtil.getConnection();			
+			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM usertest WHERE name = ?");			
+			pstmt.setString(1, username);		
+			ResultSet rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				userId = rs.getInt("user_id");
+			}			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.closeConnection(conn);
+		}		
+		return userId;
+	}
+	
 	// Method used for authenticating users during login
 	// TESTED - This works
 	public static User authenticateUser(String username, String password) {
@@ -91,5 +113,30 @@ public class UserDAO {
 		}
 		
 		return user;
+	}
+	
+	// Method to determine whether or not the user is an admin
+	public static boolean authorizeUser(User user) {		
+		int user_id = user.getUserid();
+		boolean isAdmin = false;
+		
+		try {
+			conn = DBUtil.getConnection();			
+			PreparedStatement pstmt = conn.prepareStatement("SELECT role FROM usertest WHERE user_id = ?");			
+			pstmt.setInt(1, user_id);
+			ResultSet rs = pstmt.executeQuery();
+						
+			if ((rs.getString("role")).equals("admin")) {
+				isAdmin = true;
+			} else {
+				isAdmin = false;
+			}	
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.closeConnection(conn);
+		}
+		
+		return isAdmin;
 	}
 }
