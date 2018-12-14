@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Review implements Serializable {
-	private long userId;
-	private String username;
+	private long forUserId;
+	private long fromUserId;
+	private String forUsername;
+	private String fromUsername;
 	private long postingId;
 	private long reviewId;
 	private Date reviewDate;
@@ -13,7 +15,10 @@ public class Review implements Serializable {
 	private String reviewText;
 
 	public Review() {
-		userId = 0;
+		forUserId = 0;
+		fromUserId = 0;
+		forUsername = "";
+		fromUsername = "";
 		postingId = 0;
 		reviewId = 0;
 		reviewDate = new Date();
@@ -21,30 +26,49 @@ public class Review implements Serializable {
 		reviewText = "";
 	}
 
-	public Review(long reviewId, long userId, long postingId, Date reviewDate, double reviewRating, String reviewText) {
+	public Review(long reviewId, long forUserId, long fromUserId, String forUsername, String fromUsername, long postingId, Date reviewDate, double reviewRating, String reviewText) {
 		super();
 		this.reviewId = reviewId;
-		this.userId = userId;
+		this.forUserId = forUserId;
+		this.fromUserId = fromUserId;
+		this.forUsername = forUsername;
+		this.fromUsername = fromUsername;
 		this.postingId = postingId;
 		this.reviewDate = reviewDate;
 		this.reviewRating = reviewRating;
 		this.reviewText = reviewText;
 	}
 
-	public long getUserId() {
-		return userId;
+	public long getForUserId() {
+		return forUserId;
 	}
 
-	public void setUserId(long userId) {
-		this.userId = userId;
+	public void setForUserId(long forUserId) {
+		this.forUserId = forUserId;
 	}
 	
-	public String getUsername() {
-		return username;
+	public long getFromUserId() {
+		return fromUserId;
 	}
 	
-	public void setUsername(String username) {
-		this.username = username;
+	public void setFromUserId(long fromUserId) {
+		this.fromUserId = fromUserId;
+	}
+	
+	public String getForUsername() {
+		return forUsername;
+	}
+	
+	public void setForUsername(String forUsername) {
+		this.forUsername = forUsername;
+	}
+	
+	public String getFromUsername() {
+		return fromUsername;
+	}
+	
+	public void setFromUsername(String fromUsername) {
+		this.fromUsername = fromUsername;
 	}
 
 	public long getPostingId() {

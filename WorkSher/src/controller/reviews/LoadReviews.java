@@ -1,4 +1,4 @@
-package controller;
+package controller.reviews;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,10 +8,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.ReviewDAO;
 import dao.UserDAO;
 import model.Review;
+import model.User;
 
 @WebServlet("/LoadReviews")
 public class LoadReviews extends HttpServlet {
@@ -22,6 +24,9 @@ public class LoadReviews extends HttpServlet {
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("currentUser");
 		
 		String referer = request.getHeader("Referer");
 		System.out.println(referer);
@@ -35,16 +40,15 @@ public class LoadReviews extends HttpServlet {
 		
 		
 		if (referer.contains("profile.jsp")) {
-			reviews = ReviewDAO.getReviewsByUserId(1);
+			reviews = ReviewDAO.getReviewsByForUserId(1);
 			forwardUrl = "profile.jsp";
 		
 		} else if (referer.contains("posting.jsp")) {
 			reviews = ReviewDAO.getReviewsByPostingId(1);
 			forwardUrl = "posting.jsp";
-		} else {
-			reviews = ReviewDAO.getReviewsByUserId(1);
+		} else if (referer.contains("homepage.jsp")) {
+			reviews = ReviewDAO.getReviewsByFromUserId(user.getUserid());
 			forwardUrl = "reviews.jsp";
-		}
 		
 		ArrayList<String> reviewImages = new ArrayList<String>();
 
@@ -74,9 +78,25 @@ public class LoadReviews extends HttpServlet {
 			}
 		}
 		
-		request.setAttribute("reviews", reviews);
-		request.setAttribute("reviewImages", reviewImages);
-		request.getRequestDispatcher(forwardUrl).forward(request, response);
+		int revEndIndex;
+		
+		session.setAttribute("reviews", reviews);
+		session.setAttribute("reviewImages", reviewImages);
+		session.setAttribute("revStartIndex", 0);
+		
+		if (reviews.size() < 5) {
+			revEndIndex = reviews.size();
+		} else {
+			revEndIndex = 5;
+		}
+		session.setAttribute("revEndIndex", revEndIndex);
+		response.sendRedirect("reviews.jsp");
+
+		}
+	}
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doPost(request, response);
 	}
 
 }
