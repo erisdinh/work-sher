@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class User implements Serializable {
 	
-	private int userid;
+	private long userid;
 	private String username;
 	private String password;
 	private String name;
@@ -28,7 +28,7 @@ public class User implements Serializable {
 	// from Quynh
 	// Constructor with some arguments for testing order because we havent had getUserByID() method yet
 	// Please feel free to delete it
-	public User(int userid, String username, String password, String name, String email, String role) {
+	public User(long userid, String username, String password, String name, String email, String role) {
 		this.userid = userid;
 		this.username = username;
 		this.password = password;
@@ -38,7 +38,7 @@ public class User implements Serializable {
 	}
 	
 	// GETTERS
-	public int getUserid() {
+	public long getUserid() {
 		return userid;
 	}
 
@@ -67,7 +67,7 @@ public class User implements Serializable {
 	}
 
 	// SETTERS
-	public void setUserid(int userid) {
+	public void setUserid(long userid) {
 		this.userid = userid;
 	}
 
