@@ -316,6 +316,7 @@ public class PostingDAO {
 
 		return posting;
 	}
+	
 	public static byte[] getImage(Posting posting) {
 		byte[] portfolio = null;
 		

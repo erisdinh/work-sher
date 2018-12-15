@@ -19,31 +19,27 @@ import java.util.ArrayList;
 public class LoadOrder extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public LoadOrder() {
-        super();
-    }
-    
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("In LoadOrder");
-		
-		// get session from request
-		HttpSession session = request.getSession();
-		
-		String mode = request.getParameter("mode");
-		
-		// if in user mode
-		if(mode.equals("user")) {
-			
-			// get order id
-			int orderid = Integer.parseInt(request.getParameter("orderid"));	
-			Order order = OrderDAO.getOrderById(orderid);
-			
-			session.setAttribute("order", order);
-			
-			response.sendRedirect("order.jsp");
-		}
+	public LoadOrder() {
+		super();
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		System.out.println("In LoadOrder");
+
+		// get session from request
+		HttpSession session = request.getSession();
+
+		// get order id
+		int orderid = Integer.parseInt(request.getParameter("orderid"));
+		Order order = OrderDAO.getOrderById(orderid);
+
+		session.setAttribute("order", order);
+
+		response.sendRedirect("order.jsp");
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 	}
 }

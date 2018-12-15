@@ -14,7 +14,7 @@
 	<table border=1>
 		<tr>
 			<td>PostingID:</td>
-			<td>${order.posting.postingid}</td>
+			<td>${order.posting.postingId}</td>
 		</tr>
 		<tr>
 			<td>Posted Username:</td>
