@@ -83,7 +83,9 @@
 				<button>Reject Order</button>
 				<button>Approve Order</button>
 			</c:if>
-			<button></button>
+			<c:if test="${order.status=='approved'}">
+				<button>Complete</button>
+			</c:if>
 		</c:if>
 	</form>
 </body>
