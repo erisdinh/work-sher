@@ -18,6 +18,7 @@
 --
 -- Table structure for table `orders`
 --
+USE worksher_db;
 DROP TABLE IF EXISTS `jobCategory`;
 DROP TABLE IF EXISTS `orders`;
 DROP TABLE IF EXISTS `posting`;
@@ -92,7 +93,7 @@ CREATE TABLE `jobCategory` (
 
 
 
-INSERT INTO `usertest` VALUES 
+INSERT INTO `user` VALUES 
 	(1,'Dizzle','1234','Danielle','d@sheridancollege.ca','2018-11-29 00:00:00','admin'),
 	(2,'Cue','4321','Q','q@sheridancollege.ca','2018-11-30 00:00:00','admin'),
 	(3,'Eh','54321','Abb','a@sheridancollege.ca','2018-11-29 00:00:00','admin'),
