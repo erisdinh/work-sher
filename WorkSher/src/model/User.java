@@ -25,18 +25,6 @@ public class User implements Serializable {
 		this.role = "user"; 			// User by default
 	}
 	
-	// from Quynh
-	// Constructor with some arguments for testing order because we havent had getUserByID() method yet
-	// Please feel free to delete it
-	public User(long userid, String username, String password, String name, String email, String role) {
-		this.userid = userid;
-		this.username = username;
-		this.password = password;
-		this.name = name;
-		this.dateJoined = dateJoined;
-		this.role = role;
-	}
-	
 	// GETTERS
 	public long getUserid() {
 		return userid;
