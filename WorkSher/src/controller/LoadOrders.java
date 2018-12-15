@@ -29,10 +29,6 @@ public class LoadOrders extends HttpServlet {
 		// get request session
 		HttpSession session = request.getSession();
 		
-		// sample currentUser to test manageOrder in user mode
-		User tempCurrentUser = new User(1, "test", "test", "test","test", "user");
-		session.setAttribute("currentUser", tempCurrentUser);
-		
 		// get parameters and attributes from request
 		String load = request.getParameter("load");
 		
