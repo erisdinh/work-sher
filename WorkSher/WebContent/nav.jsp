@@ -61,11 +61,11 @@
 		<div class="drop-menu">
 			<div class="menu-title" id="orders-menu">View Orders</div>
 			<div class="menu-items" id="orders-dropdown">
-				<a href="" class="menu-item">Received Orders</a> 
-				<a href="" class="menu-item">Placed Orders</a>
+				<a href="viewOrders.jsp?initial=true&load=received" class="menu-item">Received Orders</a> 
+				<a href="viewOrders.jsp?initial=true&load=requested" class="menu-item">Placed Orders</a>
 			</div>
 		</div>
-		<a href="" class="click-menu">Reviews</a>
+		<a href="reviews.jsp" class="click-menu">View Reviews</a>
 		<div class="search-bar">
 			Search: <input type="text" id="nav-search-field" placeholder="Enter search criteria" />
 		</div>

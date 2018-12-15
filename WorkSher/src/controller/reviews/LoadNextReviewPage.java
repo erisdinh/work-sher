@@ -1,6 +1,8 @@
 package controller.reviews;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,13 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.Review;
+
 /**
  * Servlet implementation class LoadNextReviewPage
  */
 @WebServlet("/LoadNextReviewPage")
 public class LoadNextReviewPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final int PAGE_OFFSET = 5;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -28,22 +31,28 @@ public class LoadNextReviewPage extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println("in LoadNextReview");
-		HttpSession session = request.getSession();
 		String referer = request.getHeader("Referer");
 		System.out.println(referer);
-		int revEndIndex = Integer.parseInt(request.getParameter("revEndIndex"));
-		int size = Integer.parseInt(request.getParameter("size"));
-		int revStartIndex = 0;
+
+		HttpSession session = request.getSession();
+		int revStartIndex = (int) session.getAttribute("revStartIndex");
+		int revEndIndex = (int) session.getAttribute("revEndIndex");
+		ArrayList<Review> reviews = (ArrayList<Review>) session.getAttribute("reviews");
+		int arraySize = reviews.size();
+		int pageSize = Integer.parseInt(request.getParameter("pageSize"));
 
 		if (referer.contains("reviews.jsp")) {
-			revStartIndex = revEndIndex;
-			if (revEndIndex + PAGE_OFFSET < size) {
-				revEndIndex += PAGE_OFFSET;
-			} else {
-				revEndIndex = size;
+			if (revEndIndex != arraySize) {
+				if (revEndIndex + pageSize > arraySize) {
+					revStartIndex += pageSize;
+					revEndIndex = arraySize;
+				} else if (revEndIndex + pageSize < arraySize) {
+					revStartIndex = revEndIndex;
+					revEndIndex += pageSize;
+				}
 			}
 			session.setAttribute("revStartIndex", revStartIndex);
 			session.setAttribute("revEndIndex", revEndIndex);
