@@ -18,13 +18,14 @@
 --
 -- Table structure for table `orders`
 --
-DROP TABLE `jobCategory`;
+USE worksher_db;
+DROP TABLE IF EXISTS `jobCategory`;
 DROP TABLE IF EXISTS `orders`;
 DROP TABLE IF EXISTS `posting`;
 DROP TABLE IF EXISTS `reviews`;
-DROP TABLE IF EXISTS `usertest`;
+DROP TABLE IF EXISTS `user`;
 
-CREATE TABLE `usertest` (
+CREATE TABLE `user` (
   `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(20) NOT NULL,
   `user_pass` varchar(20) NOT NULL,
@@ -92,7 +93,7 @@ CREATE TABLE `jobCategory` (
 
 
 
-INSERT INTO `usertest` VALUES 
+INSERT INTO `user` VALUES 
 	(1,'Dizzle','1234','Danielle','d@sheridancollege.ca','2018-11-29 00:00:00','admin'),
 	(2,'Cue','4321','Q','q@sheridancollege.ca','2018-11-30 00:00:00','admin'),
 	(3,'Eh','54321','Abb','a@sheridancollege.ca','2018-11-29 00:00:00','admin'),
