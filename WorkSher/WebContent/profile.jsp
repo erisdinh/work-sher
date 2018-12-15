@@ -29,14 +29,32 @@
 	</section>
 	
 	<section class="reviews">
-	<h2>Reviews for ${user.name}</h2>	
-	<c:forEach items="${reviews}" var="review">
-		<div class="review">
-		<p>Rating: ${review.reviewRating}<br>
-		<p>${review.reviewText}</p>
-		<p>${review.reviewDate}</p>
-		</div>
-	</c:forEach>
+		<c:set value="5" var="revStartIndex" scope="page" />
+		<c:set value="5" var="revEndIndex" scope="page" />
+			<table class="reviews-table">
+				<c:forEach var="review" items="${reviews.subList(revStartIndex, revEndIndex)}" varStatus="status">
+					<tr>
+						<td><c:out value="${review.forUsername}" /></td>
+						<td><img src="images/${reviewImages[status.index]}"
+							width="50px" /></td>
+						<td><c:out value="${review.reviewDate}" /></td>
+					</tr>
+					<tr>
+						<td><c:out value="${review.reviewText}" /></td>
+					</tr>
+				</c:forEach>
+			</table>
+
+			<form class="prev-button-form" action="LoadPrevReviewPage" method="post">
+				<input type="hidden" name="userId" value="${userId}" />
+				<input type="hidden" name="pageSize" value="5" />
+				<input type="submit" class="next-button" value="Prev" />
+			</form>
+			<form class="next-button-form" action="LoadNextReviewPage" method="post">
+				<input type="hidden" name="userId" value="${userId}" />
+				<input type="hidden" name="pageSize" value="5" />
+				<input type="submit" class="next-button" value="Next" />
+			</form>
 	</section>
 </body>
 </html>

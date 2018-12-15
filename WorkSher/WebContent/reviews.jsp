@@ -18,11 +18,12 @@
 	You have not left any reviews!
 	</c:when>
 		<c:otherwise>
-			<table id="reviews-table">
+			<c:set value="10" name="pageSize" scope="page" />
+			<table class="reviews-table">
 				<c:forEach var="review" items="${reviews.subList(revStartIndex, revEndIndex)}" varStatus="status">
 					<tr>
 						<td><c:out value="${review.forUsername}" /></td>
-						<td><img src="images/${reviewImages[status.index]}"
+						<td><img src="images/${review.reviewImgUrl}"
 							width="50px" /></td>
 						<td><c:out value="${review.reviewDate}" /></td>
 					</tr>
@@ -32,13 +33,13 @@
 				</c:forEach>
 			</table>
 
-			<form class="prev-button" action="LoadPrevReviewPage" method="post">
-				<input type="hidden" name="pageSize" value="5" />
-				<input type="submit" value="Prev" />
+			<form class="prev-button-form" action="LoadPrevReviewPage" method="post">
+				<input type="hidden" name="pageSize" value="${pageSize}" />
+				<input type="submit" class="next-button" value="Prev" />
 			</form>
-			<form class="next-button" action="LoadNextReviewPage" method="post">
-				<input type="hidden" name="pageSize" value="5" />
-				<input type="submit" value="Next" />
+			<form class="next-button-form" action="LoadNextReviewPage" method="post">
+				<input type="hidden" name="pageSize" value="${pageSize}" />
+				<input type="submit" class="next-button" value="Next" />
 			</form>
 		</c:otherwise>
 	</c:choose>
