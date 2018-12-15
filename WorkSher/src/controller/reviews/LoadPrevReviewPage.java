@@ -28,32 +28,30 @@ public class LoadPrevReviewPage extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println("in LoadPrevReview");
 		
 		HttpSession session = request.getSession();
-		int revStartIndex = Integer.parseInt(request.getParameter("revStartIndex"));
-		int arraySize = Integer.parseInt(request.getParameter("arraySize"));
+		int revStartIndex = (int) session.getAttribute("revStartIndex");
+		int revEndIndex = (int) session.getAttribute("revEndIndex");
+		ArrayList<Review> reviews = (ArrayList<Review>) session.getAttribute("reviews");
+		int arraySize = reviews.size();
 		int pageSize = Integer.parseInt(request.getParameter("pageSize"));
-		int revEndIndex = 0;
 		
 		String referer = request.getHeader("Referer");
 		System.out.println(referer);
 
 		if (referer.contains("reviews.jsp")) {
 			if (revStartIndex > 0) {
-				if (revStartIndex > arraySize) {
-					revEndIndex = arraySize;
-				} else {
-					revEndIndex = revStartIndex;
-				}
-				
 				if (revStartIndex - pageSize < 0) {
 					revStartIndex = 0;
+					revEndIndex = pageSize;
 				} else {
-					revStartIndex -= pageSize;
+					revEndIndex = revStartIndex;
+					revStartIndex = revEndIndex - pageSize;
 				}
+				
 				session.setAttribute("revStartIndex", revStartIndex);
 				session.setAttribute("revEndIndex", revEndIndex);
 			}

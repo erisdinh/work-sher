@@ -65,3 +65,7 @@
 #nav-search-field {
 	width: 20vw;
 }
+
+.prev-button {
+	float: left;
+}

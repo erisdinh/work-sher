@@ -64,7 +64,7 @@
 				<a href="" class="menu-item">Placed Orders</a>
 			</div>
 		</div>
-		<a href="" class="click-menu">Reviews</a>
+		<a href="reviews.jsp" class="click-menu">View Reviews</a>
 		<div class="search-bar">
 			Search: <input type="text" id="nav-search-field" placeholder="Enter search criteria" />
 		</div>
