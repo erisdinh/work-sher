@@ -12,6 +12,7 @@ public class Posting implements Serializable {
 
 	private long postingId;
 	private long userId;
+	private String username;
 	private String jobCategory;
 	private String title;
 	private String description;
@@ -126,6 +127,14 @@ public class Posting implements Serializable {
 
 	public void setPortfolioThumb(InputStream portfolioThumb) {
 		this.portfolioThumb = portfolioThumb;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	
 }
