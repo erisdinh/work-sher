@@ -1,5 +1,6 @@
 package model;
 
+import java.io.InputStream;
 import java.io.Serializable;
 import java.net.URL;
 import java.sql.Date;
@@ -16,8 +17,10 @@ public class Posting implements Serializable {
 	private String description;
 	private String compensation;
 	private String status;
-	private String portfolio;
+	private InputStream portfolio;
+	private InputStream portfolioThumb;
 	private Date dateCreated;
+	private Date dateUpdated;
 	
 	public Posting() {
 		//portfolio = new ArrayList<>();
@@ -25,15 +28,24 @@ public class Posting implements Serializable {
 	
 	// constructors with arguments
 	// Please feel free to change it
-	public Posting(int postingid, User user, String jobCategory, String desscription, String compensation, String status, String portfolio) {
+	public Posting(int postingid, User user, String jobCategory, String description, String compensation, String status, InputStream portfolio) {
 		this.postingId = postingid;
 		this.userId = user.getUserid();
 		this.jobCategory = jobCategory;
-		this.description = desscription;
+		this.description = description;
 		this.compensation = compensation;
 		this.status = status;
 		this.portfolio = portfolio;
 		this.dateCreated = dateCreated;
+		this.dateUpdated = dateUpdated;
+	}
+
+	public Date getDateUpdated() {
+		return dateUpdated;
+	}
+
+	public void setDateUpdated(Date dateUpdated) {
+		this.dateUpdated = dateUpdated;
 	}
 
 	public int getPostingId() {
@@ -92,11 +104,11 @@ public class Posting implements Serializable {
 		this.status = status;
 	}
 
-	public String getPortfolio() {
+	public InputStream getPortfolio() {
 		return portfolio;
 	}
 
-	public void setPortfolio(String portfolio) {
+	public void setPortfolio(InputStream portfolio) {
 		this.portfolio = portfolio;
 	}
 
@@ -107,4 +119,13 @@ public class Posting implements Serializable {
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
+
+	public InputStream getPortfolioThumb() {
+		return portfolioThumb;
+	}
+
+	public void setPortfolioThumb(InputStream portfolioThumb) {
+		this.portfolioThumb = portfolioThumb;
+	}
+	
 }

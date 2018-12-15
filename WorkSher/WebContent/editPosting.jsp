@@ -2,7 +2,7 @@
     pageEncoding="ISO-8859-1"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix = "c" %>
     <%@ page import = "model.JobCategory, dao.PostingDAO" %>
-    <%@ page import = "java.util.List, java.util.ArrayList" %>
+    <%@ page import = "java.util.List, java.util.ArrayList, java.util.Date, java.text.DateFormat, java.text.SimpleDateFormat" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,10 +12,18 @@
 <body>
 <% List <JobCategory> categories = PostingDAO.getAllJobCategories(); 
 	request.setAttribute("categories", categories);
+	DateFormat dateFormat = new SimpleDateFormat("yyyy//MM/dd");
+	Date date = new Date();
+	request.setAttribute("dateUpdated", date);
+	System.out.println(date);
 %>
 <body>
 	<form action = "PostingController" method = "POST" enctype ="multipart/form-data" >
 		<input hidden name = "postingId" value = "<c:out value = "${posting.postingId }"/>"/>
+		Date Posted: <input readonly name = "dateCreated" value = "<c:out value = "${posting.dateCreated }"/>"/></br>
+		Date Updated: <input readonly value = "<c:out value = "${posting.dateUpdated }"/>"/></br>
+		
+		<input hidden name="dateUpdated" value = "<c:out value = "${request.date }"/>">
 		Category: <% System.out.println(categories.get(0).getJobCategoryDesc()); %>
 		<select name = "jobCategory">
 			<c:forEach var = "category" items = "${categories }">

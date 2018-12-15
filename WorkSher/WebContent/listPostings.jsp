@@ -48,6 +48,8 @@
 		<table border = 1>
 			<thead>
 				<tr>
+					<th>Date Created</th>
+					<th>Date Updated</th>
 					<th>Job Category</th>
 					<th>Title</th>
 					<c:if test = "${currentUser.role == 'admin' }">
@@ -58,6 +60,8 @@
 			<tbody>
 				<c:forEach var = "posting" items = "${postings }">
 				<tr>
+					<td><c:out value = "${posting.dateCreated }"/></td>
+					<td><c:out value = "${posting.dateUpdated }"/></td>
 	
 					<td><c:out value = "${posting.jobCategory }"/></td>
 					<td><a href="PostingController?action=view&postingId=<c:out value = "${posting.postingId}"/>"><c:out value = "${posting.title}"/></a></td>

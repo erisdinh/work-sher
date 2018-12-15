@@ -1,17 +1,28 @@
 package controller;
 
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.imageio.ImageIO;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +38,7 @@ import model.Posting;
  * Servlet implementation class PostingController
  */
 @WebServlet("/PostingController")
+@MultipartConfig
 public class PostingController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -102,46 +114,34 @@ public class PostingController extends HttpServlet {
 		posting.setDescription(request.getParameter("description"));
 		posting.setCompensation(request.getParameter("compensation"));
 		posting.setStatus(request.getParameter("status"));
+		InputStream portfolio = request.getPart("portfolio").getInputStream();
+		posting.setPortfolio(portfolio);
 		
-		String path = File.separator + "images" + File.separator + posting.getUserId() + File.separator +  "portfolio";
-//		String path = "/images/" + posting.getUserId() + "/portfolio/";
-//		String path = getServletContext().getContextPath() + "/images";
-		Part portfolio = request.getPart("portfolio");
-		String fileName = getFileName(portfolio);
-		System.out.println(getServletContext().getContextPath());
 		
-		OutputStream out= null;
-		InputStream filecontent = null;
 		
-		try {
-			File file = new File(path + File.separator + fileName);
-			boolean test = file.mkdirs();
-			if (test) {
-				System.out.println("it owrks");
-			} else {
-				System.out.println("it doesn't");
-			}
-			
-			out = new FileOutputStream(file);
-			filecontent = portfolio.getInputStream();
-			
-			int read = 0;
-			byte[] bytes = new byte[1024];
-			
-			while((read = filecontent.read(bytes)) != -1) {
-				out.write(bytes, 0, read);
-			}
-		} catch (FileNotFoundException fne) {
-			fne.printStackTrace();
-		} finally {
-			if (out != null) {
-				out.close();
-			}
-			if (filecontent != null) {
-				filecontent.close();
-			}
-		}
-		posting.setPortfolio(path + fileName);
+		//// what
+//		Image ptflThumb = ImageIO.read(portfolio).getScaledInstance(100,100, BufferedImage.SCALE_SMOOTH);
+//		BufferedImage bi = new BufferedImage(ptflThumb.getWidth(null), ptflThumb.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+//		Graphics2D g2d = bi.createGraphics();
+//		g2d.drawImage(ptflThumb,  0, 0,  null);
+//		g2d.dispose();
+//		ByteArrayOutputStream baos = null;
+//		try {
+//			baos = new ByteArrayOutputStream();
+//			ImageIO.write(bi, "png", baos);
+//		} finally {
+//			try {
+//				baos.close();
+//			} catch (Exception e) {		
+//			}
+// 		}
+//		posting.setPortfolioThumb(new ByteArrayInputStream(baos.toByteArray()));
+//		
+//		
+		
+		
+		
+		
 		String postingIdString = request.getParameter("postingId");
 		
 		if (postingIdString == null || postingIdString.isEmpty()) {
@@ -156,15 +156,14 @@ public class PostingController extends HttpServlet {
 	}
 //	 https://docs.oracle.com/javaee/6/tutorial/doc/glraq.html
 	private String getFileName(final Part part) {
-	    //final String partHeader = part.getHeader("content-disposition");
-//	    LOGGER.log(Level.INFO, "Part Header = {0}", partHeader);
+		System.out.println("in getFileName!");
 	    for (String content : part.getHeader("content-disposition").split(";")) {
+	    	System.out.println(content);
 	        if (content.trim().startsWith("filename")) {
-	        	String test = content.substring(
-	                    content.indexOf('=') + 1).trim().replace("\"", "");
-	        	System.out.println(test);
-	        	test = test.substring(test.lastIndexOf("\\") + 1 ,test.length());
-	        	return test;
+	        	String fileName = content.substring(content.indexOf('=') + 1).trim().replace("\"", "");
+	            System.out.println(fileName);
+	        	return fileName.substring(fileName.lastIndexOf('/') + 1).substring(fileName.lastIndexOf('\\') + 1);
+	            
 	        }
 	    }
 	    return null;

@@ -20,13 +20,14 @@ public class PostingDAO {
 	public static void addPosting(Posting posting) {
 		try {
 			conn = DBUtil.getConnection();
-			PreparedStatement pStmt = conn.prepareStatement("INSERT INTO posting (user_id, jobCategory, title, description, compensation, status) VALUES (?,?,?,?,?,?)");
+			PreparedStatement pStmt = conn.prepareStatement("INSERT INTO posting (user_id, jobCategory, title, description, compensation, status, portfolio) VALUES (?,?,?,?,?,?,?)");
 			pStmt.setInt(1, posting.getUserId());
 			pStmt.setString(2, posting.getJobCategory());
 			pStmt.setString(3, posting.getTitle());
 			pStmt.setString(4, posting.getDescription());
 			pStmt.setString(5, posting.getCompensation());
 			pStmt.setString(6, posting.getStatus());
+			pStmt.setBlob(7, posting.getPortfolio());
 			
 			pStmt.executeUpdate();
 		} catch (SQLException ex) {
@@ -52,13 +53,14 @@ public class PostingDAO {
 	public static void updatePosting(Posting posting) {
 		try {
 			conn = DBUtil.getConnection();
-			PreparedStatement pStmt = conn.prepareStatement("UPDATE posting SET jobCategory = ?, title = ?, description = ?, compensation = ?, status = ? WHERE posting_id = ?");
+			PreparedStatement pStmt = conn.prepareStatement("UPDATE posting SET jobCategory = ?, title = ?, description = ?, compensation = ?, status = ?, portfolio = ? WHERE posting_id = ?");
 			pStmt.setString(1, posting.getJobCategory());
 			pStmt.setString(2, posting.getTitle());
 			pStmt.setString(3, posting.getDescription());
 			pStmt.setString(4, posting.getCompensation());
 			pStmt.setString(5, posting.getStatus());
-			pStmt.setInt(6, posting.getPostingId());
+			pStmt.setBlob(6, posting.getPortfolio());
+			pStmt.setInt(7, posting.getPostingId());
 			pStmt.executeUpdate();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
@@ -84,6 +86,14 @@ public class PostingDAO {
 				posting.setCompensation(rSet.getString("compensation"));
 				posting.setStatus(rSet.getString("status"));
 				posting.setDateCreated(rSet.getDate("dateCreated"));
+				posting.setDateUpdated(rSet.getDate("dateUpdated"));
+//				String test = rSet.getBlob("portfoliothumb").toString();
+//				System.out.println("hi!:-" + test + "-|");
+////				try {
+//					posting.setPortfolio(rSet.getBlob("portfoliothumb").getBinaryStream());
+//					} catch (Exception ex ) {
+//						ex.printStackTrace();
+//					}
 				postings.add(posting);
 			}
 		} catch (SQLException ex) {
@@ -256,6 +266,12 @@ public class PostingDAO {
 				posting.setCompensation(rSet.getString("compensation"));
 				posting.setStatus(rSet.getString("status"));
 				posting.setDateCreated(rSet.getDate("dateCreated"));
+				posting.setDateUpdated(rSet.getDate("dateUpdated"));
+				try {
+				posting.setPortfolio(rSet.getBlob("portfolio").getBinaryStream());
+				} catch (Exception ex ) {
+					ex.printStackTrace();
+				}
 				postings.add(posting);
 			}
 		} catch (SQLException ex) {
@@ -285,6 +301,12 @@ public class PostingDAO {
 				posting.setCompensation(rSet.getString("compensation"));
 				posting.setStatus(rSet.getString("status"));
 				posting.setDateCreated(rSet.getDate("dateCreated"));
+				posting.setDateUpdated(rSet.getDate("dateUpdated"));
+				try {
+				posting.setPortfolio(rSet.getBlob("portfolio").getBinaryStream());
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
 			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
@@ -294,6 +316,22 @@ public class PostingDAO {
 
 		return posting;
 	}
+	public static byte[] getImage(Posting posting) {
+		byte[] portfolio = null;
+		
+		try {
+			conn = DBUtil.getConnection();
+		//	PreparedStatement pStmt = conn.prepareStatement("SELECT * FROM posting WHERE )
+			
+		} catch (SQLException ex) {
+			
+		} finally {
+			DBUtil.closeConnection(conn);
+		}
+		return portfolio;
+	}
+	
+	
 	public static JobCategory getCategoryById(String jobCategoryId) {
 		JobCategory jobCategory = new JobCategory();
 		try {
