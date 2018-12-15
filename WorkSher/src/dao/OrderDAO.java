@@ -24,9 +24,9 @@ public class OrderDAO {
 			
 			PreparedStatement pstmt = connection.prepareStatement("insert into orders(requestOrderUser_id, postOrderUser_id, posting_id, description, dateResponsed, dateCompleted, status) values"
 					+ "(?, ?, ?, ?, ?, ?, ?);");
-			pstmt.setInt(1, order.getRequestUser().getUserid());
-			pstmt.setInt(2, order.getPosting().getUserId());
-			pstmt.setInt(3, order.getPosting().getPostingId());
+			pstmt.setLong(1, order.getRequestUser().getUserid());
+			pstmt.setLong(2, order.getPosting().getUserId());
+			pstmt.setLong(3, order.getPosting().getPostingId());
 			pstmt.setString(4, order.getDescription());
 			pstmt.setDate(5, order.getDateResponsed());
 			pstmt.setDate(6, order.getDateCompleted());
@@ -57,17 +57,17 @@ public class OrderDAO {
 				
 				Order order = new Order();
 				
-				order.setOrderid(rs.getInt("order_id"));
+				order.setOrderid(rs.getLong("order_id"));
 				
-				int requestUserId = rs.getInt("requestOrderUser_id");
+				long requestUserId = rs.getLong("requestOrderUser_id");
 				User requestUser = UserDAO.getUserById(requestUserId);
 				order.setRequestUser(requestUser);
 				
-				int postUserId = rs.getInt("postOrderUser_id");
+				long postUserId = rs.getLong("postOrderUser_id");
 				User postUser = UserDAO.getUserById(postUserId);
 				order.setPostUser(postUser);
 				
-				int postingid = rs.getInt("posting_id");
+				long postingid = rs.getLong("posting_id");
 				Posting posting = PostingDAO.getPostingById(postingid);
 				order.setPosting(posting);
 				
@@ -90,7 +90,7 @@ public class OrderDAO {
 		return allOrder;
 	}
 	
-	public static Order getOrderById(int orderid) {	
+	public static Order getOrderById(long orderid) {	
 		Connection connection = null;
 		Order order = new Order();
 		
@@ -98,24 +98,24 @@ public class OrderDAO {
 			
 			connection = DBUtil.getConnection();
 			
-			PreparedStatement pstmt = connection.prepareStatement("select * from orders where order_id = ?");
+			PreparedStatement pstmt = connection.prepareStatement("select * from orders order by dateRequested desc where order_id = ?");
 			
-			pstmt.setInt(1, orderid);
+			pstmt.setLong(1, orderid);
 			
 			ResultSet rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				order.setOrderid(rs.getInt("order_id"));
+				order.setOrderid(rs.getLong("order_id"));
 				
-				int requestUserId = rs.getInt("requestOrderUser_id");
+				long requestUserId = rs.getLong("requestOrderUser_id");
 				User requestUser = UserDAO.getUserById(requestUserId);
 				order.setRequestUser(requestUser);
 				
-				int postUserId = rs.getInt("postOrderUser_id");
+				long postUserId = rs.getLong("postOrderUser_id");
 				User postUser = UserDAO.getUserById(postUserId);
 				order.setPostUser(postUser);
 				
-				int postingid = rs.getInt("posting_id");
+				long postingid = rs.getLong("posting_id");
 				Posting posting = PostingDAO.getPostingById(postingid);
 				order.setPosting(posting);
 				
@@ -135,7 +135,7 @@ public class OrderDAO {
 		return order;
 	}
 	
-	public static ArrayList<Order> getRequestedOrders(int requestUserId) {
+	public static ArrayList<Order> getRequestedOrders(long requestUserId) {
 		
 		ArrayList<Order> requestedOrders = new ArrayList<>();
 		
@@ -147,23 +147,23 @@ public class OrderDAO {
 			connection = DBUtil.getConnection();
 			PreparedStatement pstmt = connection.prepareStatement("select * from orders where requestOrderUser_id=?");
 			
-			pstmt.setInt(1, requestUserId);
+			pstmt.setLong(1, requestUserId);
 			
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
 				Order order = new Order();
-				order.setOrderid(rs.getInt("order_id"));
+				order.setOrderid(rs.getLong("order_id"));
 				
-				int tempRequestUserId = rs.getInt("requestOrderUser_id");
+				long tempRequestUserId = rs.getLong("requestOrderUser_id");
 				User requestUser = UserDAO.getUserById(requestUserId);
 				order.setRequestUser(requestUser);
 				
-				int postUserId = rs.getInt("postOrderUser_id");
+				long postUserId = rs.getLong("postOrderUser_id");
 				User postUser = UserDAO.getUserById(postUserId);
 				order.setPostUser(postUser);
 				
-				int postingid = rs.getInt("posting_id");
+				long postingid = rs.getLong("posting_id");
 				Posting posting = PostingDAO.getPostingById(postingid);
 				order.setPosting(posting);
 				
@@ -184,7 +184,7 @@ public class OrderDAO {
 		return requestedOrders;
 	}
 	
-	public static ArrayList<Order> getReceivedOrders(int postUseId) {
+	public static ArrayList<Order> getReceivedOrders(long postUseId) {
 		
 		ArrayList<Order> receivedOrders = new ArrayList<>();
 		
@@ -196,7 +196,7 @@ public class OrderDAO {
 			connection = DBUtil.getConnection();
 			PreparedStatement pstmt = connection.prepareStatement("select * from orders where postOrderUser_id=?");
 			
-			pstmt.setInt(1, postUseId);
+			pstmt.setLong(1, postUseId);
 			
 			rs = pstmt.executeQuery();
 			
@@ -204,15 +204,15 @@ public class OrderDAO {
 				Order order = new Order();
 				order.setOrderid(rs.getInt("order_id"));
 				
-				int requestUserId = rs.getInt("requestOrderUser_id");
+				long requestUserId = rs.getLong("requestOrderUser_id");
 				User requestUser = UserDAO.getUserById(requestUserId);
 				order.setRequestUser(requestUser);
 				
-				int postUserId = rs.getInt("postOrderUser_id");
+				long postUserId = rs.getLong("postOrderUser_id");
 				User postUser = UserDAO.getUserById(postUserId);
 				order.setPostUser(postUser);
 				
-				int postingid = rs.getInt("posting_id");
+				long postingid = rs.getLong("posting_id");
 				Posting posting = PostingDAO.getPostingById(postingid);
 				order.setPosting(posting);
 				

@@ -69,5 +69,22 @@
 			</c:if>
 		</c:if>
 	</table>
+
+	<form action="ManageOrder">
+		<c:if test="${currentUser.userid==order.requestUser.userid}">
+			<button>Cancel Order</button>
+			<button>Edit Order</button>
+			<c:if test="${order.status=='complete'}">
+				<button>Leave Review</button>
+			</c:if>
+		</c:if>
+		<c:if test="${currentUser.userid==order.postUser.userid}">
+			<c:if test="${order.status=='pending'}">
+				<button>Reject Order</button>
+				<button>Approve Order</button>
+			</c:if>
+			<button></button>
+		</c:if>
+	</form>
 </body>
 </html>
