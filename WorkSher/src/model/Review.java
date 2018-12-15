@@ -8,6 +8,7 @@ public class Review implements Serializable {
 	private long fromUserId;
 	private String forUsername;
 	private String fromUsername;
+	private long orderId;
 	private long postingId;
 	private long reviewId;
 	private Date reviewDate;
@@ -26,13 +27,14 @@ public class Review implements Serializable {
 		reviewText = "";
 	}
 
-	public Review(long reviewId, long forUserId, long fromUserId, String forUsername, String fromUsername, long postingId, Date reviewDate, double reviewRating, String reviewText) {
+	public Review(long reviewId, long forUserId, long fromUserId, String forUsername, String fromUsername, long orderId, long postingId, Date reviewDate, double reviewRating, String reviewText) {
 		super();
 		this.reviewId = reviewId;
 		this.forUserId = forUserId;
 		this.fromUserId = fromUserId;
 		this.forUsername = forUsername;
 		this.fromUsername = fromUsername;
+		this.orderId = orderId;
 		this.postingId = postingId;
 		this.reviewDate = reviewDate;
 		this.reviewRating = reviewRating;
@@ -69,6 +71,14 @@ public class Review implements Serializable {
 	
 	public void setFromUsername(String fromUsername) {
 		this.fromUsername = fromUsername;
+	}
+	
+	public long getOrderId() {
+		return orderId;
+	}
+	
+	public void setOrderId() {
+		this.orderId = orderId;
 	}
 
 	public long getPostingId() {

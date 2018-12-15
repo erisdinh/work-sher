@@ -16,7 +16,7 @@ public class UserDAO {
 	public static void addUser(User user) {	
 		try {
 			conn = DBUtil.getConnection();
-			PreparedStatement pStmt = conn.prepareStatement("INSERT INTO usertest" 
+			PreparedStatement pStmt = conn.prepareStatement("INSERT INTO users" 
 														+ "(username, user_pass, name, email, date_joined, role)"
 														+ " values (?, ?, ?, ?, ?, ? )");					
 			pStmt.setString(1, user.getUsername());
@@ -38,13 +38,13 @@ public class UserDAO {
 	}
 
 	// Method to get user info from database by UserID
-	public static User getUserById(int userid) {
+	public static User getUserById(long userid) {
 		User user = new User();
 		
 		try {
 			conn = DBUtil.getConnection();			
-			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM usertest WHERE user_id = ?");			
-			pstmt.setInt(1, userid);		
+			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM users WHERE user_id = ?");			
+			pstmt.setLong(1, userid);		
 			ResultSet rs = pstmt.executeQuery();
 			
 			if (rs.next()) {
@@ -61,7 +61,7 @@ public class UserDAO {
 		}
 		
 		return user;
-	}
+	}	
 	
 	// Method used for authenticating users during login
 	// TESTED - This works
@@ -70,7 +70,7 @@ public class UserDAO {
 		
 		try {
 			conn = DBUtil.getConnection();			
-			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM usertest WHERE username = ? AND user_pass = ?");			
+			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM users WHERE username = ? AND user_pass = ?");			
 			pstmt.setString(1, username);
 			pstmt.setString(2, password);
 			ResultSet rs = pstmt.executeQuery();
@@ -91,5 +91,30 @@ public class UserDAO {
 		}
 		
 		return user;
+	}
+	
+	// Method to determine whether or not the user is an admin
+	public static boolean authorizeUser(User user) {		
+		long user_id = user.getUserid();
+		boolean isAdmin = false;
+		
+		try {
+			conn = DBUtil.getConnection();			
+			PreparedStatement pstmt = conn.prepareStatement("SELECT role FROM users WHERE user_id = ?");			
+			pstmt.setLong(1, user_id);
+			ResultSet rs = pstmt.executeQuery();
+						
+			if ((rs.getString("role")).equals("admin")) {
+				isAdmin = true;
+			} else {
+				isAdmin = false;
+			}	
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.closeConnection(conn);
+		}
+		
+		return isAdmin;
 	}
 }
