@@ -75,9 +75,17 @@
 
 				<div>
 					<form action="viewOrders.jsp">
+						<c:if test="${numberOfOrderPages!= 1}">
+						<c:if test="${pageOrders > 0 }">
+							<button type="submit" value="${loop.index-1}" name="pageOrders">Previous</button>
+						</c:if>
 						<c:forEach begin="0" end="${numberOfOrderPages}" varStatus="loop">
 							<button type="submit" value="${loop.index}" name="pageOrders">${loop.count}</button>
 						</c:forEach>
+						<c:if test="${pageOrders < numberOfOrderPages}">
+							<button type="submit" value="${loop.index+1}" name="pageOrders">Next</button>
+						</c:if>
+						</c:if>
 					</form>
 				</div>
 		</c:otherwise>

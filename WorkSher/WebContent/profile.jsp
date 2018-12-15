@@ -3,25 +3,40 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>${user.name}'s Profile</title>
 </head>
 <body>
-	<!-- Test code to get user's postings -->
-	<c:forEach items="${postings}" var="posting">
-		<p>${posting.title}<br>
-		${posting.description}</p>
-	</c:forEach>
+	<section class="userinfo">
+	<h1>${user.name}'s Profile</h1>
+	${user.username}<br>
+	<a href="mailto:${user.email}">Contact ${user.name}</a><br>
+	Member since: ${user.dateJoined}
+	</section>
 	
-	<!-- Test code to get reviews for user -->
-	<c:forEach items="${reviews}" var="review">
-		<p>${review.reviewText}</p>
+	<section class="postings">
+	<h2>Postings</h2>
+	<c:forEach items="${postings}" var="posting">
+		<div class="posting">
+		<h3><a href="PostingController?action=view&postingId=${posting.postingId}">${posting.title}</a></h3>
+		<p>${posting.description}</p>
+		<p>Compensation: ${posting.compensation}</p>
+		</div>
 	</c:forEach>
-	</br></br>
-	<!-- Link to manage all user's order in user mode -->
-	<a href="viewOrders.jsp?load=received">View Orders</a>
+	</section>
+	
+	<section class="reviews">
+	<h2>Reviews for ${user.name}</h2>	
+	<c:forEach items="${reviews}" var="review">
+		<div class="review">
+		<p>Rating: ${review.reviewRating}<br>
+		<p>${review.reviewText}</p>
+		<p>${review.reviewDate}</p>
+		</div>
+	</c:forEach>
+	</section>
 </body>
 </html>

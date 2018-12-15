@@ -25,19 +25,10 @@ public class CreateOrder extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// sample users and postings to test order creating
-		User tempCurrentUser = new User(1, "test", "test", "test","test", "user");
-		User user2 = new User(2, "test2", "test2", "test2", "test2", "user");
-		Posting tempPost = PostingDAO.getPostingById(1);
 		
 		// get session  from request
 		HttpSession session = request.getSession();
 
-		// set sample users and posting to session to test order
-		session.setAttribute("currentUser", tempCurrentUser);
-		session.setAttribute("postUser", user2);
-		session.setAttribute("posting", tempPost);
-		
 		// get attributes from current session
 		User currentUser = (User) session.getAttribute("currentUser");
 		User postUser = (User) session.getAttribute("postUser");

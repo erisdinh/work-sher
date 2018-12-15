@@ -10,6 +10,7 @@
 </head>
 <body>
 	<h1>Welcome to WorkSher!</h1>
+	<jsp:include page="nav.jsp"></jsp:include>
 	<c:choose>
 		<c:when test="${currentUser == null}">
 			<a href="login.jsp">Login</a>
