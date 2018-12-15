@@ -31,8 +31,8 @@
 				</c:forEach>
 			</table>
 
-			<a href="LoadPrevReviewPage?revStartIndex=${revStartIndex}&size=${reviews.size()}">Prev</a>
-			<a href="LoadNextReviewPage?revEndIndex=${revEndIndex}&size=${reviews.size()}">Next</a>
+			<a href="LoadPrevReviewPage?revStartIndex=${revStartIndex}&arraySize=${reviews.size()}&pageSize=5">Prev</a>
+			<a href="LoadNextReviewPage?revEndIndex=${revEndIndex}&arraySize=${reviews.size()}&pageSize=5">Next</a>
 		</c:otherwise>
 	</c:choose>
 </body>
