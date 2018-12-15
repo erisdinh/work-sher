@@ -61,6 +61,8 @@ create table `posting`(
 `compensation` varchar(30),
 `status` varchar(10),
 `portfolio` longblob,
+`portfoliotype` varchar(20),
+`portfoliolength` int(10) unsigned, 
 `portfoliothumb` blob,
 `dateCreated` timestamp not null default current_timestamp,
 `dateUpdated` timestamp not null default current_timestamp,

@@ -50,6 +50,7 @@
 		</select>
 		</c:if>
 		<input type = "file" name = "portfolio" accept = "image/*">
+
 		<input type = "submit" value = "Sher!">
 	</form>
 </body>

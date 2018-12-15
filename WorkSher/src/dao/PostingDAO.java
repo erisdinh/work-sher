@@ -54,14 +54,19 @@ public class PostingDAO {
 	public static void updatePosting(Posting posting) {
 		try {
 			conn = DBUtil.getConnection();
-			PreparedStatement pStmt = conn.prepareStatement("UPDATE posting SET jobCategory = ?, title = ?, description = ?, compensation = ?, status = ?, portfolio = ? WHERE posting_id = ?");
+			PreparedStatement pStmt = conn.prepareStatement("UPDATE posting SET jobCategory = ?, title = ?, description = ?, compensation = ?, status = ?, portfolio = ?, portfoliotype = ?, portfoliolength = ? WHERE posting_id = ?");
 			pStmt.setString(1, posting.getJobCategory());
 			pStmt.setString(2, posting.getTitle());
 			pStmt.setString(3, posting.getDescription());
 			pStmt.setString(4, posting.getCompensation());
 			pStmt.setString(5, posting.getStatus());
 			pStmt.setBlob(6, posting.getPortfolio());
-			pStmt.setLong(7, posting.getPostingId());
+
+			pStmt.setString(7, posting.getPortfolioType());
+			pStmt.setInt(8, posting.getPortfolioLength());
+			
+			pStmt.setLong(9, posting.getPostingId());
+			
 			pStmt.executeUpdate();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
@@ -91,11 +96,11 @@ public class PostingDAO {
 				posting.setDateUpdated(rSet.getDate("dateUpdated"));
 				//String test = rSet.getBlob("portfoliothumb").toString();
 				//System.out.println("hi!:-" + test + "-|");
-				try {
-					posting.setPortfolio(rSet.getBlob("portfoliothumb").getBinaryStream());
-					} catch (Exception ex ) {
-						ex.printStackTrace();
-					}
+//				try {
+//					posting.setPortfolio(rSet.getBlob("portfoliothumb").getBinaryStream());
+//					} catch (Exception ex ) {
+//						ex.printStackTrace();
+//					}
 				postings.add(posting);
 			}
 		} catch (SQLException ex) {
@@ -379,8 +384,11 @@ public class PostingDAO {
 				posting.setStatus(rSet.getString("status"));
 				posting.setDateCreated(rSet.getDate("dateCreated"));
 				posting.setDateUpdated(rSet.getDate("dateUpdated"));
+				posting.setPortfolioLength(rSet.getInt("portfolioLength"));
+				posting.setPortfolioType(rSet.getString("portfolioType"));
+				
 				try {
-				posting.setPortfolio(rSet.getBlob("portfolio").getBinaryStream());
+					posting.setPortfolio(rSet.getBlob("portfolio").getBinaryStream());
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}

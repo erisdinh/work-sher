@@ -121,9 +121,15 @@ public class PostingController extends HttpServlet {
 		posting.setDescription(request.getParameter("description"));
 		posting.setCompensation(request.getParameter("compensation"));
 		posting.setStatus(request.getParameter("status"));
-		InputStream portfolio = request.getPart("portfolio").getInputStream();
+		Part portfolioPart = request.getPart("portfolio");
+		InputStream portfolio = portfolioPart.getInputStream();
 		posting.setPortfolio(portfolio);
 		
+		String portfolioType = portfolioPart.getContentType();
+		posting.setPortfolioType(portfolioType);
+		int portfolioLength = Math.toIntExact(portfolioPart.getSize());
+		System.out.println(portfolioLength);
+		posting.setPortfolioLength(portfolioLength);
 		
 		
 		//// what
