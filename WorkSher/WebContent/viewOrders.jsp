@@ -11,8 +11,8 @@
 </head>
 <body>
 	<c:choose>
-		<c:when test="${initial=='true'}">
-			<jsp:forward page="/LoadOrders?load=${load}"/>
+		<c:when test="${param.initial=='true'}">
+			<jsp:forward page="/LoadOrders?load=${param.load}" />
 		</c:when>
 		<c:otherwise>
 
@@ -21,18 +21,18 @@
 				<c:if test="${load=='received'}">
 					<h1>Received Orders</h1>
 				</c:if>
-				<c:if test="${load=='requested'}"></c:if>
-					<h1>Placed Orders</a>
+				<c:if test="${load=='requested'}">
+					<h1>Placed Orders</h1>
+				</c:if>
 			</div>
 			<div>
 				<c:forEach items="${orders}" var="order"
-					begin="${(param.pageOrders)*5}" end="${(param.pageOrders)*5+4}">
+					begin="${(param.page)*5}" end="${(param.page)*5+4}">
 					<div>
 						<table border=1>
 							<tr>
-								<td colspan=2><a
-									href="LoadOrder?orderid=${order.orderid}"> <em><c:out
-												value="OrderID: ${order.orderid}" /></em>
+								<td colspan=2><a href="LoadOrder?orderid=${order.orderid}">
+										<em><c:out value="OrderID: ${order.orderid}" /></em>
 								</a></td>
 							</tr>
 							<tr>
@@ -76,15 +76,15 @@
 				<div>
 					<form action="viewOrders.jsp">
 						<c:if test="${numberOfOrderPages!= 1}">
-						<c:if test="${pageOrders > 0 }">
-							<button type="submit" value="${loop.index-1}" name="pageOrders">Previous</button>
-						</c:if>
-						<c:forEach begin="0" end="${numberOfOrderPages}" varStatus="loop">
-							<button type="submit" value="${loop.index}" name="pageOrders">${loop.count}</button>
-						</c:forEach>
-						<c:if test="${pageOrders < numberOfOrderPages}">
-							<button type="submit" value="${loop.index+1}" name="pageOrders">Next</button>
-						</c:if>
+							<c:if test="${param.page > 0}">
+		 							<button type="submit" value="${param.page-1}" name="page">Previous</button>
+							</c:if>
+							<c:forEach begin="0" end="${numberOfOrderPages}" varStatus="loop">
+								<button type="submit" value="${loop.index}" name="page">${loop.count}</button>
+							</c:forEach>
+							<c:if test="${param.page <= (numberOfOrderPages-1) || param.page == null}">
+								<button type="submit" value="${param.page+1}" name="page">Next</button>
+							</c:if>
 						</c:if>
 					</form>
 				</div>

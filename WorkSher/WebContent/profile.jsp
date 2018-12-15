@@ -10,6 +10,7 @@
 <title>${user.name}'s Profile</title>
 </head>
 <body>
+	<jsp:include page="nav.jsp"></jsp:include>
 	<section class="userinfo">
 	<h1>${user.name}'s Profile</h1>
 	${user.username}<br>
