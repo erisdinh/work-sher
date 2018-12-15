@@ -24,9 +24,9 @@ public class OrderDAO {
 			
 			PreparedStatement pstmt = connection.prepareStatement("insert into orders(requestOrderUser_id, postOrderUser_id, posting_id, description, dateResponsed, dateCompleted, status) values"
 					+ "(?, ?, ?, ?, ?, ?, ?);");
-			pstmt.setInt(1, order.getRequestUser().getUserid());
-			pstmt.setInt(2, order.getPosting().getUserId());
-			pstmt.setInt(3, order.getPosting().getPostingId());
+			pstmt.setLong(1, order.getRequestUser().getUserid());
+			pstmt.setLong(2, order.getPosting().getUserId());
+			pstmt.setLong(3, order.getPosting().getPostingId());
 			pstmt.setString(4, order.getDescription());
 			pstmt.setDate(5, order.getDateResponsed());
 			pstmt.setDate(6, order.getDateCompleted());

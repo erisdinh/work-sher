@@ -21,7 +21,7 @@ public class PostingDAO {
 		try {
 			conn = DBUtil.getConnection();
 			PreparedStatement pStmt = conn.prepareStatement("INSERT INTO posting (user_id, jobCategory, title, description, compensation, status, portfolio) VALUES (?,?,?,?,?,?,?)");
-			pStmt.setInt(1, posting.getUserId());
+			pStmt.setLong(1, posting.getUserId());
 			pStmt.setString(2, posting.getJobCategory());
 			pStmt.setString(3, posting.getTitle());
 			pStmt.setString(4, posting.getDescription());
@@ -36,11 +36,11 @@ public class PostingDAO {
 			DBUtil.closeConnection(conn);
 		}
 	}
-	public static void deletePostingById(int postingId) {
+	public static void deletePostingById(long postingId) {
 		try {
 			conn = DBUtil.getConnection();
 			PreparedStatement pStmt = conn.prepareStatement("DELETE FROM posting WHERE posting_id = ?");
-				pStmt.setInt(1, postingId);
+				pStmt.setLong(1, postingId);
 				
 				pStmt.executeUpdate();
 		} catch (SQLException ex) {
@@ -60,7 +60,7 @@ public class PostingDAO {
 			pStmt.setString(4, posting.getCompensation());
 			pStmt.setString(5, posting.getStatus());
 			pStmt.setBlob(6, posting.getPortfolio());
-			pStmt.setInt(7, posting.getPostingId());
+			pStmt.setLong(7, posting.getPostingId());
 			pStmt.executeUpdate();
 		} catch (SQLException ex) {
 			ex.printStackTrace();
@@ -69,7 +69,7 @@ public class PostingDAO {
 		}
 	}
 	public static List<Posting> getAllPostings() {
-		
+		System.out.println("hi");
 		List<Posting> postings = new ArrayList<>();
 		try {
 			conn = DBUtil.getConnection();
@@ -87,13 +87,13 @@ public class PostingDAO {
 				posting.setStatus(rSet.getString("status"));
 				posting.setDateCreated(rSet.getDate("dateCreated"));
 				posting.setDateUpdated(rSet.getDate("dateUpdated"));
-//				String test = rSet.getBlob("portfoliothumb").toString();
-//				System.out.println("hi!:-" + test + "-|");
-////				try {
-//					posting.setPortfolio(rSet.getBlob("portfoliothumb").getBinaryStream());
-//					} catch (Exception ex ) {
-//						ex.printStackTrace();
-//					}
+				//String test = rSet.getBlob("portfoliothumb").toString();
+				//System.out.println("hi!:-" + test + "-|");
+				try {
+					posting.setPortfolio(rSet.getBlob("portfoliothumb").getBinaryStream());
+					} catch (Exception ex ) {
+						ex.printStackTrace();
+					}
 				postings.add(posting);
 			}
 		} catch (SQLException ex) {
@@ -128,7 +128,7 @@ public class PostingDAO {
 							// keep original statement
 						} else {
 							// only username
-							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN usertest u ON p.user_id = u.user_id WHERE LOWER(username) LIKE ?");
+							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN user u ON p.user_id = u.user_id WHERE LOWER(username) LIKE ?");
 							pStmt.setString(1, searchUser);
 						}
 					} else {
@@ -139,7 +139,7 @@ public class PostingDAO {
 							} 
 						// description & username
 						else {
-							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN usertest u ON p.user_id = u.user_id WHERE LOWER(username) LIKE ? AND LOWER(description> LIKE ?");
+							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN user u ON p.user_id = u.user_id WHERE LOWER(username) LIKE ? AND LOWER(description> LIKE ?");
 							pStmt.setString(1, searchUser);
 							pStmt.setString(2,  searchDesc);
 						}
@@ -155,7 +155,7 @@ public class PostingDAO {
 						}
 						// category and user
 						else {
-							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN usertest u ON p.user_id = u.user_id WHERE LOWER(username) LIKE ? AND jobCategory = ?");
+							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN user u ON p.user_id = u.user_id WHERE LOWER(username) LIKE ? AND jobCategory = ?");
 							pStmt.setString(1,  searchUser);
 							pStmt.setString(2,  searchCategory);		
 						}
@@ -169,7 +169,7 @@ public class PostingDAO {
 							pStmt.setString(2,  searchCategory);		
 						}
 						// category & description & username
-						else {pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN usertest u ON p.user_id = u.user_id WHERE LOWER(username) LIKE ? AND LOWER(description) LIKE ? AND jobCategory = ?");
+						else {pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN user u ON p.user_id = u.user_id WHERE LOWER(username) LIKE ? AND LOWER(description) LIKE ? AND jobCategory = ?");
 							pStmt.setString(1,  searchUser);
 							pStmt.setString(2,  searchDesc);
 							pStmt.setString(3,  searchCategory);
@@ -191,7 +191,7 @@ public class PostingDAO {
 						} 
 						// title & user
 						else {
-							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN usertest u ON p.user_id = u.user_id WHERE LOWER(username) LIKE ? AND LOWER(title) LIKE ?");
+							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN user u ON p.user_id = u.user_id WHERE LOWER(username) LIKE ? AND LOWER(title) LIKE ?");
 							pStmt.setString(1,  searchUser);
 							pStmt.setString(2,  searchTitle);
 						}
@@ -208,7 +208,7 @@ public class PostingDAO {
 						} 
 						// title & description & user
 						else {
-							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN usertest u ON p.user_id = u.user_id WHERE LOWER(username) LIKE ? AND LOWER(description) LIKE ? AND LOWER(title) LIKE ?");
+							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN user u ON p.user_id = u.user_id WHERE LOWER(username) LIKE ? AND LOWER(description) LIKE ? AND LOWER(title) LIKE ?");
 							pStmt.setString(1,  searchUser);
 							pStmt.setString(2,  searchDesc);
 							pStmt.setString(3,  searchTitle);				
@@ -228,7 +228,7 @@ public class PostingDAO {
 						} 
 						// title & category & user
 						else {
-							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN usertest u ON p.user_id = u.user_id WHERE LOWER(username) LIKE ? AND jobCategory = ? AND LOWER(title) LIKE ?");
+							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN user u ON p.user_id = u.user_id WHERE LOWER(username) LIKE ? AND jobCategory = ? AND LOWER(title) LIKE ?");
 							pStmt.setString(1,  searchUser);
 							pStmt.setString(2,  searchCategory);
 							pStmt.setString(3,  searchTitle);
@@ -246,7 +246,7 @@ public class PostingDAO {
 						}
 						// EVERYTHING!!!!
 						else {
-							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN usertest u ON p.user_id = u.user_id WHERE LOWER(username) LIKE ? AND LOWER(description) LIKE ? AND jobCategory = ? AND LOWER(title) LIKE ?");
+							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN user u ON p.user_id = u.user_id WHERE LOWER(username) LIKE ? AND LOWER(description) LIKE ? AND jobCategory = ? AND LOWER(title) LIKE ?");
 							pStmt.setString(1,  searchUser);
 							pStmt.setString(2,  searchDesc);
 							pStmt.setString(3,  searchCategory);
@@ -281,15 +281,48 @@ public class PostingDAO {
 		}
 		return postings;
 	}
+	public static List<Posting> getPostingsByUserId(long userId) {
+		List<Posting> postings = new ArrayList<>();
+		try {
+			conn  = DBUtil.getConnection();
+			PreparedStatement pStmt = conn.prepareStatement("SELECT * FROM posting WHERE LOWER(username) LIKE ?");
+			pStmt.setLong(1, userId);
+			
+		
+			ResultSet rSet = pStmt.executeQuery();
+			while (rSet.next()) {
+				Posting posting = new Posting();
+				posting.setPostingId(rSet.getInt("posting_id"));
+				posting.setUserId(rSet.getLong("user_id"));
+				posting.setJobCategory(rSet.getString("jobCategory"));
+				posting.setTitle(rSet.getString("title"));
+				posting.setDescription(rSet.getString("description"));
+				posting.setCompensation(rSet.getString("compensation"));
+				posting.setStatus(rSet.getString("status"));
+				posting.setDateCreated(rSet.getDate("dateCreated"));
+				posting.setDateUpdated(rSet.getDate("dateUpdated"));
+				try {
+				posting.setPortfolio(rSet.getBlob("portfolio").getBinaryStream());
+				} catch (Exception ex ) {
+					ex.printStackTrace();
+				}
+				postings.add(posting);
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		} finally {
+			DBUtil.closeConnection(conn);
+		}
+		return postings;
+	}
 	
-	
-	public static Posting getPostingById(int postingId) {
+	public static Posting getPostingById(long postingId) {
 		
 		Posting posting = new Posting();
 		try {
 			conn = DBUtil.getConnection();
-			PreparedStatement pStmt = conn.prepareStatement("SELECT * FROM posting WHERE posting_id = ?");
-			pStmt.setInt(1, postingId);
+			PreparedStatement pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN user u ON p.user_id = u.user_id WHERE posting_id = ?");
+			pStmt.setLong(1, postingId);
 			
 			ResultSet rSet = pStmt.executeQuery();
 			while (rSet.next()) {
