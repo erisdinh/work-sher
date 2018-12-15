@@ -1,19 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
         <%@ page import = "java.util.Date, java.util.List, java.util.ArrayList" %>
-    <%@ page import = "model.JobCategory, dao.PostingDAO" %>
+    <%@ page import = "model.JobCategory, model.Posting, dao.UserDAO, dao.PostingDAO, model.User" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 </head>
-
+<%User postingUser = UserDAO.getUserById(  ((Posting)request.getAttribute("posting")).getUserId()    ); 
+request.setAttribute("postingUser", postingUser);
+%>
 <body>
 	<script>
 		$('input[name=dob]').datepicker();
 	</script>
-
+		User: ${postingUser.username}</br>
 		Title: ${posting.title }</br>
 		Category: ${posting.jobCategory}</br>
 		Description: ${posting.description }</br>

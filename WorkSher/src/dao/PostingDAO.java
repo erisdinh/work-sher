@@ -78,8 +78,8 @@ public class PostingDAO {
 
 			while (rSet.next()) {
 				Posting posting = new Posting();
-				posting.setPostingId(rSet.getInt("posting_id"));
-				posting.setUserId(rSet.getInt("user_id"));
+				posting.setPostingId(rSet.getLong("posting_id"));
+				posting.setUserId(rSet.getLong("user_id"));
 				posting.setJobCategory(rSet.getString("jobCategory"));
 				posting.setTitle(rSet.getString("title"));
 				posting.setDescription(rSet.getString("description"));
@@ -258,8 +258,8 @@ public class PostingDAO {
 			ResultSet rSet = pStmt.executeQuery();
 			while (rSet.next()) {
 				Posting posting = new Posting();
-				posting.setPostingId(rSet.getInt("posting_id"));
-				posting.setUserId(rSet.getInt("user_id"));
+				posting.setPostingId(rSet.getLong("posting_id"));
+				posting.setUserId(rSet.getLong("user_id"));
 				posting.setJobCategory(rSet.getString("jobCategory"));
 				posting.setTitle(rSet.getString("title"));
 				posting.setDescription(rSet.getString("description"));
@@ -291,7 +291,7 @@ public class PostingDAO {
 			ResultSet rSet = pStmt.executeQuery();
 			while (rSet.next()) {
 				Posting posting = new Posting();
-				posting.setPostingId(rSet.getInt("posting_id"));
+				posting.setPostingId(rSet.getLong("posting_id"));
 				posting.setUserId(rSet.getLong("user_id"));
 				posting.setJobCategory(rSet.getString("jobCategory"));
 				posting.setTitle(rSet.getString("title"));
@@ -320,13 +320,13 @@ public class PostingDAO {
 		Posting posting = new Posting();
 		try {
 			conn = DBUtil.getConnection();
-			PreparedStatement pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN users u ON p.user_id = u.user_id WHERE posting_id = ?");
+			PreparedStatement pStmt = conn.prepareStatement("SELECT * FROM posting WHERE posting_id = ?");
 			pStmt.setLong(1, postingId);
 			
 			ResultSet rSet = pStmt.executeQuery();
 			while (rSet.next()) {
-				posting.setPostingId(rSet.getInt("posting_id"));
-				posting.setUserId(rSet.getInt("user_id"));
+				posting.setPostingId(rSet.getLong("posting_id"));
+				posting.setUserId(rSet.getLong("user_id"));
 				posting.setJobCategory(rSet.getString("jobCategory"));
 				posting.setTitle(rSet.getString("title"));
 				posting.setDescription(rSet.getString("description"));
