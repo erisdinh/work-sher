@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import java.sql.Date;
 import java.sql.SQLException;
 import dao.OrderDAO;
+import dao.PostingDAO;
 import model.Order;
 import model.User;
 import model.Posting;
@@ -27,7 +28,7 @@ public class CreateOrder extends HttpServlet {
 		// sample users and postings to test order creating
 		User tempCurrentUser = new User(1, "test", "test", "test","test", "user");
 		User user2 = new User(2, "test2", "test2", "test2", "test2", "user");
-		Posting tempPost = new Posting(1, user2, "Design", "I can design posters.", "2 cups of coffee", "active", "");
+		Posting tempPost = PostingDAO.getPostingById(1);
 		
 		// get session  from request
 		HttpSession session = request.getSession();

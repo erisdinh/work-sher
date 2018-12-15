@@ -8,17 +8,32 @@
 <title>View Reviews</title>
 </head>
 <body>
-	<table id="reviews-table">
-		<c:forEach var="review" items="${reviews}" begin=0 end=10>
-			<tr>
-				<td><c:out value="${review.userId}" /></td>
-				<td><c:out value="${review.reviewDate}" /></td>
-				<td><img src=<c:out value="images/ + ${reviewImages.index}" /> /></td>
-			</tr>
-			<tr>
-				<td><c:out value="${review.reviewText}" /></td>
-			</tr>
-		</c:forEach>
-	</table>
+	revStartIndex: ${revStartIndex}
+	<br>
+	revEndIndex: ${revEndIndex}
+	
+	<c:choose>
+		<c:when test="${reviews.isEmpty()}">
+	You have not left any reviews!
+	</c:when>
+		<c:otherwise>
+			<table id="reviews-table">
+				<c:forEach var="review" items="${reviews.subList(revStartIndex, revEndIndex)}" varStatus="status">
+					<tr>
+						<td><c:out value="${review.forUsername}" /></td>
+						<td><img src="images/${reviewImages[status.index]}"
+							width="50px" /></td>
+						<td><c:out value="${review.reviewDate}" /></td>
+					</tr>
+					<tr>
+						<td><c:out value="${review.reviewText}" /></td>
+					</tr>
+				</c:forEach>
+			</table>
+
+			<a href="LoadPrevReviewPage?revStartIndex=${revStartIndex}&size=${reviews.size()}">Prev</a>
+			<a href="LoadNextReviewPage?revEndIndex=${revEndIndex}&size=${reviews.size()}">Next</a>
+		</c:otherwise>
+	</c:choose>
 </body>
 </html>

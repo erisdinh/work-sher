@@ -1,48 +1,67 @@
 package model;
 
+import java.io.InputStream;
 import java.io.Serializable;
+import java.net.URL;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+import model.User;
 
 public class Posting implements Serializable {
 
-	private int postingid;
-	private User user;
+	private int postingId;
+	private int userId;
 	private String jobCategory;
+	private String title;
 	private String description;
 	private String compensation;
 	private String status;
-	private String portfolio;
+	private InputStream portfolio;
+	private InputStream portfolioThumb;
 	private Date dateCreated;
+	private Date dateUpdated;
 	
-	public Posting() {}
+	public Posting() {
+		//portfolio = new ArrayList<>();
+	}
 	
 	// constructors with arguments
 	// Please feel free to change it
-	public Posting(int postingid, User user, String jobCategory, String desscription, String compensation, String status, String portfolio) {
-		this.postingid = postingid;
-		this.user = user;
+	public Posting(int postingid, User user, String jobCategory, String description, String compensation, String status, InputStream portfolio) {
+		this.postingId = postingid;
+		this.userId = user.getUserid();
 		this.jobCategory = jobCategory;
-		this.description = desscription;
+		this.description = description;
 		this.compensation = compensation;
 		this.status = status;
 		this.portfolio = portfolio;
 		this.dateCreated = dateCreated;
+		this.dateUpdated = dateUpdated;
 	}
 
-	public int getPostingid() {
-		return postingid;
+	public Date getDateUpdated() {
+		return dateUpdated;
 	}
 
-	public void setPostingid(int postingid) {
-		this.postingid = postingid;
+	public void setDateUpdated(Date dateUpdated) {
+		this.dateUpdated = dateUpdated;
 	}
 
-	public User getUser() {
-		return user;
+	public int getPostingId() {
+		return postingId;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setPostingId(int postingId) {
+		this.postingId = postingId;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
 	public String getJobCategory() {
@@ -51,6 +70,14 @@ public class Posting implements Serializable {
 
 	public void setJobCategory(String jobCategory) {
 		this.jobCategory = jobCategory;
+	}
+	
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public String getDescription() {
@@ -77,11 +104,11 @@ public class Posting implements Serializable {
 		this.status = status;
 	}
 
-	public String getPortfolio() {
+	public InputStream getPortfolio() {
 		return portfolio;
 	}
 
-	public void setPortfolio(String portfolio) {
+	public void setPortfolio(InputStream portfolio) {
 		this.portfolio = portfolio;
 	}
 
@@ -92,4 +119,13 @@ public class Posting implements Serializable {
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
+
+	public InputStream getPortfolioThumb() {
+		return portfolioThumb;
+	}
+
+	public void setPortfolioThumb(InputStream portfolioThumb) {
+		this.portfolioThumb = portfolioThumb;
+	}
+	
 }

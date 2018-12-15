@@ -18,11 +18,13 @@ public class ReviewDAO {
 		try {
 			conn = DBUtil.getConnection();
 			
-			PreparedStatement stmt = conn.prepareStatement("INSERT INTO reviews (user_id, posting_id, review_rating, review_text) VALUES (?, ?, ?, ?)");
-			stmt.setLong(1, review.getUserId());
-			stmt.setLong(2, review.getPostingId());
-			stmt.setDouble(3, review.getReviewRating());
-			stmt.setString(4, review.getReviewText());
+			PreparedStatement stmt = conn.prepareStatement("INSERT INTO reviews (for_user_id, from_user_id, posting_id, review_rating, review_text) "
+					+ "VALUES (?, ?, ?, ?, ?");
+			stmt.setLong(1, review.getForUserId());
+			stmt.setLong(2, review.getFromUserId());
+			stmt.setLong(3, review.getPostingId());
+			stmt.setDouble(4, review.getReviewRating());
+			stmt.setString(5, review.getReviewText());
 			stmt.executeUpdate();
 		
 		} catch (SQLException e) {
@@ -75,7 +77,8 @@ public class ReviewDAO {
 			
 			if (rs.next()) {
 				review.setReviewId(rs.getLong("review_id"));
-				review.setUserId(rs.getLong("user_id"));
+				review.setForUserId(rs.getLong("user_id"));
+				review.setFromUserId(rs.getLong("from_user_id"));
 				review.setReviewDate(new Date(rs.getDate("review_date").getTime()));
 				review.setPostingId(rs.getLong("posting_id"));
 				review.setReviewRating(rs.getDouble("review_rating"));
@@ -91,22 +94,56 @@ public class ReviewDAO {
 		return review;
 	}
 
-	public static ArrayList<Review> getReviewsByUserId(long userId) {
+	public static ArrayList<Review> getReviewsByForUserId(long forUserId) {
 		ArrayList<Review> reviews = new ArrayList<>();
 		
 		try {
 			conn = DBUtil.getConnection();
 			
 			PreparedStatement stmt = conn.prepareStatement("SELECT usertest.username, reviews.* FROM reviews "
-					+ "INNER JOIN usertest ON usertest.user_id=reviews.user_id WHERE usertest.user_id=? ORDER BY review_date DESC");
-			stmt.setLong(1, userId);
+					+ "INNER JOIN usertest ON usertest.user_id=reviews.for_user_id WHERE usertest.user_id=? ORDER BY review_date DESC");
+			stmt.setLong(1, forUserId);
 			ResultSet rs = stmt.executeQuery();
 			
 			while (rs.next()) {
 				Review review = new Review();
 				review.setReviewId(rs.getLong("review_id"));
-				review.setUserId(rs.getLong("user_id"));
-				review.setUsername(rs.getString("username"));
+				review.setForUserId(rs.getLong("for_user_id"));
+				review.setFromUserId(rs.getLong("from_user_id"));
+				review.setForUsername(rs.getString("username"));
+				review.setPostingId(rs.getLong("posting_id"));
+				review.setReviewDate(new Date(rs.getDate("review_date").getTime()));
+				review.setReviewRating(rs.getDouble("review_rating"));
+				review.setReviewText(rs.getString("review_text"));
+				reviews.add(review);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.closeConnection(conn);
+		}
+		
+		return reviews;
+
+	}
+	
+	public static ArrayList<Review> getReviewsByFromUserId(long fromUserId) {
+		ArrayList<Review> reviews = new ArrayList<>();
+		
+		try {
+			conn = DBUtil.getConnection();
+			
+			PreparedStatement stmt = conn.prepareStatement("SELECT usertest.username, reviews.* FROM reviews "
+					+ "INNER JOIN usertest ON usertest.user_id=reviews.from_user_id WHERE usertest.user_id=? ORDER BY review_date DESC");
+			stmt.setLong(1, fromUserId);
+			ResultSet rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				Review review = new Review();
+				review.setReviewId(rs.getLong("review_id"));
+				review.setForUserId(rs.getLong("for_user_id"));
+				review.setFromUserId(rs.getLong("from_user_id"));
+				review.setFromUsername(rs.getString("username"));
 				review.setPostingId(rs.getLong("posting_id"));
 				review.setReviewDate(new Date(rs.getDate("review_date").getTime()));
 				review.setReviewRating(rs.getDouble("review_rating"));
@@ -136,7 +173,8 @@ public class ReviewDAO {
 			while (rs.next()) {
 				Review review = new Review();
 				review.setReviewId(rs.getLong("review_id"));
-				review.setUserId(rs.getLong("user_id"));
+				review.setForUserId(rs.getLong("for_user_id"));
+				review.setFromUserId(rs.getLong("from_user_id"));
 				review.setPostingId(rs.getLong("posting_id"));
 				review.setReviewDate(new Date(rs.getDate("review_date").getTime()));
 				review.setReviewRating(rs.getDouble("review_rating"));
