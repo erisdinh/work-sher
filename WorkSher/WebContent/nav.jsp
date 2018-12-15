@@ -52,8 +52,9 @@
 		<div class="drop-menu">
 			<div class="menu-title" id="profile-menu">Profile</div>
 			<div class="menu-items" id="profile-dropdown">
-				<a href="" class="menu-item">Settings</a> 
-				<a href="" class="menu-item">Public Profile</a> <a href="" class="menu-item">Logout</a>
+				<a href="accountsettings.jsp" class="menu-item">Settings</a> 
+				<a href="LoadProfile?userId=${currentUser.userid}" class="menu-item">Public Profile</a>
+				<a href="" class="menu-item">Logout</a>
 			</div>
 		</div>
 		<a href="" class="click-menu">View Postings</a>
@@ -64,7 +65,7 @@
 				<a href="viewOrders.jsp?initial=true&load=requested" class="menu-item">Placed Orders</a>
 			</div>
 		</div>
-		<a href="" class="click-menu">Reviews</a>
+		<a href="reviews.jsp" class="click-menu">View Reviews</a>
 		<div class="search-bar">
 			Search: <input type="text" id="nav-search-field" placeholder="Enter search criteria" />
 		</div>
