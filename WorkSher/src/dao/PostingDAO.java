@@ -285,10 +285,9 @@ public class PostingDAO {
 		List<Posting> postings = new ArrayList<>();
 		try {
 			conn  = DBUtil.getConnection();
-			PreparedStatement pStmt = conn.prepareStatement("SELECT * FROM posting WHERE LOWER(username) LIKE ?");
+			PreparedStatement pStmt = conn.prepareStatement("SELECT * FROM posting WHERE user_id = ?");
 			pStmt.setLong(1, userId);
-			
-		
+	
 			ResultSet rSet = pStmt.executeQuery();
 			while (rSet.next()) {
 				Posting posting = new Posting();
@@ -300,7 +299,7 @@ public class PostingDAO {
 				posting.setCompensation(rSet.getString("compensation"));
 				posting.setStatus(rSet.getString("status"));
 				posting.setDateCreated(rSet.getDate("dateCreated"));
-				posting.setDateUpdated(rSet.getDate("dateUpdated"));
+				// posting.setDateUpdated(rSet.getDate("dateUpdated"));
 				try {
 				posting.setPortfolio(rSet.getBlob("portfolio").getBinaryStream());
 				} catch (Exception ex ) {

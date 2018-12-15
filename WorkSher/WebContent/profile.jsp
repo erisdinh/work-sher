@@ -10,6 +10,14 @@
 <title>${user.name}'s Profile</title>
 </head>
 <body>
+	<c:forEach items="${postings}" var="posting">
+		<p>${posting.title}<br>
+		${posting.description}</p>
+	</c:forEach>
+	
+	<c:forEach items="${reviews}" var="review">
+		<p>${review.reviewText}</p>
+	</c:forEach>
 	</br></br>
 	<!-- Link to manage all user's order in user mode -->
 	<a href="viewOrders.jsp?load=received">View Orders</a>
