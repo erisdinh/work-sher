@@ -8,14 +8,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 </head>
-<%User postingUser = UserDAO.getUserById(  ((Posting)request.getAttribute("posting")).getUserId()    ); 
-request.setAttribute("postingUser", postingUser);
-%>
+
 <body>
 	<script>
 		$('input[name=dob]').datepicker();
 	</script>
-		User: ${postingUser.username}</br>
+		User: ${posting.username}</br>
 		Title: ${posting.title }</br>
 		Category: ${posting.jobCategory}</br>
 		Description: ${posting.description }</br>

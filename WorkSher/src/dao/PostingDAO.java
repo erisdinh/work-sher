@@ -20,14 +20,15 @@ public class PostingDAO {
 	public static void addPosting(Posting posting) {
 		try {
 			conn = DBUtil.getConnection();
-			PreparedStatement pStmt = conn.prepareStatement("INSERT INTO posting (user_id, jobCategory, title, description, compensation, status, portfolio) VALUES (?,?,?,?,?,?,?)");
+			PreparedStatement pStmt = conn.prepareStatement("INSERT INTO posting (user_id, username, jobCategory, title, description, compensation, status, portfolio) VALUES (?,?,?,?,?,?,?,?)");
 			pStmt.setLong(1, posting.getUserId());
-			pStmt.setString(2, posting.getJobCategory());
-			pStmt.setString(3, posting.getTitle());
-			pStmt.setString(4, posting.getDescription());
-			pStmt.setString(5, posting.getCompensation());
-			pStmt.setString(6, posting.getStatus());
-			pStmt.setBlob(7, posting.getPortfolio());
+			pStmt.setString(2, posting.getUsername());
+			pStmt.setString(3, posting.getJobCategory());
+			pStmt.setString(4, posting.getTitle());
+			pStmt.setString(5, posting.getDescription());
+			pStmt.setString(6, posting.getCompensation());
+			pStmt.setString(7, posting.getStatus());
+			pStmt.setBlob(8, posting.getPortfolio());
 			
 			pStmt.executeUpdate();
 		} catch (SQLException ex) {
@@ -80,6 +81,7 @@ public class PostingDAO {
 				Posting posting = new Posting();
 				posting.setPostingId(rSet.getLong("posting_id"));
 				posting.setUserId(rSet.getLong("user_id"));
+				posting.setUsername(rSet.getString("username"));
 				posting.setJobCategory(rSet.getString("jobCategory"));
 				posting.setTitle(rSet.getString("title"));
 				posting.setDescription(rSet.getString("description"));
@@ -103,6 +105,47 @@ public class PostingDAO {
 		}
 		return postings;
 	}
+	public static List<Posting> getSearchResults(String searchTerm) {
+		List<Posting> postings = new ArrayList<>();
+		try {
+			conn = DBUtil.getConnection();
+			searchTerm = "%" + searchTerm + "%";
+			
+			PreparedStatement pStmt = conn.prepareStatement("SELECT * FROM posting WHERE LOWER(title) LIKE ? OR LOWER(description) LIKE ? OR LOWER(username) LIKE ? OR LOWER(jobCategory) LIKE ?");
+			pStmt.setString(1, searchTerm);
+			pStmt.setString(2, searchTerm);
+			pStmt.setString(3, searchTerm);
+			pStmt.setString(4, searchTerm);
+			
+			ResultSet rSet = pStmt.executeQuery();
+			while (rSet.next()) {
+				Posting posting = new Posting();
+				posting.setPostingId(rSet.getLong("posting_id"));
+				posting.setUserId(rSet.getLong("user_id"));
+				posting.setJobCategory(rSet.getString("jobCategory"));
+				posting.setTitle(rSet.getString("title"));
+				posting.setDescription(rSet.getString("description"));
+				posting.setCompensation(rSet.getString("compensation"));
+				posting.setStatus(rSet.getString("status"));
+				posting.setDateCreated(rSet.getDate("dateCreated"));
+				posting.setDateUpdated(rSet.getDate("dateUpdated"));
+				try {
+				posting.setPortfolio(rSet.getBlob("portfolio").getBinaryStream());
+				} catch (Exception ex ) {
+					ex.printStackTrace();
+				}
+				postings.add(posting);
+			}
+			
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		} finally {
+			DBUtil.closeConnection(conn);
+		}
+		
+		return postings;
+	}
+	
 	public static List<Posting> getAdvancedSearchResults(String searchTitle, String searchCategory, String searchDesc, String searchUser) {
 
 		if (!searchTitle.equals("")) {
@@ -293,6 +336,7 @@ public class PostingDAO {
 				Posting posting = new Posting();
 				posting.setPostingId(rSet.getLong("posting_id"));
 				posting.setUserId(rSet.getLong("user_id"));
+				posting.setUsername(rSet.getString("username"));
 				posting.setJobCategory(rSet.getString("jobCategory"));
 				posting.setTitle(rSet.getString("title"));
 				posting.setDescription(rSet.getString("description"));
@@ -327,6 +371,7 @@ public class PostingDAO {
 			while (rSet.next()) {
 				posting.setPostingId(rSet.getLong("posting_id"));
 				posting.setUserId(rSet.getLong("user_id"));
+				posting.setUsername(rSet.getString("username"));
 				posting.setJobCategory(rSet.getString("jobCategory"));
 				posting.setTitle(rSet.getString("title"));
 				posting.setDescription(rSet.getString("description"));

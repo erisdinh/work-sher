@@ -59,6 +59,13 @@ public class PostingController extends HttpServlet {
 		String action = request.getParameter("action");
 		
 		if (action.equalsIgnoreCase("search")) {
+			String searchTerm = request.getParameter("searchTerm");
+			
+			
+			forward = LIST_POSTINGS;
+			request.setAttribute("postings", PostingDAO.getSearchResults(searchTerm));
+			
+		} else if (action.equalsIgnoreCase("advsearch")) {
 			String searchTitle = request.getParameter("title");
 			String searchJobCategory = request.getParameter("jobCategory");
 			String searchDescription = request.getParameter("description");
