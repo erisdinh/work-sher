@@ -23,9 +23,9 @@ DROP TABLE IF EXISTS `jobCategory`;
 DROP TABLE IF EXISTS `orders`;
 DROP TABLE IF EXISTS `posting`;
 DROP TABLE IF EXISTS `reviews`;
-DROP TABLE IF EXISTS `user`;
+DROP TABLE IF EXISTS `users`;
 
-CREATE TABLE `user` (
+CREATE TABLE `users` (
   `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(20) NOT NULL,
   `user_pass` varchar(20) NOT NULL,
@@ -47,8 +47,8 @@ create table `reviews` (
     `review_rating` decimal(2,1) not null,
     `review_text` text,
     primary key (`review_id`),
-    foreign key (`for_user_id`) references `usertest`(`user_id`),
-    foreign key (`from_user_id`) references `usertest`(`user_id`)
+    foreign key (`for_user_id`) references `users`(`user_id`),
+    foreign key (`from_user_id`) references `users`(`user_id`)
 );
 
 create table `posting`(
@@ -64,7 +64,7 @@ create table `posting`(
 `dateCreated` timestamp not null default current_timestamp,
 `dateUpdated` timestamp not null default current_timestamp,
 primary key(`posting_id`),
-foreign key(`user_id`) references `usertest`(`user_id`)
+foreign key(`user_id`) references `users`(`user_id`)
 );
 CREATE TABLE `orders` (
   `order_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -80,8 +80,8 @@ CREATE TABLE `orders` (
   KEY `requestOrderUser_id` (`requestOrderUser_id`),
   KEY `postOrderUser_id` (`postOrderUser_id`),
   KEY `posting_id` (`posting_id`),
-  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`requestOrderUser_id`) REFERENCES `usertest` (`user_id`),
-  CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`postOrderUser_id`) REFERENCES `usertest` (`user_id`),
+  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`requestOrderUser_id`) REFERENCES `users` (`user_id`),
+  CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`postOrderUser_id`) REFERENCES `users` (`user_id`),
   CONSTRAINT `orders_ibfk_3` FOREIGN KEY (`posting_id`) REFERENCES `posting` (`posting_id`)
 );
 
@@ -93,7 +93,7 @@ CREATE TABLE `jobCategory` (
 
 
 
-INSERT INTO `user` VALUES 
+INSERT INTO `users` VALUES 
 	(1,'Dizzle','1234','Danielle','d@sheridancollege.ca','2018-11-29 00:00:00','admin'),
 	(2,'Cue','4321','Q','q@sheridancollege.ca','2018-11-30 00:00:00','admin'),
 	(3,'Eh','54321','Abb','a@sheridancollege.ca','2018-11-29 00:00:00','admin'),
