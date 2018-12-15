@@ -15,7 +15,6 @@ import model.Review;
 @WebServlet("/LoadPrevReviewPage")
 public class LoadPrevReviewPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final int PAGE_OFFSET = 5;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -32,21 +31,29 @@ public class LoadPrevReviewPage extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println("in LoadPrevReview");
+		
 		HttpSession session = request.getSession();
+		int revStartIndex = Integer.parseInt(request.getParameter("revStartIndex"));
+		int arraySize = Integer.parseInt(request.getParameter("arraySize"));
+		int pageSize = Integer.parseInt(request.getParameter("pageSize"));
+		int revEndIndex = 0;
+		
 		String referer = request.getHeader("Referer");
 		System.out.println(referer);
-		int revStartIndex = Integer.parseInt(request.getParameter("revStartIndex"));
-		int size = Integer.parseInt(request.getParameter("size"));
-		int revEndIndex = 0;
 
 		if (referer.contains("reviews.jsp")) {
 			if (revStartIndex > 0) {
-				if (size < revStartIndex) {
-					revEndIndex = size;
+				if (revStartIndex > arraySize) {
+					revEndIndex = arraySize;
 				} else {
 					revEndIndex = revStartIndex;
 				}
-				revStartIndex -= PAGE_OFFSET;
+				
+				if (revStartIndex - pageSize < 0) {
+					revStartIndex = 0;
+				} else {
+					revStartIndex -= pageSize;
+				}
 				session.setAttribute("revStartIndex", revStartIndex);
 				session.setAttribute("revEndIndex", revEndIndex);
 			}
