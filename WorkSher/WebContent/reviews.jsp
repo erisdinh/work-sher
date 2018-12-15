@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@include file="nav.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -31,8 +32,14 @@
 				</c:forEach>
 			</table>
 
-			<a href="LoadPrevReviewPage?revStartIndex=${revStartIndex}&arraySize=${reviews.size()}&pageSize=5">Prev</a>
-			<a href="LoadNextReviewPage?revEndIndex=${revEndIndex}&arraySize=${reviews.size()}&pageSize=5">Next</a>
+			<form class="prev-button" action="LoadPrevReviewPage" method="post">
+				<input type="hidden" name="pageSize" value="5" />
+				<input type="submit" value="Prev" />
+			</form>
+			<form class="next-button" action="LoadNextReviewPage" method="post">
+				<input type="hidden" name="pageSize" value="5" />
+				<input type="submit" value="Next" />
+			</form>
 		</c:otherwise>
 	</c:choose>
 </body>

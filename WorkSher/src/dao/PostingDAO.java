@@ -348,7 +348,7 @@ public class PostingDAO {
 				posting.setCompensation(rSet.getString("compensation"));
 				posting.setStatus(rSet.getString("status"));
 				posting.setDateCreated(rSet.getDate("dateCreated"));
-				// posting.setDateUpdated(rSet.getDate("dateUpdated"));
+				posting.setDateUpdated(rSet.getDate("dateUpdated"));
 				try {
 				posting.setPortfolio(rSet.getBlob("portfolio").getBinaryStream());
 				} catch (Exception ex ) {
