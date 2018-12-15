@@ -40,7 +40,7 @@ public class LoadProfile extends HttpServlet {
 		request.setAttribute("postings", postings);
 		request.setAttribute("reviews", reviews);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("LoadReviews");
+		RequestDispatcher rd = request.getRequestDispatcher("profile.jsp");
 		rd.forward(request, response);		
 	}
 }
