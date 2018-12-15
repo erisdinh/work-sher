@@ -13,11 +13,12 @@
 	<script>
 		$('input[name=dob]').datepicker();
 	</script>
-	<form method = "POST" action = "PostingController" name = "frmAddPosting"enctype = "multipart/form-data">
+
 		Title: ${posting.title }</br>
 		Category: ${posting.jobCategory}</br>
 		Description: ${posting.description }</br>
 		Compensation: ${posting.compensation}</br>
+		<!-- <img src= "${pageContext.request.contextPath}/ImageServlet?ps=${ posting.postingId}">-->
 <!-- 	<
 		<select name = "jobCategory">
 			<c:forEach var = "category" items = "${categories }">
@@ -36,8 +37,8 @@
 		Last Name: <input type = "text" name = "lastName" value = "<c:out value = "${user.lastName }"/>"/></br>
 		DOB: <input type = "text" name = "dob" value = "<fmt:formatDate pattern = "dd/MM/yyyy" value = "${user.dob }"/>"/>(dd/MM/yyyy)</br>
 		Email: <input type = "text" name = "email" value = "<c:out value = "${user.email }"/>"/></br>
-		<input type = "submit" value = "Submit"/><-->
-	</form>
+		<input type = "submit" value = "Submit"/>
+	</form>-->
 	<!-- a button to create order for the current posting -->
 	<a href="User/createOrder.jsp" ><button>Create New Order</button></a>
 </body>
