@@ -10,11 +10,13 @@
 <title>${user.name}'s Profile</title>
 </head>
 <body>
+	<!-- Test code to get user's postings -->
 	<c:forEach items="${postings}" var="posting">
 		<p>${posting.title}<br>
 		${posting.description}</p>
 	</c:forEach>
 	
+	<!-- Test code to get reviews for user -->
 	<c:forEach items="${reviews}" var="review">
 		<p>${review.reviewText}</p>
 	</c:forEach>
