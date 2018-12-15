@@ -7,11 +7,21 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>${user.name}'s Profile</title>
 </head>
 <body>
+	<!-- Test code to get user's postings -->
+	<c:forEach items="${postings}" var="posting">
+		<p>${posting.title}<br>
+		${posting.description}</p>
+	</c:forEach>
+	
+	<!-- Test code to get reviews for user -->
+	<c:forEach items="${reviews}" var="review">
+		<p>${review.reviewText}</p>
+	</c:forEach>
 	</br></br>
 	<!-- Link to manage all user's order in user mode -->
-	<a href="viewOrders.jsp?initial=true">View Orders</a>
+	<a href="viewOrders.jsp?load=received">View Orders</a>
 </body>
 </html>

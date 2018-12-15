@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,12 +30,12 @@ public class RegisterUser extends HttpServlet {
 		
 		// Store the data in a User object
 		User user = new User(username, password, name, email);
-		
-		/* TO DO:
-		 * - Second password field to confirm password?
-		 */
-		
+
 		// Add to database
 		UserDAO.addUser(user);
+		
+		// Log user in after they have registered
+		RequestDispatcher rd = request.getRequestDispatcher("Login");
+		rd.forward(request, response);
 	}
 }

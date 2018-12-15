@@ -100,8 +100,8 @@ public class ReviewDAO {
 		try {
 			conn = DBUtil.getConnection();
 			
-			PreparedStatement stmt = conn.prepareStatement("SELECT usertest.username, reviews.* FROM reviews "
-					+ "INNER JOIN usertest ON usertest.user_id=reviews.for_user_id WHERE usertest.user_id=? ORDER BY review_date DESC");
+			PreparedStatement stmt = conn.prepareStatement("SELECT users.username, reviews.* FROM reviews "
+					+ "INNER JOIN users ON users.user_id=reviews.for_user_id WHERE users.user_id=? ORDER BY review_date DESC");
 			stmt.setLong(1, forUserId);
 			ResultSet rs = stmt.executeQuery();
 			
