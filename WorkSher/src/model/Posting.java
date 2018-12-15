@@ -10,8 +10,8 @@ import model.User;
 
 public class Posting implements Serializable {
 
-	private int postingId;
-	private int userId;
+	private long postingId;
+	private long userId;
 	private String jobCategory;
 	private String title;
 	private String description;
@@ -28,7 +28,7 @@ public class Posting implements Serializable {
 	
 	// constructors with arguments
 	// Please feel free to change it
-	public Posting(int postingid, User user, String jobCategory, String description, String compensation, String status, InputStream portfolio) {
+	public Posting(long postingid, User user, String jobCategory, String description, String compensation, String status, InputStream portfolio) {
 		this.postingId = postingid;
 		this.userId = user.getUserid();
 		this.jobCategory = jobCategory;
@@ -48,19 +48,19 @@ public class Posting implements Serializable {
 		this.dateUpdated = dateUpdated;
 	}
 
-	public int getPostingId() {
+	public long getPostingId() {
 		return postingId;
 	}
 
-	public void setPostingId(int postingId) {
+	public void setPostingId(long postingId) {
 		this.postingId = postingId;
 	}
 
-	public int getUserId() {
+	public long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(int userId) {
+	public void setUserId(long userId) {
 		this.userId = userId;
 	}
 

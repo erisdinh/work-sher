@@ -12,6 +12,6 @@
 <body>
 	</br></br>
 	<!-- Link to manage all user's order in user mode -->
-	<a href="viewOrders.jsp?initial=true">View Orders</a>
+	<a href="viewOrders.jsp?load=received">View Orders</a>
 </body>
 </html>

@@ -5,7 +5,7 @@ import java.sql.Date;
 
 public class Order implements Serializable{
 	
-	private int orderid;
+	private long orderid;
 	private User requestUser;
 	private User postUser;
 	private Posting posting;
@@ -17,7 +17,7 @@ public class Order implements Serializable{
 	
 	public Order() {}
 	
-	public Order(int orderid, User requestUser, User postUser, Posting posting, Date dateRequested, Date dateResponsed, Date dateCompleted, String status) {
+	public Order(long orderid, User requestUser, User postUser, Posting posting, Date dateRequested, Date dateResponsed, Date dateCompleted, String status) {
 		this.orderid = orderid;
 		this.requestUser = requestUser;
 		this.postUser = postUser;
@@ -28,11 +28,11 @@ public class Order implements Serializable{
 		this.status = status;
 	}
 
-	public int getOrderid() {
+	public long getOrderid() {
 		return orderid;
 	}
 
-	public void setOrderid(int orderid) {
+	public void setOrderid(long orderid) {
 		this.orderid = orderid;
 	}
 

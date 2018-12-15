@@ -12,20 +12,17 @@
 <body>
 	<c:choose>
 		<c:when test="${initial=='true'}">
-			<jsp:forward page="/LoadOrders?load=received"/>
+			<jsp:forward page="/LoadOrders?load=${load}"/>
 		</c:when>
 		<c:otherwise>
 
 			<h1>Manage Orders</h1>
 			<div>
-				<table>
-					<tr>
-						<td><a href="LoadOrders?load=received">Received Orders</a></td>
-					</tr>
-					<tr>
-						<td><a href="LoadOrders?load=requested">Requested Orders</a></td>
-					</tr>
-				</table>
+				<c:if test="${load=='received'}">
+					<h1>Received Orders</h1>
+				</c:if>
+				<c:if test="${load=='requested'}"></c:if>
+					<h1>Placed Orders</a>
 			</div>
 			<div>
 				<c:forEach items="${orders}" var="order"
