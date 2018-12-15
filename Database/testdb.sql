@@ -18,13 +18,13 @@
 --
 -- Table structure for table `orders`
 --
-DROP TABLE `jobCategory`;
+DROP TABLE IF EXISTS `jobCategory`;
 DROP TABLE IF EXISTS `orders`;
 DROP TABLE IF EXISTS `posting`;
 DROP TABLE IF EXISTS `reviews`;
-DROP TABLE IF EXISTS `usertest`;
+DROP TABLE IF EXISTS `user`;
 
-CREATE TABLE `usertest` (
+CREATE TABLE `user` (
   `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(20) NOT NULL,
   `user_pass` varchar(20) NOT NULL,
