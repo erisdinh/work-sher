@@ -58,8 +58,7 @@ public class CreateOrder extends HttpServlet {
 		
 		// set new order as an attribute to request
 		session.setAttribute("newOrder", order);
-		response.sendRedirect("/order.jsp");
-		
+		response.sendRedirect("order.jsp");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
