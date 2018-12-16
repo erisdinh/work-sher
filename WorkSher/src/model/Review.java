@@ -108,7 +108,7 @@ public class Review implements Serializable {
 		return orderId;
 	}
 	
-	public void setOrderId() {
+	public void setOrderId(long orderId) {
 		this.orderId = orderId;
 	}
 
@@ -142,6 +142,7 @@ public class Review implements Serializable {
 
 	public void setReviewRating(double reviewRating) {
 		this.reviewRating = reviewRating;
+		loadReviewImgUrl();
 	}
 
 	public String getReviewText() {

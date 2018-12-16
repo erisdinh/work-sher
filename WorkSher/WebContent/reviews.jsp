@@ -9,16 +9,19 @@
 <title>View Reviews</title>
 </head>
 <body>
-	revStartIndex: ${revStartIndex}
-	<br>
-	revEndIndex: ${revEndIndex}
-	
 	<c:choose>
 		<c:when test="${reviews.isEmpty()}">
-	You have not left any reviews!
-	</c:when>
+		You have not left any reviews!
+		</c:when>
 		<c:otherwise>
-			<c:set value="10" name="pageSize" scope="page" />
+			<c:set value="10" var="pageSize" scope="page" />
+			<c:if test="${revStartIndex == null}">
+				<c:set value="0" var="revStartIndex" scope="session" />
+			</c:if>
+			<c:if test="${revEndIndex == null}">
+				<c:set value="10" var="revEndIndex" scope="session" />
+			</c:if>
+			
 			<table class="reviews-table">
 				<c:forEach var="review" items="${reviews.subList(revStartIndex, revEndIndex)}" varStatus="status">
 					<tr>

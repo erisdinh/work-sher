@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.PostingDAO;
 import dao.ReviewDAO;
@@ -38,7 +39,10 @@ public class LoadProfile extends HttpServlet {
 		
 		request.setAttribute("user", user);
 		request.setAttribute("postings", postings);
-		request.setAttribute("reviews", reviews);
+		
+		// Review needs to be session-scope for it to work with pages (Danielle)
+		HttpSession session = request.getSession();
+		session.setAttribute("reviews", reviews);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("profile.jsp");
 		rd.forward(request, response);		

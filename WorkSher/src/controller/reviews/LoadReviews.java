@@ -29,13 +29,11 @@ public class LoadReviews extends HttpServlet {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("currentUser");
 
-		ArrayList<Review> reviews = null;
-
-		int revEndIndex;
+		ArrayList<Review> reviews = ReviewDAO.getReviewsByFromUserId(user.getUserid());
 
 		session.setAttribute("reviews", reviews);
 		
-		response.sendRedirect("review.jsp");
+		response.sendRedirect("reviews.jsp");
 
 	}
 
