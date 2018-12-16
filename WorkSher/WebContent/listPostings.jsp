@@ -19,10 +19,20 @@
 
 %>
 <body>
+
+	<jsp:include page="nav.jsp"></jsp:include>
 	<div id = "search">
-		<h3>Search</h3>
 		<form action = "PostingController">
 			<input hidden name = "action" value = "search">
+			<input type = "text" name = "searchTerm">
+			<input type = "submit" value = "submit">
+		</form>
+	</div>
+
+	<div id = "advsearch">
+		<h3>Search</h3>
+		<form action = "PostingController">
+			<input hidden name = "action" value = "advsearch">
 				<table>
 					<tr>
 						<td>

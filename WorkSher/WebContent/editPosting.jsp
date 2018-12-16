@@ -18,11 +18,13 @@
 	System.out.println(date);
 %>
 <body>
+
+	<jsp:include page="nav.jsp"></jsp:include>
 	<form action = "PostingController" method = "POST" enctype ="multipart/form-data" >
 		<input hidden name = "postingId" value = "<c:out value = "${posting.postingId }"/>"/>
 		Date Posted: <input readonly name = "dateCreated" value = "<c:out value = "${posting.dateCreated }"/>"/></br>
 		Date Updated: <input readonly value = "<c:out value = "${posting.dateUpdated }"/>"/></br>
-		
+		User: <input readonly name = "username" value = "<c:out value = "${posting.Username }"/>"/>
 		<input hidden name="dateUpdated" value = "<c:out value = "${request.date }"/>">
 		Category: <% System.out.println(categories.get(0).getJobCategoryDesc()); %>
 		<select name = "jobCategory">
@@ -50,6 +52,7 @@
 		</select>
 		</c:if>
 		<input type = "file" name = "portfolio" accept = "image/*">
+
 		<input type = "submit" value = "Sher!">
 	</form>
 </body>

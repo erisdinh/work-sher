@@ -54,12 +54,15 @@ create table `reviews` (
 create table `posting`(
 `posting_id` int(10) unsigned not null auto_increment,
 `user_id` int(10) unsigned not null,
+`username` varchar(20) NOT NULL,
 `jobCategory` varchar(60) not null,
 `title` varchar(30),
 `description` varchar(200),
 `compensation` varchar(30),
 `status` varchar(10),
 `portfolio` longblob,
+`portfoliotype` varchar(20),
+`portfoliolength` int(10) unsigned, 
 `portfoliothumb` blob,
 `dateCreated` timestamp not null default current_timestamp,
 `dateUpdated` timestamp not null default current_timestamp,
@@ -102,12 +105,12 @@ INSERT INTO `users` VALUES
 	(6,'DrAbstract','hallo','Dan','da@sheridancollege.ca','2018-12-01 00:00:00','user'),
     (7,'Bruno','honey','Ursus','u@sheridancollege.ca','2018-12-02 00:00:00','user');
     
-INSERT INTO posting (posting_id, user_id, jobCategory, title, description, compensation, status, dateCreated, dateUpdated) VALUES
-	(1, 6, "MATART", "Cat jackets", "The finest jackets made from free-range cats", "10-12 cats", "active", "2018-12-03 00:00:00", "2018-12-07 00:00:00"),
-	(2, 4, "ANIGAM", "Character Designs", "Traditional. Please stop asking if I will do pixel art for you", "Ceramics", "active", "2018-12-03 00:00:00",  "2018-12-05 00:00:00"),
-	(3, 7, "APPHEA", "Massage", "Not that kind of massage. I'm a professional", "Website", "active", "2018-12-03 00:00:00", "2018-12-12 00:00:00"),
-	(4, 5, "VISPER", "1 person show", "This is my thesis project. Please come. My mark depends on it", "Something good?", "active", "2018-12-03 00:00:00",  "2018-12-09 00:00:00"),
-	(5, 1, "PUBSAF", "Security", "I will enforce your lines. No bollards needd", "Website", "active", "2018-12-03 00:00:00", "2018-12-11 00:00:00");
+INSERT INTO posting (posting_id, user_id, username, jobCategory, title, description, compensation, status, dateCreated, dateUpdated) VALUES
+	(1, 6, "DrAbstract", "MATART", "Cat jackets", "The finest jackets made from free-range cats", "10-12 cats", "active", "2018-12-03 00:00:00", "2018-12-07 00:00:00"),
+	(2, 4, "Gee", "ANIGAM", "Character Designs", "Traditional. Please stop asking if I will do pixel art for you", "Ceramics", "active", "2018-12-03 00:00:00",  "2018-12-05 00:00:00"),
+	(3, 7, "Bruno", "APPHEA", "Massage", "Not that kind of massage. I'm a professional", "Website", "active", "2018-12-03 00:00:00", "2018-12-12 00:00:00"),
+	(4, 5, "Peetz", "VISPER", "1 person show", "This is my thesis project. Please come. My mark depends on it", "Something good?", "active", "2018-12-03 00:00:00",  "2018-12-09 00:00:00"),
+	(5, 1, "Dizzle", "PUBSAF", "Security", "I will enforce your lines. No bollards needd", "Website", "active", "2018-12-03 00:00:00", "2018-12-11 00:00:00");
 
 INSERT INTO reviews (review_id, for_user_id, from_user_id, posting_id, review_date, review_rating, review_text) VALUES
 	(1, 6, 1, 1, "2018-12-05 00:00:00", 0.5, "This feels more like coyote than cat" ),
