@@ -35,7 +35,8 @@ public class LoadProfile extends HttpServlet {
 		long userId = Long.parseLong(request.getParameter("userId"));
 		User user = UserDAO.getUserById(userId);
 		ArrayList<Posting> postings = (ArrayList<Posting>) PostingDAO.getPostingsByUserId(userId);
-		List<Review> reviews = ReviewDAO.getReviewsByForUserId(userId).subList(0, 5);
+		List<Review> reviews = ReviewDAO.getReviewsByForUserId(userId);
+		reviews = reviews.subList(0, reviews.size());
 		
 		request.setAttribute("user", user);
 		request.setAttribute("postings", postings);
