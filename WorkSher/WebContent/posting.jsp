@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-        <%@ page import = "java.util.Date, java.util.List, java.util.ArrayList" %>
-    <%@ page import = "model.JobCategory, model.Posting, dao.UserDAO, dao.PostingDAO, model.User" %>
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>    
+	pageEncoding="ISO-8859-1"%>
+<%@ page import="java.util.Date, java.util.List, java.util.ArrayList"%>
+<%@ page
+	import="model.JobCategory, model.Posting, dao.UserDAO, dao.PostingDAO, model.User"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -11,7 +12,7 @@
 </head>
 
 <body>
-	
+
 	<jsp:include page="nav.jsp"></jsp:include>
 		<c:if test = "${posting.status == 'inactive'}">
 			This is an inactive post and you are unable to place orders for it</br>
@@ -32,12 +33,13 @@
 			</c:otherwise>
 		</c:choose>
 		</br>
-
 		<c:if test = "${currentUser.userid == posting.userId}">
 			<form action = "editPosting.jsp"><input type = "submit" value = "Edit Your Post"></form>
 		</c:if>
-	<c:if test="${posting.status == 'active' }">	
-	<a href="User/createOrder.jsp" ><button>Create New Order</button></a>
-	</c:if>
+		<c:if test="${posting.status == 'active' }">
+    	   	<c:if test="${currentUser.userid!=posting.userId || currentUser.role=='user'}">
+      	      <a href="createOrder.jsp"><button>Create New Order</button></a>
+        	</c:if>
+   		</c:if>
 </body>
 </html>

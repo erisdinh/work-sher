@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.sql.Connection;
 import java.sql.Date;
 
@@ -51,12 +52,12 @@ public class ReviewDAO {
 		}
 	}
 
-	public static void deleteReview(Review review) {
+	public static void deleteReviewByReviewId(int reviewId) {
 		try {
 			conn = DBUtil.getConnection();
 			
 			PreparedStatement stmt = conn.prepareStatement("DELETE FROM reviews WHERE review_id=?");
-			stmt.setLong(1, review.getReviewId());
+			stmt.setLong(1, reviewId);
 			stmt.executeUpdate();
 	
 		} catch (SQLException e) {
@@ -94,8 +95,8 @@ public class ReviewDAO {
 		return review;
 	}
 
-	public static ArrayList<Review> getReviewsByForUserId(long forUserId) {
-		ArrayList<Review> reviews = new ArrayList<>();
+	public static List<Review> getReviewsByForUserId(long forUserId) {
+		List<Review> reviews = new ArrayList<>();
 		
 		try {
 			conn = DBUtil.getConnection();
@@ -127,8 +128,8 @@ public class ReviewDAO {
 
 	}
 	
-	public static ArrayList<Review> getReviewsByFromUserId(long fromUserId) {
-		ArrayList<Review> reviews = new ArrayList<>();
+	public static List<Review> getReviewsByFromUserId(long fromUserId) {
+		List<Review> reviews = new ArrayList<>();
 		
 		try {
 			conn = DBUtil.getConnection();
@@ -160,8 +161,8 @@ public class ReviewDAO {
 
 	}
 
-	public static ArrayList<Review> getReviewsByPostingId(long postingId) {
-		ArrayList<Review> reviews = new ArrayList<>();
+	public static List<Review> getReviewsByPostingId(long postingId) {
+		List<Review> reviews = new ArrayList<>();
 		
 		try {
 			conn = DBUtil.getConnection();

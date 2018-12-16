@@ -4,12 +4,19 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>WorkSher | Create Order | ${currentUser.username}</title>
+<title>WorkSher | Update Order | ${currentUser.username}</title>
 </head>
 <body>
 	<jsp:include page="nav.jsp"></jsp:include>
-	<form action="ManageOrder" id="createOrder" method="post">
-		<h1>Create New Order</h1>
+	<form action="ManageOrder" id="updateOrder" method="post">
+		<h1>Update Order</h1>
+		<table>
+			<tr>
+				<td>OrderID:</td>
+				<td>${order.orderid}</td>
+			</tr>
+		</table>
+		</br>
 		<div>
 			<table id="postingInformation" border=1>
 				<tr>
@@ -34,16 +41,12 @@
 				</tr>
 				<tr>
 					<td>Order Description:</td>
-					<td><textarea
-							style="resize: none; width: 500px; height: 150px;"
-							name="description"
-							placeholder="Enter your order description here..."></textarea></td>
+					<td><textarea style="resize:none;width: 400px;height:150px;" name="description" placeholder="Enter your order description here..."></textarea></td>
 				</tr>
 			</table>
 		</div>
 		</br>
-		<button type="submit" name="action" value="create">Create
-			Order</button>
+		<button type="submit" name="action" value="update">Update Order</button>
 	</form>
 </body>
 </html>

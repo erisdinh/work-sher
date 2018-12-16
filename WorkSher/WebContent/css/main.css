@@ -1,4 +1,48 @@
-@charset "ISO-8859-1";
+html, body {
+	font-family: Arial, sans-serif;
+	width: 100%;
+}
+
+a, a:visited {
+	text-decoration: none;
+	font-weight: bold;
+	color: #00ADB5;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+label {
+	text-align: right;
+	padding: 0.5%;
+	margin: 1%;
+	color: #393E46;	
+}
+
+input[type=text], input[type=password] {
+	border: solid 1px #393E46;
+	border-radius: 2px;
+	font-family: Arial, sans-serif;
+	font-size: 1em;
+	color: #393E46;
+	padding: 0.5%;
+	margin: 1%;
+}
+
+input[type=submit] {
+	background-color: #00ADB5;
+	font-family: Arial, sans-serif;
+	font-size: 1em;
+    color: white;
+    height: 2em;
+    border: none;
+    border-radius: 2px;
+}
+
+input[type=submit]:hover {
+	background-color: #00ADB5;
+}
 
 .prev-button-form {
 	float: left;

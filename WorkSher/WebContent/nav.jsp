@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -26,16 +28,25 @@
 			</div>
 		</div>
 		<div class="drop-menu">
-			<div class="menu-title" id="orders-menu">View Orders</div>
-			<div class="menu-items" id="orders-dropdown">
-				<a href="viewOrders.jsp?initial=true&load=received" class="menu-item">Received Orders</a> 
-				<a href="viewOrders.jsp?initial=true&load=requested" class="menu-item">Placed Orders</a>
-			</div>
+			<div class="menu-title" id="orders-menu">Orders</div>
+			<c:choose>
+				<c:when test="${currentUser.role=='admin'}">
+					<div class="menu-items" id="orders-dropdown">
+						<a href="viewOrders.jsp?initial=true&load=all" class="menu-item">View All Orders</a> 
+					</div> 
+				</c:when>
+				<c:otherwise>
+					<div class="menu-items" id="orders-dropdown">
+						<a href="viewOrders.jsp?initial=true&load=received" class="menu-item">Received Orders</a> 
+						<a href="viewOrders.jsp?initial=true&load=requested" class="menu-item">Placed Orders</a>
+					</div> 
+				</c:otherwise>
+			</c:choose>
 		</div>
 		<div class="drop-menu">
 			<div class="menu-title">Reviews</div>
 			<div class="menu-items">
-				<a href="reviews.jsp" class="menu-item">View Reviews</a>
+				<a href="ReviewController?action=load&fromUserId=${currentUser.userid}" class="menu-item">View Reviews</a>
 			</div>
 		</div>
 		<div class="search-bar">

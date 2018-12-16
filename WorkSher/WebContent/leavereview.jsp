@@ -11,7 +11,7 @@
 	<h1>
 		Leave a review for
 		<c:choose>
-			<c:when test="${currentUser.userid == order.requestUser.userid">
+			<c:when test="${currentUser.userid == order.requestUser.userid}">
 				<c:out value="${order.requestUser.name}" />
 			</c:when>
 			<c:otherwise>
