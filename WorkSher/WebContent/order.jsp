@@ -12,6 +12,12 @@
 <body>
 	<h1>Order Information:</h1>
 	<table border=1>
+		<c:if test="${type=='old}">
+			<tr>
+				<td>OrderID:</td>
+				<td>${order.orderid}</td>
+		</tr>
+		</c:if>
 		<tr>
 			<td>PostingID:</td>
 			<td>${order.posting.postingId}</td>
