@@ -57,7 +57,7 @@
 				<a href="" class="menu-item">Logout</a>
 			</div>
 		</div>
-		<a href="listPostings.jsp" class="click-menu">View Postings</a>
+		<a href="${pageContext.request.contextPath}/PostingController?action=listPostings" class="click-menu">View Postings</a>
 		<div class="drop-menu">
 			<div class="menu-title" id="orders-menu">View Orders</div>
 			<div class="menu-items" id="orders-dropdown">
@@ -67,7 +67,13 @@
 		</div>
 		<a href="reviews.jsp" class="click-menu">View Reviews</a>
 		<div class="search-bar">
-			Search: <input type="text" id="nav-search-field" placeholder="Enter search criteria" />
+			Search: 		<form action = "PostingController">
+			<input hidden name = "action" value = "search">
+			<input type = "text" name = "searchTerm" placeholder = "Enter Search Criteria">
+			<input type = "submit" value = "submit">
+			<br>
+			<a href="advancedSearch.jsp">Advanced Search</a>
+		</form>
 		</div>
 	</div>
 </body>

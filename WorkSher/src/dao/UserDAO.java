@@ -37,6 +37,28 @@ public class UserDAO {
 		}
 	}
 
+	// Method to update user details in database
+	public static void updateUser(User user) {
+		try {
+			conn = DBUtil.getConnection();
+			PreparedStatement pStmt = conn.prepareStatement("UPDATE users SET" 
+														+ " user_pass = ?,"
+														+ " name = ?,"
+														+ " email = ?"
+														+ " WHERE user_id = ?");					
+			pStmt.setString(1, user.getPassword());
+			pStmt.setString(2, user.getName());
+			pStmt.setString(3, user.getEmail());
+			pStmt.setLong(4, user.getUserid());
+
+			pStmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.closeConnection(conn);
+		}
+	}
+	
 	// Method to get user info from database by UserID
 	public static User getUserById(long userid) {
 		User user = new User();

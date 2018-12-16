@@ -1,41 +1,61 @@
 package controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-/**
- * Servlet implementation class ManageAccount
- */
+import dao.UserDAO;
+import model.User;
+
 @WebServlet("/ManageAccount")
 public class ManageAccount extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+
     public ManageAccount() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		HttpSession session = request.getSession();
+		User currentUser = (User)session.getAttribute("currentUser");		
+		String username = currentUser.getUsername();
+		String password = request.getParameter("currpassword");
+		String name = request.getParameter("name");
+		String email = request.getParameter("email");
+		String feedback;
+			
+		// If name, email fields are empty
+		if (name == "") {
+			name = currentUser.getName();
+		}
+		if (email == "") {
+			email = currentUser.getEmail();
+		}
+		
+		// Find user in the database
+				User user = UserDAO.authenticateUser(username, password);
+				
+		if (user != null) {
+			feedback = "Account updated successfully";
+			// Update current user information in session attribute
+			currentUser.setName(name);
+			currentUser.setEmail(email);
+			currentUser.setPassword(request.getParameter("newpassword"));
+			
+			// Update current user information in database
+			UserDAO.updateUser(currentUser);
+		} else {
+			feedback = "ERROR: Incorrect password";
+		}
+		
+		request.setAttribute("feedback", feedback);
+		RequestDispatcher rd = request.getRequestDispatcher("accountsettings.jsp");
+		rd.forward(request, response);
 	}
-
 }

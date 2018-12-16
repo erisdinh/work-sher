@@ -18,6 +18,7 @@ import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Enumeration;
 
 import javax.imageio.ImageIO;
 import javax.servlet.RequestDispatcher;
@@ -55,6 +56,7 @@ public class PostingController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String forward = "";
+		HttpSession session = request.getSession();
 		
 		String action = request.getParameter("action");
 		
@@ -64,6 +66,15 @@ public class PostingController extends HttpServlet {
 			
 			forward = LIST_POSTINGS;
 			request.setAttribute("postings", PostingDAO.getSearchResults(searchTerm));
+			
+		} else if (action.equalsIgnoreCase("catSearch")) {
+			String searchTitle = "";
+			String searchJobCategory = request.getParameter("jobCategory");
+			String searchDescription = "";
+			String searchUser = "";
+
+			forward = LIST_POSTINGS;
+			request.setAttribute("postings", PostingDAO.getAdvancedSearchResults(searchTitle, searchJobCategory, searchDescription, searchUser));
 			
 		} else if (action.equalsIgnoreCase("advsearch")) {
 			String searchTitle = request.getParameter("title");
@@ -91,14 +102,15 @@ public class PostingController extends HttpServlet {
 			
 			Posting posting = PostingDAO.getPostingById(postingId);
 			
-			request.setAttribute("posting", posting);
-			
+			//request.setAttribute("posting", posting);
+			session.setAttribute("posting", posting);
 			if (action.equalsIgnoreCase("edit")) {
 				forward = INSERT_OR_EDIT;
 			} else {
 				forward = VIEW;
 			}
 		} else {
+			session.removeAttribute("posting");
 			forward = INSERT_OR_EDIT;
 		}
 		RequestDispatcher view = request.getRequestDispatcher(forward);
@@ -113,47 +125,41 @@ public class PostingController extends HttpServlet {
 		HttpSession session = request.getSession();
 	
 		Posting posting = new Posting();
+		User currentUser = (User)session.getAttribute("currentUser");
 		
-		posting.setUserId(1); // TO DO, get from
-		// posting.setUserId(((User)session.getAttribute("user")).getUserid()); ???
+		posting.setUserId(currentUser.getUserid()); // TO DO, get from
+		posting.setUsername(currentUser.getUsername());
 		posting.setJobCategory(request.getParameter("jobCategory"));
 		posting.setTitle(request.getParameter("title"));
 		posting.setDescription(request.getParameter("description"));
 		posting.setCompensation(request.getParameter("compensation"));
 		posting.setStatus(request.getParameter("status"));
+		System.out.println("in PC: " + request.getParameter("dateUpdated"));
+		try {
+			Date dateUpdated = new SimpleDateFormat("dd/MM/yyyy").parse(request.getParameter("dateUpdated"));
+			posting.setDateUpdated(dateUpdated);
+		} catch (ParseException ex) {
+			ex.printStackTrace();
+		}
+//		Date dateUpdated = new java.sql.Date(     ((Date)request.getAttribute("dateUpdated")).getTime()     );
+//		posting.setDateUpdated(dateUpdated);
+		
+		//posting.setDateUpdated(request.getParameter("dateUpdated"));
 		Part portfolioPart = request.getPart("portfolio");
 		InputStream portfolio = portfolioPart.getInputStream();
 		posting.setPortfolio(portfolio);
 		
 		String portfolioType = portfolioPart.getContentType();
-		posting.setPortfolioType(portfolioType);
-		int portfolioLength = Math.toIntExact(portfolioPart.getSize());
-		System.out.println(portfolioLength);
-		posting.setPortfolioLength(portfolioLength);
+		if (!portfolioType.equals("application/octet-stream")) {
+			posting.setPortfolioType(portfolioType);
+
+			int portfolioLength = Math.toIntExact(portfolioPart.getSize());
+
+			System.out.println(portfolioLength);
+			posting.setPortfolioLength(portfolioLength);
+		}
 		
-		
-		//// what
-//		Image ptflThumb = ImageIO.read(portfolio).getScaledInstance(100,100, BufferedImage.SCALE_SMOOTH);
-//		BufferedImage bi = new BufferedImage(ptflThumb.getWidth(null), ptflThumb.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-//		Graphics2D g2d = bi.createGraphics();
-//		g2d.drawImage(ptflThumb,  0, 0,  null);
-//		g2d.dispose();
-//		ByteArrayOutputStream baos = null;
-//		try {
-//			baos = new ByteArrayOutputStream();
-//			ImageIO.write(bi, "png", baos);
-//		} finally {
-//			try {
-//				baos.close();
-//			} catch (Exception e) {		
-//			}
-// 		}
-//		posting.setPortfolioThumb(new ByteArrayInputStream(baos.toByteArray()));
-//		
-//		
-		
-		
-		
+
 		
 		String postingIdString = request.getParameter("postingId");
 		

@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+    <%@ taglib uri= "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+    <%@ taglib uri = "http://java.sun.com/jsp/jstl/fmt" prefix = "fmt" %>
     <%@ page import = "model.JobCategory, dao.PostingDAO" %>
-    <%@ page import = "java.util.List, java.util.ArrayList, java.util.Date, java.text.DateFormat, java.text.SimpleDateFormat" %>
+    <%@ page import = "java.util.List, java.util.Calendar, java.util.ArrayList, java.util.Date, java.text.DateFormat, java.text.SimpleDateFormat" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,10 +13,10 @@
 <body>
 <% List <JobCategory> categories = PostingDAO.getAllJobCategories(); 
 	request.setAttribute("categories", categories);
-	DateFormat dateFormat = new SimpleDateFormat("yyyy//MM/dd");
-	Date date = new Date();
-	request.setAttribute("dateUpdated", date);
-	System.out.println(date);
+	DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+	Date today = Calendar.getInstance().getTime();
+	String ddd = df.format(today);
+	request.setAttribute("dateUpdated", today);
 %>
 <body>
 
@@ -24,8 +25,8 @@
 		<input hidden name = "postingId" value = "<c:out value = "${posting.postingId }"/>"/>
 		Date Posted: <input readonly name = "dateCreated" value = "<c:out value = "${posting.dateCreated }"/>"/></br>
 		Date Updated: <input readonly value = "<c:out value = "${posting.dateUpdated }"/>"/></br>
-		User: <input readonly name = "username" value = "<c:out value = "${posting.Username }"/>"/>
-		<input hidden name="dateUpdated" value = "<c:out value = "${request.date }"/>">
+		User: <input readonly name = "username" value = "<c:out value = "${currentUser.username }"/>"/>
+		<input hidden name="dateUpdated" value = "<fmt:formatDate pattern = "dd/MM/yyyy" value = "${dateUpdated }"/>">
 		Category: <% System.out.println(categories.get(0).getJobCategoryDesc()); %>
 		<select name = "jobCategory">
 			<c:forEach var = "category" items = "${categories }">
@@ -52,7 +53,7 @@
 		</select>
 		</c:if>
 		<input type = "file" name = "portfolio" accept = "image/*">
-
+		</br>
 		<input type = "submit" value = "Sher!">
 	</form>
 </body>
