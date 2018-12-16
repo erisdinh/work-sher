@@ -76,8 +76,8 @@ CREATE TABLE `orders` (
   `posting_id` int(10) unsigned NOT NULL,
   `description` varchar(100) DEFAULT NULL,
   `dateRequested` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `dateResponsed` date DEFAULT NULL,
-  `dateCompleted` date DEFAULT NULL,
+  `dateResponsed` datetime DEFAULT NULL,
+  `dateCompleted` datetime DEFAULT NULL,
   `status` varchar(30) NOT NULL,
   PRIMARY KEY (`order_id`),
   KEY `requestOrderUser_id` (`requestOrderUser_id`),
@@ -140,12 +140,12 @@ INSERT INTO jobCategory (jobCategoryId, jobCategoryDesc) VALUES
     ("TECFUN", "Technology Fundamentals");
     
 INSERT INTO orders (order_id, requestOrderUser_id, postOrderUser_id, posting_id, description, dateRequested, dateResponsed, dateCompleted, status) VALUES
-	(1, 1, 6, 1, "The finest jackets made from free-range cats", "2018-12-04 00:00:00", "2018-12-05 00:00:00", "2018-12-07 00:00:00", "active"),
-	(2, 2, 5, 4, "This is my thesis project. Please come. My mark depends on it", "2018-12-04 00:00:00", "2018-12-05 00:00:00", "2018-12-07 00:00:00", "active"),
-	(3, 5, 6, 1, "The finest jackets made from free-range cats", "2018-12-05 00:00:00", "2018-12-07 00:00:00", "2018-12-10 00:00:00", "active"),
-	(4, 5, 4, 2, "Traditional. Please stop asking if I will do pixel art for you", "2018-12-05 00:00:00", "2018-12-07 00:00:00", "2018-12-10 00:00:00", "active"),
-	(5, 5, 1, 5, "I will enforce your lines. No bollards needd", "2018-12-05 00:00:00", "2018-12-07 00:00:00", "2018-12-11 00:00:00", "active"),
-	(6, 5, 7, 3, "Not that kind of massage. I'm a professional", "2018-12-06 00:00:00", "2018-12-09 00:00:00", "2018-12-12 00:00:00", "active");
+	(1, 1, 6, 1, "The finest jackets made from free-range cats", cast("2018-12-04 00:00:00" as datetime), cast("2018-12-05 00:00:00" as datetime), cast("2018-12-07 00:00:00 as datetime" as datetime), "Pending"),
+	(2, 2, 5, 4, "This is my thesis project. Please come. My mark depends on it", cast("2018-12-04 00:00:00" as datetime), cast("2018-12-05 00:00:00" as datetime), cast("2018-12-07 00:00:00" as datetime), "Approved"),
+	(3, 5, 6, 1, "The finest jackets made from free-range cats", cast("2018-12-05 00:00:00" as datetime), cast("2018-12-07 00:00:00" as datetime), cast("2018-12-10 00:00:00" as datetime), "Completed"),
+	(4, 5, 4, 2, "Traditional. Please stop asking if I will do pixel art for you", cast("2018-12-05 00:00:00" as datetime), cast("2018-12-07 00:00:00" as datetime), cast("2018-12-10 00:00:00" as datetime), "Pending"),
+	(5, 5, 1, 5, "I will enforce your lines. No bollards needd", cast("2018-12-05 00:00:00" as datetime), cast("2018-12-07 00:00:00" as datetime), cast("2018-12-11 00:00:00" as datetime), "Approved"),
+	(6, 5, 7, 3, "Not that kind of massage. I'm a professional", cast("2018-12-06 00:00:00" as datetime), cast("2018-12-09 00:00:00" as datetime), cast("2018-12-12 00:00:00" as datetime), "Completed");
 
 
 

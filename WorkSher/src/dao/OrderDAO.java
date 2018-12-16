@@ -98,7 +98,7 @@ public class OrderDAO {
 			
 			connection = DBUtil.getConnection();
 			
-			PreparedStatement pstmt = connection.prepareStatement("select * from orders order by dateRequested desc where order_id = ?");
+			PreparedStatement pstmt = connection.prepareStatement("select * from orders where order_id = ?");
 			
 			pstmt.setLong(1, orderid);
 			
@@ -145,7 +145,7 @@ public class OrderDAO {
 		try {
 			
 			connection = DBUtil.getConnection();
-			PreparedStatement pstmt = connection.prepareStatement("select * from orders where requestOrderUser_id=?");
+			PreparedStatement pstmt = connection.prepareStatement("select * from orders where requestOrderUser_id=? order by order_id desc");
 			
 			pstmt.setLong(1, requestUserId);
 			
@@ -194,7 +194,7 @@ public class OrderDAO {
 		try {
 			
 			connection = DBUtil.getConnection();
-			PreparedStatement pstmt = connection.prepareStatement("select * from orders where postOrderUser_id=?");
+			PreparedStatement pstmt = connection.prepareStatement("select * from orders where postOrderUser_id=? order by order_id desc");
 			
 			pstmt.setLong(1, postUseId);
 			

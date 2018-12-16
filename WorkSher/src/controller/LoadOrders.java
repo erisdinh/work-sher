@@ -50,7 +50,8 @@ public class LoadOrders extends HttpServlet {
 			
 			session.setAttribute("orders", orders);
 			
-			int numberOfOrderPage = (int) Math.ceil((orders.size() / 5));
+			int numberOfOrderPage = (int) Math.ceil((orders.size() / 5.0));
+			System.out.println("NumberofOrderPage:" + numberOfOrderPage);
 			
 			session.setAttribute("ordersSize", orders.size());
 			session.setAttribute("numberOfOrderPages", numberOfOrderPage);
