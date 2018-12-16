@@ -14,27 +14,23 @@
 			<table id="postingInformation" border=1>
 				<tr>
 					<td>PostingID:</td>
-					<td>0000000001</td>
+					<td>${posting.postingId}</td>
 				</tr>
 				<tr>
 					<td>Posted User:</td>
-					<td>UserName</td>
-				</tr>
-				<tr>
-					<td>Posted User Full Name:</td>
-					<td>User Full Name</td>
+					<td>${posting.username}</td>
 				</tr>
 				<tr>
 					<td>Category:</td>
-					<td>Design</td>
+					<td>${posting.jobCategory }</td>
 				</tr>
 				<tr>
 					<td>Posting Description:</td>
-					<td>I can design posters.</td>
+					<td>${posting.description}</td>
 				</tr>
 				<tr>
 					<td>Compensation:</td>
-					<td>2 cups of coffee.</td>
+					<td>${posting.compensation}</td>
 				</tr>
 			</table>
 		</div>
@@ -43,11 +39,11 @@
 			<table id="newOrderInformation" border=1>
 				<tr>
 					<td>Requested User:</td>
-					<td>UserName</td>
+					<td>${currentUser.username}</td>
 				</tr>
 				<tr>
 					<td>Requested User Full Name:</td>
-					<td>User Full Name</td>
+					<td>${currentUser.name}</td>
 				</tr>
 				<tr>
 					<td>Order Description:</td>

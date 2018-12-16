@@ -34,6 +34,8 @@
 			</c:otherwise>
 		</c:choose>
 		</br>
-	<a href="User/createOrder.jsp" ><button>Create New Order</button></a>
+		<c:if test="${currentUser.userid!=posting.userId}">
+			<a href="createOrder.jsp" ><button>Create New Order</button></a>
+		</c:if>
 </body>
 </html>
