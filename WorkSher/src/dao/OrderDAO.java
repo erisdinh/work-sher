@@ -41,9 +41,10 @@ public class OrderDAO {
 		}
 	}
 
-	public static ArrayList<Order> getAllOrder() {
+	public static ArrayList<Order> getAllOrders() {
 
 		Connection connection = null;
+		ResultSet rs = null;
 		ArrayList<Order> allOrder = new ArrayList<>();
 
 		try {
@@ -51,7 +52,7 @@ public class OrderDAO {
 
 			Statement stmt = connection.createStatement();
 
-			ResultSet rs = stmt.executeQuery("select * from orders");
+			rs = stmt.executeQuery("select * from orders order by order_id desc");
 
 			while (rs.next()) {
 
@@ -90,8 +91,8 @@ public class OrderDAO {
 	}
 
 	public static Order getOrderById(long orderid) {
-		System.out.println("In getOrderById");
 		Connection connection = null;
+		ResultSet rs = null;
 		Order order = new Order();
 
 		try {
@@ -102,7 +103,7 @@ public class OrderDAO {
 
 			pstmt.setLong(1, orderid);
 
-			ResultSet rs = pstmt.executeQuery();
+			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				order.setOrderid(rs.getLong("order_id"));
@@ -237,7 +238,6 @@ public class OrderDAO {
 
 	public static void updateOrder(Order order) {
 		Connection connection = null;
-		ResultSet rs = null;
 
 		try {
 
@@ -260,7 +260,6 @@ public class OrderDAO {
 
 	public static void responseOrder(Order order) {
 		Connection connection = null;
-		ResultSet rs = null;
 
 		try {
 			connection = DBUtil.getConnection();
@@ -283,7 +282,6 @@ public class OrderDAO {
 	
 	public static void markCompletedOrder(Order order) {
 		Connection connection = null;
-		ResultSet rs = null;
 
 		try {
 			connection = DBUtil.getConnection();
@@ -295,6 +293,23 @@ public class OrderDAO {
 			pstmt.setString(2, order.getStatus());
 			pstmt.setLong(3, order.getOrderid());
 			
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.getMessage();
+		} finally {
+			DBUtil.closeConnection(connection);
+		}
+	}
+	
+	public static void deleteOrder(long orderid) {
+		Connection connection = null;
+		
+		try {
+			connection = DBUtil.getConnection();
+			PreparedStatement pstmt = connection.prepareStatement("delete from orders where order_id = ?");
+
+			pstmt.setLong(1, orderid);
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
