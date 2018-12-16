@@ -6,7 +6,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<script>
+<script type="text/javascript">
+	document.addEventListener("DOMContentLoaded", function() {
+		var startDate = document.getElementById("startDate");
+		var endDate = document.getElementById("endDate");
+		var today = new Date();
+		var day = today.getDate();
+		var month = today.getMonth();
+		var year = today.getFullYear();
+		
+	})
 </script>
 <title>Insert title here</title>
 </head>
@@ -43,7 +52,7 @@
 						<td>Start Date:</td>
 						<td><input type = "date" name = "startDate" min = "2018-12-01 "id = "startDate"></td>
 						<td>End Date:</td>
-						<td><input type = "date" name = "startDate"max = "2018-12-01" id = "endDate"></td>
+						<td><input type = "date" name = "startDate" min = "2018-12-01" id = "endDate"></td>
 						
 						<td><input type = "submit" value = "search"></td>
 					</tr>

@@ -38,11 +38,11 @@ public class LoadNextReviewPage extends HttpServlet {
 		System.out.println(referer);
 
 		HttpSession session = request.getSession();
-		int revStartIndex = (int) session.getAttribute("revStartIndex");
-		int revEndIndex = (int) session.getAttribute("revEndIndex");
-		ArrayList<Review> reviews = (ArrayList<Review>) session.getAttribute("reviews");
+		int revStartIndex = (int) request.getAttribute("revStartIndex");
+		int revEndIndex = (int) request.getAttribute("revEndIndex");
+		ArrayList<Review> reviews = (ArrayList<Review>) request.getAttribute("reviews");
 		int arraySize = reviews.size();
-		int pageSize = Integer.parseInt(request.getParameter("pageSize"));
+		int pageSize = (int) request.getAttribute("pageSize");
 
 		if (referer.contains("reviews.jsp")) {
 			if (revEndIndex != arraySize) {

@@ -14,6 +14,7 @@ public class Review implements Serializable {
 	private Date reviewDate;
 	private double reviewRating;
 	private String reviewText;
+	private String reviewImgUrl;
 
 	public Review() {
 		forUserId = 0;
@@ -23,8 +24,10 @@ public class Review implements Serializable {
 		postingId = 0;
 		reviewId = 0;
 		reviewDate = new Date();
-		reviewRating = 0;
+		reviewRating = 1;
 		reviewText = "";
+		
+		loadReviewImgUrl();
 	}
 
 	public Review(long reviewId, long forUserId, long fromUserId, String forUsername, String fromUsername, long orderId, long postingId, Date reviewDate, double reviewRating, String reviewText) {
@@ -39,6 +42,34 @@ public class Review implements Serializable {
 		this.reviewDate = reviewDate;
 		this.reviewRating = reviewRating;
 		this.reviewText = reviewText;
+		
+		loadReviewImgUrl();
+	}
+	
+	private void loadReviewImgUrl() {
+			if (reviewRating == 1.0) {
+				reviewImgUrl = "rating1.png";
+			} else if (reviewRating == 1.5) {
+				reviewImgUrl = "rating1-5.png";
+			} else if (reviewRating == 2.0) {
+				reviewImgUrl = "rating2png";
+			} else if (reviewRating == 2.5) {
+				reviewImgUrl = "rating2-5.png";
+			} else if (reviewRating == 3.0) {
+				reviewImgUrl = "rating3.png";
+			} else if (reviewRating == 3.5) {
+				reviewImgUrl = "rating3-5.png";
+			} else if (reviewRating == 4.0) {
+				reviewImgUrl = "rating4.png";
+			} else if (reviewRating == 4.5) {
+				reviewImgUrl = "rating4-5.png";
+			} else {
+				reviewImgUrl = "rating5.png";
+			}
+	}
+	
+	public String getReviewImgUrl() {
+		return reviewImgUrl;
 	}
 
 	public long getForUserId() {
@@ -77,7 +108,7 @@ public class Review implements Serializable {
 		return orderId;
 	}
 	
-	public void setOrderId() {
+	public void setOrderId(long orderId) {
 		this.orderId = orderId;
 	}
 
@@ -111,6 +142,7 @@ public class Review implements Serializable {
 
 	public void setReviewRating(double reviewRating) {
 		this.reviewRating = reviewRating;
+		loadReviewImgUrl();
 	}
 
 	public String getReviewText() {

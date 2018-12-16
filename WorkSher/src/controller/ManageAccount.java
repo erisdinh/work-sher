@@ -16,7 +16,8 @@ import model.User;
 @WebServlet("/ManageAccount")
 public class ManageAccount extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	private String feedback;
+	
     public ManageAccount() {
         super();
     }
@@ -28,7 +29,6 @@ public class ManageAccount extends HttpServlet {
 		String password = request.getParameter("currpassword");
 		String name = request.getParameter("name");
 		String email = request.getParameter("email");
-		String feedback;
 			
 		// If name, email fields are empty
 		if (name == "") {
@@ -39,7 +39,7 @@ public class ManageAccount extends HttpServlet {
 		}
 		
 		// Find user in the database
-				User user = UserDAO.authenticateUser(username, password);
+		User user = UserDAO.authenticateUser(username, password);
 				
 		if (user != null) {
 			feedback = "Account updated successfully";
@@ -56,6 +56,22 @@ public class ManageAccount extends HttpServlet {
 		
 		request.setAttribute("feedback", feedback);
 		RequestDispatcher rd = request.getRequestDispatcher("accountsettings.jsp");
+		rd.forward(request, response);
+	}
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String action = request.getParameter("action");
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("currentUser");
+		
+		if (action.equalsIgnoreCase("delete")) {
+			UserDAO.deleteUser(user);
+			session.setAttribute("currentUser", null);
+			feedback = "Thank you for using WorkSher. Your account has been deleted.";
+		}
+		
+		request.setAttribute("feedback", feedback);
+		RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
 		rd.forward(request, response);
 	}
 }
