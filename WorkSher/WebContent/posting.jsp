@@ -13,15 +13,11 @@
 <body>
 	
 	<jsp:include page="nav.jsp"></jsp:include>
-	<script>
-		$('input[name=dob]').datepicker();
-	</script>
 		User: ${posting.username}</br>
 		Title: ${posting.title }</br>
 		Category: ${posting.jobCategory}</br>
 		Description: ${posting.description }</br>
 		Compensation: ${posting.compensation}</br>
-		<!-- <img src= "${pageContext.request.contextPath}/ImageServlet?ps=${ posting.postingId}">-->
 		Portfolio</br>
 		<c:choose>
 			<c:when test = "${posting.portfolioType != null}">
@@ -29,11 +25,12 @@
 				
 			</c:when>
 			<c:otherwise>
-			hi	
 				<img src = "images/portofolioPlaceholder.jpg">
 			</c:otherwise>
 		</c:choose>
 		</br>
+	<c:if test="${posting.status == 'active' }">	
 	<a href="User/createOrder.jsp" ><button>Create New Order</button></a>
+	</c:if>
 </body>
 </html>
