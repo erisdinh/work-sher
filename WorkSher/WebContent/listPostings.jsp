@@ -19,6 +19,8 @@
 
 %>
 <body>
+
+	<jsp:include page="nav.jsp"></jsp:include>
 	<div id = "search">
 		<form action = "PostingController">
 			<input hidden name = "action" value = "search">

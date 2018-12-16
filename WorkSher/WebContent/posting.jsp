@@ -11,6 +11,8 @@
 </head>
 
 <body>
+	
+	<jsp:include page="nav.jsp"></jsp:include>
 	<script>
 		$('input[name=dob]').datepicker();
 	</script>
@@ -28,7 +30,7 @@
 			</c:when>
 			<c:otherwise>
 			hi	
-				<img src = "/images/portofolioPlaceholder.jpg">
+				<img src = "images/portofolioPlaceholder.jpg">
 			</c:otherwise>
 		</c:choose>
 		</br>

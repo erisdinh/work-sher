@@ -20,7 +20,7 @@ public class PostingDAO {
 	public static void addPosting(Posting posting) {
 		try {
 			conn = DBUtil.getConnection();
-			PreparedStatement pStmt = conn.prepareStatement("INSERT INTO posting (user_id, username, jobCategory, title, description, compensation, status, portfolio) VALUES (?,?,?,?,?,?,?,?)");
+			PreparedStatement pStmt = conn.prepareStatement("INSERT INTO posting (user_id, username, jobCategory, title, description, compensation, status, portfolio, portfoliotype, portfoliolength) VALUES (?,?,?,?,?,?,?,?,?,?)");
 			pStmt.setLong(1, posting.getUserId());
 			pStmt.setString(2, posting.getUsername());
 			pStmt.setString(3, posting.getJobCategory());
@@ -29,6 +29,9 @@ public class PostingDAO {
 			pStmt.setString(6, posting.getCompensation());
 			pStmt.setString(7, posting.getStatus());
 			pStmt.setBlob(8, posting.getPortfolio());
+
+			pStmt.setString(9, posting.getPortfolioType());
+			pStmt.setInt(10, posting.getPortfolioLength());
 			
 			pStmt.executeUpdate();
 		} catch (SQLException ex) {
@@ -64,7 +67,7 @@ public class PostingDAO {
 
 			pStmt.setString(7, posting.getPortfolioType());
 			pStmt.setInt(8, posting.getPortfolioLength());
-			
+
 			pStmt.setLong(9, posting.getPostingId());
 			
 			pStmt.executeUpdate();
