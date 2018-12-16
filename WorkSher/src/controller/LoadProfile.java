@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -34,7 +35,7 @@ public class LoadProfile extends HttpServlet {
 		long userId = Long.parseLong(request.getParameter("userId"));
 		User user = UserDAO.getUserById(userId);
 		ArrayList<Posting> postings = (ArrayList<Posting>) PostingDAO.getPostingsByUserId(userId);
-		ArrayList<Review> reviews = ReviewDAO.getReviewsByForUserId(userId);
+		List<Review> reviews = ReviewDAO.getReviewsByForUserId(userId).subList(0, 5);
 		
 		request.setAttribute("user", user);
 		request.setAttribute("postings", postings);
