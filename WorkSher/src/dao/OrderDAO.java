@@ -235,7 +235,7 @@ public class OrderDAO {
 		return receivedOrders;
 	}
 
-	public static void editOrder(Order order) {
+	public static void updateOrder(Order order) {
 		Connection connection = null;
 		ResultSet rs = null;
 
