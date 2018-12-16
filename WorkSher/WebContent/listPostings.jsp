@@ -11,13 +11,10 @@
 <title>Insert title here</title>
 </head>
 <% 
-
 	List <JobCategory> categories = PostingDAO.getAllJobCategories(); 
 	request.setAttribute("categories", categories);
-
 %>
 <body>
-
 	<jsp:include page="nav.jsp"></jsp:include>
 	<div id = "viewByCategories">
 		<a href="${pageContext.request.contextPath}/PostingController?action=listPostings">All Categories</a></br>
@@ -35,8 +32,8 @@
 					<th>Date Updated</th>
 					<th>Job Category</th>
 					<th>Title</th>
-					<c:if test = "${currentUser.role == 'admin' }">
-					<th colspan = 2>Admin</th>
+					<c:if test = "${currentUser.role == 'admin' || currentUser.userid == posting.userId}">
+					<th colspan = 3>Admin</th>
 					</c:if>
 				</tr>
 			</thead>
@@ -45,17 +42,25 @@
 				<tr>
 					<td><c:out value = "${posting.dateCreated }"/></td>
 					<td><c:out value = "${posting.dateUpdated }"/></td>
-	
 					<td><c:out value = "${posting.jobCategory }"/></td>
 					<td><a href="PostingController?action=view&postingId=<c:out value = "${posting.postingId}"/>"><c:out value = "${posting.title}"/></a></td>
 					<c:if test = "${(currentUser.role) == 'admin' || currentUser.userid == posting.userId}">
 						<td><a href="PostingController?action=edit&postingId=<c:out value = "${posting.postingId }"/>">Update</a></td>
-						<td><a href="PostingController?action=delete&postingId=<c:out value = "${posting.postingId }"/>">Delete</a></td>
+						<c:choose>
+							<c:when test = "${posting.status == 'inactive' }">
+								<td><a href="PostingController?action=activate&postingId=<c:out value = "${posting.postingId }"/>">Activate</a></td>
+							</c:when>
+							<c:otherwise>
+								<td><a href="PostingController?action=deactivate&postingId=<c:out value = "${posting.postingId }"/>">Deactivate</a></td>
+							</c:otherwise>
+						</c:choose>
+						<c:if test = "${(currentUser.role) == 'admin' }">
+							<td><a href="PostingController?action=delete&postingId=<c:out value = "${posting.postingId }"/>">Delete</a></td>
+						</c:if>
 					</c:if>
 				</tr>
 				</c:forEach>
 			</tbody>
-			
 		</table>
 	</div>
 	<p><a href="PostingController?action=insert">Post a job!</a>

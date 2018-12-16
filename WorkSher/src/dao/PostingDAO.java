@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mysql.jdbc.Statement;
+
 import model.JobCategory;
 import model.Posting;
 import model.User;
@@ -40,7 +42,40 @@ public class PostingDAO {
 			DBUtil.closeConnection(conn);
 		}
 	}
+	public static void deactivatePostingById(long postingId) {
+
+		try {
+			conn = DBUtil.getConnection();
+			PreparedStatement pStmt = conn.prepareStatement("UPDATE posting SET status = ? WHERE posting_id = ?");
+				pStmt.setString(1, "inactive");
+				pStmt.setLong(2, postingId);
+				pStmt.executeUpdate();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		} finally {
+			DBUtil.closeConnection(conn);
+		}
+	}
+	public static void activatePostingById(long postingId) {
+
+		try {
+			conn = DBUtil.getConnection();
+			PreparedStatement pStmt = conn.prepareStatement("UPDATE posting SET status = ? WHERE posting_id = ?");
+				pStmt.setString(1, "active");
+				pStmt.setLong(2, postingId);
+				pStmt.executeUpdate();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		} finally {
+			DBUtil.closeConnection(conn);
+		}
+	}
+	
+	
 	public static void deletePostingById(long postingId) {
+
+		PostingDAO.deleteAllReviewsForPostingId(postingId);
+		PostingDAO.deleteAllOrdersForPostingId(postingId);
 		try {
 			conn = DBUtil.getConnection();
 			PreparedStatement pStmt = conn.prepareStatement("DELETE FROM posting WHERE posting_id = ?");
@@ -65,8 +100,7 @@ public class PostingDAO {
 			pStmt.setString(4, posting.getCompensation());
 			pStmt.setString(5, posting.getStatus());
 			pStmt.setBlob(6, posting.getPortfolio());
-			
-
+		
 			pStmt.setString(7, posting.getPortfolioType());
 			pStmt.setInt(8, posting.getPortfolioLength());
 			System.out.println(posting.getDateUpdated());
@@ -102,13 +136,6 @@ public class PostingDAO {
 				posting.setStatus(rSet.getString("status"));
 				posting.setDateCreated(rSet.getDate("dateCreated"));
 				posting.setDateUpdated(rSet.getDate("dateUpdated"));
-				//String test = rSet.getBlob("portfoliothumb").toString();
-				//System.out.println("hi!:-" + test + "-|");
-//				try {
-//					posting.setPortfolio(rSet.getBlob("portfoliothumb").getBinaryStream());
-//					} catch (Exception ex ) {
-//						ex.printStackTrace();
-//					}
 				postings.add(posting);
 			}
 		} catch (SQLException ex) {
@@ -465,4 +492,35 @@ public class PostingDAO {
 		}
 		return jobCategories;
 	}	
+	public static void deleteAllOrdersForPostingId(long postingId) {
+		
+		try {
+			conn = DBUtil.getConnection();
+			PreparedStatement pStmt = conn.prepareStatement("DELETE FROM orders WHERE posting_id = ?");
+				pStmt.setLong(1, postingId);
+				
+				pStmt.executeUpdate();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		} finally {
+			DBUtil.closeConnection(conn);
+		}
+	}
+
+	public static void deleteAllReviewsForPostingId(long postingId) {
+		try {
+			conn = DBUtil.getConnection();
+			PreparedStatement pStmt = conn.prepareStatement("DELETE FROM reviews WHERE posting_id = ?");
+				pStmt.setLong(1, postingId);
+				
+				pStmt.executeUpdate();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		} finally {
+			DBUtil.closeConnection(conn);
+		}
+	}
+	
+	
+	
 }

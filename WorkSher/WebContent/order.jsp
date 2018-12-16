@@ -7,16 +7,17 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Order</title>
+<title>WorkSher | Order Information | ${currentUser.username}</title>
 </head>
 <body>
+	<jsp:include page="nav.jsp"></jsp:include>
 	<h1>Order Information:</h1>
 	<table border=1>
-		<c:if test="${type=='old}">
+		<c:if test="${type=='old'}">
 			<tr>
 				<td>OrderID:</td>
 				<td>${order.orderid}</td>
-		</tr>
+			</tr>
 		</c:if>
 		<tr>
 			<td>PostingID:</td>
@@ -58,10 +59,12 @@
 			<td>Order Status:</td>
 			<td>${order.status}</td>
 		</tr>
-		<tr>
-			<td>Order Requested Date:</td>
-			<td>${order.dateRequested}</td>
-		</tr>
+		<c:if test="${type=='old'}">
+			<tr>
+				<td>Order Requested Date:</td>
+				<td>${order.dateRequested}</td>
+			</tr>
+		</c:if>
 		<c:if test="${order.status!='pending' }">
 			<tr>
 				<td>Order Response Date:</td>
@@ -76,21 +79,16 @@
 		</c:if>
 	</table>
 
-	<c:out value="CurrentUser: ${currentUser.userid }"></c:out>
-	<c:out value="RequestUser: ${order.requestUser.userid }"></c:out>
-	<c:out value="PostUser: ${order.postUser.userid }"></c:out>
+	</br>
 
 	<form action="ManageOrder">
 		<c:if test="${currentUser.userid==order.requestUser.userid}">
 			<c:if test="${order.status=='Pending'}">
 				<button type="submit" value="cancel" name="action">Cancel</button>
-				<button type="submit" value="edit" name="action">Edit</button>
+				<button type="submit" value="update" name="action">Update</button>
 			</c:if>
 			<c:if test="${order.status=='Approved'}">
 				<button type="submit" value="cancel" name="action">Cancel</button>
-			</c:if>
-			<c:if test="${order.status=='Complete'}">
-				<button type="submit" value="review" name="action">Review</button>
 			</c:if>
 		</c:if>
 		<c:if test="${currentUser.userid==order.postUser.userid}">
@@ -101,6 +99,9 @@
 			<c:if test="${order.status=='Approved'}">
 				<button type="submit" value="complete" name="action">Complete</button>
 			</c:if>
+		</c:if>
+		<c:if test="${order.status=='Completed'}">
+			<button type="submit" value="review" name="action">Review</button>
 		</c:if>
 	</form>
 </body>
