@@ -35,7 +35,7 @@
 		<div class="drop-menu">
 			<div class="menu-title">Reviews</div>
 			<div class="menu-items">
-				<a href="reviews.jsp" class="menu-item">View Reviews</a>
+				<a href="ReviewController?action=load&fromUserId=${currentUser.userid}" class="menu-item">View Reviews</a>
 			</div>
 		</div>
 		<div class="search-bar">
