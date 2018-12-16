@@ -33,8 +33,6 @@ public class LoadOrder extends HttpServlet {
 		// get order id
 		long orderid = Long.parseLong(request.getParameter("orderid"));
 		Order order = OrderDAO.getOrderById(orderid);
-		System.out.println("OrderID:" + orderid);
-		System.out.println("OrderID:" + order.getOrderid());
 
 		session.setAttribute("order", order);
 
