@@ -56,6 +56,7 @@ public class PostingController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String forward = "";
 		HttpSession session = request.getSession();
+		
 		String action = request.getParameter("action");
 		
 		if (action.equalsIgnoreCase("search")) {
@@ -91,8 +92,8 @@ public class PostingController extends HttpServlet {
 			
 			Posting posting = PostingDAO.getPostingById(postingId);
 			
-			request.setAttribute("posting", posting);
-			
+			//request.setAttribute("posting", posting);
+			session.setAttribute("posting", posting);
 			if (action.equalsIgnoreCase("edit")) {
 				forward = INSERT_OR_EDIT;
 			} else {
