@@ -24,7 +24,7 @@
 	<c:choose>
 		<c:when test="${posting.portfolioType != null}">
 			<img
-				src="${pageContext.request.contextPath}/ImageServlet?ps=${ posting.postingId}"
+				src="${pageContext.request.contextPath}/ImageServlet?ps=${posting.postingId}"
 				style="width: 400px">
 
 		</c:when>

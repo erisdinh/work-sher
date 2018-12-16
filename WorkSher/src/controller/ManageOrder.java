@@ -17,7 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dao.OrderDAO;
+import dao.UserDAO;
 import model.Order;
+import model.Posting;
+import model.User;
 
 @WebServlet("/ManageOrder")
 public class ManageOrder extends HttpServlet {
@@ -29,6 +32,7 @@ public class ManageOrder extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
 		String action = request.getParameter("action");
 
 		HttpSession session = request.getSession();
@@ -38,11 +42,11 @@ public class ManageOrder extends HttpServlet {
 		if (action.equals("cancel")) {
 
 			order.setStatus("Cancel");
-			OrderDAO.editOrder(order);
+			OrderDAO.updateOrder(order);
 
-		} else if (action.equals("edit")) {
+		} else if (action.equals("update")) {
 
-			response.sendRedirect("editOrder.jsp");
+			response.sendRedirect("updateOrder.jsp");
 
 		} else if (action.equals("review")) {
 
@@ -51,43 +55,77 @@ public class ManageOrder extends HttpServlet {
 		} else if (action.equals("reject")) {
 
 			order.setStatus("Rejected");
-			
+
 			OrderDAO.responseOrder(order);
 			order = OrderDAO.getOrderById(order.getOrderid());
-			
+
 			session.setAttribute("order", order);
-			
+
 			response.sendRedirect("order.jsp");
 
 		} else if (action.equals("approve")) {
 
 			order.setStatus("Approved");
-			
+
 			OrderDAO.responseOrder(order);
 			order = OrderDAO.getOrderById(order.getOrderid());
-			
+
 			session.setAttribute("order", order);
-			
+
 			response.sendRedirect("order.jsp");
 
 		} else if (action.equals("complete")) {
-			
+
 			order.setStatus("Completed");
-			
+
 			OrderDAO.responseOrder(order);
 			order = OrderDAO.getOrderById(order.getOrderid());
-			
+
 			session.setAttribute("order", order);
-			
+
 			response.sendRedirect("order.jsp");
-			
+
 		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+
+		String action = request.getParameter("action");
+
+		HttpSession session = request.getSession();
+		
+		String orderDescription = request.getParameter("description");
+
+		if (action.equals("create")) {
+			
+			// get attributes from current session
+			User currentUser = (User) session.getAttribute("currentUser");
+			Posting posting = (Posting) session.getAttribute("posting");
+			
+			// create new order
+			Order order = new Order();
+			order.setRequestUser(currentUser);
+			order.setPostUser(UserDAO.getUserById(posting.getUserId()));
+			order.setPosting(posting);
+			order.setDescription(orderDescription);
+			order.setStatus("pending");
+
+			// add new order to database
+			OrderDAO.addOrder(order);
+
+			// set new order as an attribute to request
+			session.setAttribute("order", order);
+			response.sendRedirect("order.jsp");
+			
+		} else if (action.equals("update")) {
+			
+			Order order = (Order) session.getAttribute("order");
+			
+			order.setDescription(orderDescription);
+			
+			OrderDAO.updateOrder(order);
+		}
 	}
 
 }
