@@ -16,7 +16,10 @@
 	<h1>${user.name}'s Profile</h1>
 	${user.username}<br>
 	<a href="mailto:${user.email}">Contact ${user.name}</a><br>
-	Member since: ${user.dateJoined}
+	Member since: ${user.dateJoined}<br>
+	<c:if test = "${currentUser.role.equalsIgnoreCase('admin')}">
+	<a href="ManageAccount?action=admdelete&userId=${user.userid}">Delete User</a>
+	</c:if>
 	</section>
 	
 	<section class="postings">
