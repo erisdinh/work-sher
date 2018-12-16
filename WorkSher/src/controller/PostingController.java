@@ -55,7 +55,7 @@ public class PostingController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String forward = "";
-		
+		HttpSession session = request.getSession();
 		String action = request.getParameter("action");
 		
 		if (action.equalsIgnoreCase("search")) {
