@@ -13,6 +13,9 @@
 <body>
 	
 	<jsp:include page="nav.jsp"></jsp:include>
+		<c:if test = "${posting.status == 'inactive'}">
+			This is an inactive post and you are unable to place orders for it</br>
+		</c:if>
 		User: ${posting.username}</br>
 		Title: ${posting.title }</br>
 		Category: ${posting.jobCategory}</br>
@@ -29,6 +32,10 @@
 			</c:otherwise>
 		</c:choose>
 		</br>
+
+		<c:if test = "${currentUser.userid == posting.userId}">
+			<form action = "editPosting.jsp"><input type = "submit" value = "Edit Your Post"></form>
+		</c:if>
 	<c:if test="${posting.status == 'active' }">	
 	<a href="User/createOrder.jsp" ><button>Create New Order</button></a>
 	</c:if>

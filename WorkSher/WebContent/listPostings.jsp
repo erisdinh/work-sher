@@ -33,7 +33,7 @@
 					<th>Job Category</th>
 					<th>Title</th>
 					<c:if test = "${currentUser.role == 'admin' || currentUser.userid == posting.userId}">
-					<th colspan = 3>Admin</th>
+					<th colspan = 3>Management</th>
 					</c:if>
 				</tr>
 			</thead>

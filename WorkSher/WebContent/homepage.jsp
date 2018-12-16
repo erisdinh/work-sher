@@ -18,7 +18,15 @@
 			<br>
 		</c:when>
 		<c:otherwise>
-			<a href="LoadReviews">View Reviews</a>
+			<div>
+			
+			<p><a href="PostingController?action=insert">Post a job!</a>
+			<h2>Most recent postings by your fellow classmates</h2>
+
+				<jsp:include page="homePageListings.jsp"></jsp:include>
+			</div>
+			
+<a href="LoadReviews">View Reviews</a>
 		</c:otherwise>
 	</c:choose>
 </body>

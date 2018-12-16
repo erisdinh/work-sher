@@ -31,7 +31,6 @@ public class PostingDAO {
 			pStmt.setString(6, posting.getCompensation());
 			pStmt.setString(7, posting.getStatus());
 			pStmt.setBlob(8, posting.getPortfolio());
-
 			pStmt.setString(9, posting.getPortfolioType());
 			pStmt.setInt(10, posting.getPortfolioLength());
 			
@@ -121,7 +120,9 @@ public class PostingDAO {
 		List<Posting> postings = new ArrayList<>();
 		try {
 			conn = DBUtil.getConnection();
-			PreparedStatement pStmt = conn.prepareStatement("SELECT * FROM posting");
+			PreparedStatement pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN users u ON p.user_id = u.user_id ORDER BY dateCreated DESC");
+			
+			
 			ResultSet rSet = pStmt.executeQuery();		
 
 			while (rSet.next()) {
@@ -145,6 +146,37 @@ public class PostingDAO {
 		}
 		return postings;
 	}
+	public static List<Posting> getHomePageResults() {
+		List<Posting> postings = new ArrayList<>();
+		try {
+			conn = DBUtil.getConnection();
+			PreparedStatement pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN users u ON p.user_id = u.user_id ORDER BY dateCreated DESC LIMIT 5");
+			
+			
+			ResultSet rSet = pStmt.executeQuery();		
+
+			while (rSet.next()) {
+				Posting posting = new Posting();
+				posting.setPostingId(rSet.getLong("posting_id"));
+				posting.setUserId(rSet.getLong("user_id"));
+				posting.setUsername(rSet.getString("username"));
+				posting.setJobCategory(rSet.getString("jobCategory"));
+				posting.setTitle(rSet.getString("title"));
+				posting.setDescription(rSet.getString("description"));
+				posting.setCompensation(rSet.getString("compensation"));
+				posting.setStatus(rSet.getString("status"));
+				posting.setDateCreated(rSet.getDate("dateCreated"));
+				posting.setDateUpdated(rSet.getDate("dateUpdated"));
+				postings.add(posting);
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		} finally {
+			DBUtil.closeConnection(conn);
+		}
+		return postings;
+	}
+	
 	public static List<Posting> getSearchResults(String searchTerm) {
 		List<Posting> postings = new ArrayList<>();
 		try {
