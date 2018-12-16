@@ -57,7 +57,7 @@
 				<a href="" class="menu-item">Logout</a>
 			</div>
 		</div>
-		<a href="listpostings.jsp" class="click-menu">View Postings</a>
+		<a href="listPostings.jsp" class="click-menu">View Postings</a>
 		<div class="drop-menu">
 			<div class="menu-title" id="orders-menu">View Orders</div>
 			<div class="menu-items" id="orders-dropdown">
