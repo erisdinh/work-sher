@@ -39,13 +39,17 @@ public class LoadOrders extends HttpServlet {
 
 		ArrayList<Order> orders = new ArrayList<>();	
 		
-			// if action is received, load all received orders
+			// if load is received, load all received orders
 			if(load.equals("received")) {
 				orders = OrderDAO.getReceivedOrders(currentUser.getUserid());
 				
-				// if action is requested, load all requested orders
+				// if load is requested, load all requested orders
 			} else if (load.equals("requested")) {
 				orders = OrderDAO.getRequestedOrders(currentUser.getUserid());
+				
+				// if load is all (only for admin), load all existing orders
+			} else if (load.equals("all")) {
+				orders = OrderDAO.getAllOrders();
 			}
 			
 			session.setAttribute("orders", orders);

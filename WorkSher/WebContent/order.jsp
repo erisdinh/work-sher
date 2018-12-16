@@ -19,17 +19,23 @@
 				<td>${order.orderid}</td>
 			</tr>
 		</c:if>
+		<c:if
+			test="${currentUser.userid==order.requestUser.userid || currentUser.role=='admin'}">
+			<tr>
+				<td>Posted User:</td>
+				<td>${order.postUser.username}</td>
+			</tr>
+		</c:if>
+		<c:if
+			test="${currentUser.userid==order.postUser.userid || currentUser.role=='admin'}">
+			<tr>
+				<td>Requested User:</td>
+				<td>${order.requestUser.username}</td>
+			</tr>
+		</c:if>
 		<tr>
 			<td>PostingID:</td>
 			<td>${order.posting.postingId}</td>
-		</tr>
-		<tr>
-			<td>Posted Username:</td>
-			<td>${order.postUser.username}</td>
-		</tr>
-		<tr>
-			<td>Posted User Full Name:</td>
-			<td>${order.postUser.name}</td>
 		</tr>
 		<tr>
 			<td>Category:</td>
@@ -42,14 +48,6 @@
 		<tr>
 			<td>Compensation:</td>
 			<td>${order.posting.compensation}</td>
-		</tr>
-		<tr>
-			<td>Requested UserName:</td>
-			<td>${order.requestUser.username}</td>
-		</tr>
-		<tr>
-			<td>Requested User Full Name:</td>
-			<td>${order.requestUser.name}</td>
 		</tr>
 		<tr>
 			<td>Order Description:</td>
@@ -65,7 +63,7 @@
 				<td>${order.dateRequested}</td>
 			</tr>
 		</c:if>
-		<c:if test="${order.status!='pending' }">
+		<c:if test="${order.status!='pending' && type=='old'}">
 			<tr>
 				<td>Order Response Date:</td>
 				<td>${order.dateResponsed}</td>
@@ -82,27 +80,46 @@
 	</br>
 
 	<form action="ManageOrder">
-		<c:if test="${currentUser.userid==order.requestUser.userid}">
-			<c:if test="${order.status=='Pending'}">
-				<button type="submit" value="cancel" name="action">Cancel</button>
-				<button type="submit" value="update" name="action">Update</button>
+		<c:if test="${type=='old'}">
+			<c:if test="${currentUser.userid==order.requestUser.userid}">
+				<c:if test="${order.status=='Pending'}">
+					<button type="submit" value="cancel" name="action">Cancel</button>
+					<button type="submit" value="update" name="action">Update</button>
+				</c:if>
+				<c:if test="${order.status=='Approved'}">
+					<button type="submit" value="cancel" name="action">Cancel</button>
+				</c:if>
+				<c:if test="${order.status=='Completed'}">
+					<button type="submit" value="review" name="action">Review</button>
+				</c:if>
 			</c:if>
-			<c:if test="${order.status=='Approved'}">
-				<button type="submit" value="cancel" name="action">Cancel</button>
+			<c:if test="${currentUser.userid==order.postUser.userid}">
+				<c:if test="${order.status=='Pending'}">
+					<button type="submit" value="reject" name="action">Reject</button>
+					<button type="submit" value="approve" name="action">Approve</button>
+				</c:if>
+				<c:if test="${order.status=='Approved'}">
+					<button type="submit" value="complete" name="action">Complete</button>
+				</c:if>
+				<c:if test="${order.status=='Completed'}">
+					<button type="submit" value="review" name="action">Review</button>
+				</c:if>
 			</c:if>
-		</c:if>
-		<c:if test="${currentUser.userid==order.postUser.userid}">
-			<c:if test="${order.status=='Pending'}">
-				<button type="submit" value="reject" name="action">Reject</button>
-				<button type="submit" value="approve" name="action">Approve</button>
-			</c:if>
-			<c:if test="${order.status=='Approved'}">
-				<button type="submit" value="complete" name="action">Complete</button>
-			</c:if>
-		</c:if>
-		<c:if test="${order.status=='Completed'}">
-			<button type="submit" value="review" name="action">Review</button>
 		</c:if>
 	</form>
+	<c:if test="${currentUser.role=='admin' && param.action!='delete'}">
+		<form action="order.jsp" method="post">
+			<button type="submit" value="delete" name="action">Delete</button>
+		</form>
+	</c:if>
+	<c:if test="${param.action=='delete'}">
+		<form action="ManageOrder"">
+			<div>
+				<span>Do you want to delete this order?</span>
+				<button type="submit" value="skip" name="action">Cancel</button>
+				<button type="submit" value="confirm" name="action">Confirm</button>
+			</div>
+		</form>
+	</c:if>
 </body>
 </html>

@@ -34,7 +34,7 @@ public class LoadOrder extends HttpServlet {
 		long orderid = Long.parseLong(request.getParameter("orderid"));
 		Order order = OrderDAO.getOrderById(orderid);
 		
-		request.setAttribute("type", "old");
+		session.setAttribute("type", "old");
 		session.setAttribute("order", order);
 
 		response.sendRedirect("order.jsp");

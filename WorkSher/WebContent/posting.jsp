@@ -34,7 +34,7 @@
 	</c:choose>
 	</br>
 	<c:if test="${posting.status == 'active' }">
-		<c:if test="${currentUser.userid!=posting.userId}">
+		<c:if test="${currentUser.userid!=posting.userId || currentUser.role=='user'}">
 			<a href="createOrder.jsp"><button>Create New Order</button></a>
 		</c:if>
 	</c:if>

@@ -8,7 +8,7 @@
 </head>
 <body>
 	<jsp:include page="nav.jsp"></jsp:include>
-	<form action="ManageOrder" id="updateOrder" method="post">
+	<form action="ManageOrder" method="post">
 		<h1>Update Order</h1>
 		<table>
 			<tr>
@@ -18,7 +18,7 @@
 		</table>
 		</br>
 		<div>
-			<table id="postingInformation" border=1>
+			<table border=1>
 				<tr>
 					<td>PostingID:</td>
 					<td>${posting.postingId}</td>
