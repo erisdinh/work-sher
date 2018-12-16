@@ -71,6 +71,8 @@
 			<input hidden name = "action" value = "search">
 			<input type = "text" name = "searchTerm" placeholder = "Enter Search Criteria">
 			<input type = "submit" value = "submit">
+			<br>
+			<a href="advancedSearch.jsp">Advanced Search</a>
 		</form>
 		</div>
 	</div>

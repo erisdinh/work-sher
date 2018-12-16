@@ -66,6 +66,15 @@ public class PostingController extends HttpServlet {
 			forward = LIST_POSTINGS;
 			request.setAttribute("postings", PostingDAO.getSearchResults(searchTerm));
 			
+		} else if (action.equalsIgnoreCase("catSearch")) {
+			String searchTitle = "";
+			String searchJobCategory = request.getParameter("jobCategory");
+			String searchDescription = "";
+			String searchUser = "";
+
+			forward = LIST_POSTINGS;
+			request.setAttribute("postings", PostingDAO.getAdvancedSearchResults(searchTitle, searchJobCategory, searchDescription, searchUser));
+			
 		} else if (action.equalsIgnoreCase("advsearch")) {
 			String searchTitle = request.getParameter("title");
 			String searchJobCategory = request.getParameter("jobCategory");
@@ -100,6 +109,7 @@ public class PostingController extends HttpServlet {
 				forward = VIEW;
 			}
 		} else {
+			session.removeAttribute("posting");
 			forward = INSERT_OR_EDIT;
 		}
 		RequestDispatcher view = request.getRequestDispatcher(forward);
@@ -114,9 +124,10 @@ public class PostingController extends HttpServlet {
 		HttpSession session = request.getSession();
 	
 		Posting posting = new Posting();
+		User currentUser = (User)session.getAttribute("currentUser");
 		
-		posting.setUserId(1); // TO DO, get from
-		// posting.setUserId(((User)session.getAttribute("user")).getUserid()); ???
+		posting.setUserId(currentUser.getUserid()); // TO DO, get from
+		posting.setUsername(currentUser.getUsername());
 		posting.setJobCategory(request.getParameter("jobCategory"));
 		posting.setTitle(request.getParameter("title"));
 		posting.setDescription(request.getParameter("description"));
@@ -127,34 +138,16 @@ public class PostingController extends HttpServlet {
 		posting.setPortfolio(portfolio);
 		
 		String portfolioType = portfolioPart.getContentType();
-		posting.setPortfolioType(portfolioType);
-		int portfolioLength = Math.toIntExact(portfolioPart.getSize());
-		System.out.println(portfolioLength);
-		posting.setPortfolioLength(portfolioLength);
+		if (!portfolioType.equals("application/octet-stream")) {
+			posting.setPortfolioType(portfolioType);
+
+			int portfolioLength = Math.toIntExact(portfolioPart.getSize());
+
+			System.out.println(portfolioLength);
+			posting.setPortfolioLength(portfolioLength);
+		}
 		
-		
-		//// what
-//		Image ptflThumb = ImageIO.read(portfolio).getScaledInstance(100,100, BufferedImage.SCALE_SMOOTH);
-//		BufferedImage bi = new BufferedImage(ptflThumb.getWidth(null), ptflThumb.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-//		Graphics2D g2d = bi.createGraphics();
-//		g2d.drawImage(ptflThumb,  0, 0,  null);
-//		g2d.dispose();
-//		ByteArrayOutputStream baos = null;
-//		try {
-//			baos = new ByteArrayOutputStream();
-//			ImageIO.write(bi, "png", baos);
-//		} finally {
-//			try {
-//				baos.close();
-//			} catch (Exception e) {		
-//			}
-// 		}
-//		posting.setPortfolioThumb(new ByteArrayInputStream(baos.toByteArray()));
-//		
-//		
-		
-		
-		
+
 		
 		String postingIdString = request.getParameter("postingId");
 		

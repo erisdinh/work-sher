@@ -55,6 +55,7 @@ public class PostingDAO {
 	}
 
 	public static void updatePosting(Posting posting) {
+		System.out.println("updating: " + posting.getPortfolioType());
 		try {
 			conn = DBUtil.getConnection();
 			PreparedStatement pStmt = conn.prepareStatement("UPDATE posting SET jobCategory = ?, title = ?, description = ?, compensation = ?, status = ?, portfolio = ?, portfoliotype = ?, portfoliolength = ? WHERE posting_id = ?");
@@ -137,10 +138,8 @@ public class PostingDAO {
 				posting.setStatus(rSet.getString("status"));
 				posting.setDateCreated(rSet.getDate("dateCreated"));
 				posting.setDateUpdated(rSet.getDate("dateUpdated"));
-				try {
-				posting.setPortfolio(rSet.getBlob("portfolio").getBinaryStream());
-				} catch (Exception ex ) {
-					ex.printStackTrace();
+				if (rSet.getBlob("portfolio") != null) {
+					posting.setPortfolio(rSet.getBlob("portfolio").getBinaryStream());
 				}
 				postings.add(posting);
 			}
@@ -318,10 +317,9 @@ public class PostingDAO {
 				posting.setStatus(rSet.getString("status"));
 				posting.setDateCreated(rSet.getDate("dateCreated"));
 				posting.setDateUpdated(rSet.getDate("dateUpdated"));
-				try {
+				if (rSet.getBlob("portfolio") != null) {
 				posting.setPortfolio(rSet.getBlob("portfolio").getBinaryStream());
-				} catch (Exception ex ) {
-					ex.printStackTrace();
+
 				}
 				postings.add(posting);
 			}
@@ -352,10 +350,9 @@ public class PostingDAO {
 				posting.setStatus(rSet.getString("status"));
 				posting.setDateCreated(rSet.getDate("dateCreated"));
 				posting.setDateUpdated(rSet.getDate("dateUpdated"));
-				try {
+				if (rSet.getBlob("portfolio") != null) {
 				posting.setPortfolio(rSet.getBlob("portfolio").getBinaryStream());
-				} catch (Exception ex ) {
-					ex.printStackTrace();
+
 				}
 				postings.add(posting);
 			}
@@ -370,6 +367,7 @@ public class PostingDAO {
 	public static Posting getPostingById(long postingId) {
 		
 		Posting posting = new Posting();
+		
 		try {
 			conn = DBUtil.getConnection();
 			PreparedStatement pStmt = conn.prepareStatement("SELECT * FROM posting WHERE posting_id = ?");
@@ -389,12 +387,11 @@ public class PostingDAO {
 				posting.setDateUpdated(rSet.getDate("dateUpdated"));
 				posting.setPortfolioLength(rSet.getInt("portfolioLength"));
 				posting.setPortfolioType(rSet.getString("portfolioType"));
+				if (posting.getPortfolioType()!= null) {
 				
-				try {
 					posting.setPortfolio(rSet.getBlob("portfolio").getBinaryStream());
-				} catch (Exception ex) {
-					ex.printStackTrace();
 				}
+				System.out.println("getting: " + posting.getPortfolioType());
 			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();

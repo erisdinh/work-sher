@@ -54,14 +54,14 @@ create table `reviews` (
 create table `posting`(
 `posting_id` int(10) unsigned not null auto_increment,
 `user_id` int(10) unsigned not null,
-`username` varchar(20) NOT NULL,
+`username` varchar(30) NOT NULL,
 `jobCategory` varchar(60) not null,
-`title` varchar(30),
-`description` varchar(200),
+`title` varchar(100),
+`description` text,
 `compensation` varchar(30),
 `status` varchar(10),
 `portfolio` longblob,
-`portfoliotype` varchar(20),
+`portfoliotype` varchar(50),
 `portfoliolength` int(10) unsigned, 
 `portfoliothumb` blob,
 `dateCreated` timestamp not null default current_timestamp,
@@ -103,14 +103,27 @@ INSERT INTO `users` VALUES
 	(4,'Gee','12345','Jorge','g@sheridancollege.ca','2018-11-29 00:00:00','user'),
 	(5,'Peetz','1111','Peter','p@sheridancollege.ca','2018-12-02 00:00:00','user'),
 	(6,'DrAbstract','hallo','Dan','da@sheridancollege.ca','2018-12-01 00:00:00','user'),
-    (7,'Bruno','honey','Ursus','u@sheridancollege.ca','2018-12-02 00:00:00','user');
+	(7,'Bruno','honey','Ursus','u@sheridancollege.ca','2018-12-02 00:00:00','user'),
+    (8,'TBFan','TomBrady','Dario','dar@sheridancollege.ca','2018-12-13 00:00:00','user'),
+	(9,'BikeGuy','Tetsuo','Kaneda','akira@sheridancollege.ca','2018-12-12 00:00:00','user'),
+	(10,'DrProfessor','ringring','Bob John','bobby@sheridancollege.ca','2018-12-09 00:00:00','user');
     
 INSERT INTO posting (posting_id, user_id, username, jobCategory, title, description, compensation, status, dateCreated, dateUpdated) VALUES
 	(1, 6, "DrAbstract", "MATART", "Cat jackets", "The finest jackets made from free-range cats", "10-12 cats", "active", "2018-12-03 00:00:00", "2018-12-07 00:00:00"),
 	(2, 4, "Gee", "ANIGAM", "Character Designs", "Traditional. Please stop asking if I will do pixel art for you", "Ceramics", "active", "2018-12-03 00:00:00",  "2018-12-05 00:00:00"),
 	(3, 7, "Bruno", "APPHEA", "Massage", "Not that kind of massage. I'm a professional", "Website", "active", "2018-12-03 00:00:00", "2018-12-12 00:00:00"),
 	(4, 5, "Peetz", "VISPER", "1 person show", "This is my thesis project. Please come. My mark depends on it", "Something good?", "active", "2018-12-03 00:00:00",  "2018-12-09 00:00:00"),
-	(5, 1, "Dizzle", "PUBSAF", "Security", "I will enforce your lines. No bollards needd", "Website", "active", "2018-12-03 00:00:00", "2018-12-11 00:00:00");
+	(5, 9, "DrProfessor", "APPHEA", "Phrenology", "I will enforce your lines. No bollards needd", "Website", "active", "2018-12-03 00:00:00", "2018-12-11 00:00:00"),
+	(6, 8, "BikeGuy", "CHEMEN", "Dwarf Elephants", "Genetically engineered! Thank you, coop!", "Website", "active", "2018-12-03 00:00:00", "2018-12-11 00:00:00"),
+	(7, 7, "Bruno", "COMSTU", "Personal mascot", "I will enforce your lines. No bollards needd", "Website", "active", "2018-12-03 00:00:00", "2018-12-11 00:00:00"),
+	(8, 7, "DrAbstract", "BUSGEN", "Small Business accounting", "I have a lot of experience", "Website", "active", "2018-12-06 00:00:00", "2018-12-13 00:00:00"),
+	(9, 9, "DrProfessor", "EDUCAT", "Introduction to Semiotics Tutor", "I will enforce your lines. No bollards needd", "Website", "active", "2018-12-07 00:00:00", "2018-12-11 00:00:00"),
+	(10, 5, "Peetz", "ANIGAM", "Multi-platform platforming game", "Java, J2EE, Zim. It has everything and an expanding playerbase. Please try!", "Loyalty", "active", "2018-12-08 00:00:00", "2018-12-12 00:00:00"),
+	(11, 9, "DrProfessor", "APPHEA", "Matholosophy", "I have a very specific set of skills which... are not in much demand now", "Website", "active", "2018-12-10 00:00:00", "2018-12-14 00:00:00"),
+	(12, 9, "DrProfessor", "DESILL", "Life drawing model", "Nude, clothed, drapery studies. I have a lot of props!", "Website", "active", "2018-12-11 00:00:00", "2018-12-11 00:00:00"),
+	(13, 7, "TBFan", "FILMTV", "Play-by-play commentary", "I will enforce your lines. No bollards needd", "Website", "active", "2018-12-11 00:00:00", "2018-12-13 00:00:00"),
+	(14, 6, "DrAbstract", "TECFUN", "ZimJS Accreditation", "Learn ZimJS from the man himself!", "None needed!", "active", "2018-12-12 00:00:00", "2018-12-13 00:00:00"),
+	(15, 9, "DrProfessor", "APPHEA", "Massage", "Yes, that kind of massage", "Negotiable", "active", "2018-12-12 00:00:00", "2018-12-13 00:00:00");
 
 INSERT INTO reviews (review_id, for_user_id, from_user_id, posting_id, review_date, review_rating, review_text) VALUES
 	(1, 6, 1, 1, "2018-12-05 00:00:00", 0.5, "This feels more like coyote than cat" ),
@@ -118,7 +131,16 @@ INSERT INTO reviews (review_id, for_user_id, from_user_id, posting_id, review_da
 	(3, 6, 5, 1, "2018-12-07 00:00:00", 4.0, "This is a fine jacket. I would and have recommended this service" ),
 	(4, 4, 5, 2, "2018-12-07 00:00:00", 1.0, "This ain't pixel art, my guy" ),
 	(5, 1, 5, 5, "2018-12-08 00:00:00", 0.5, "I did not feel secured" ),
-	(6, 7, 5, 3, "2018-12-08 00:00:00", 0.0, "Bear claws scratch. :(" );
+	(6, 7, 5, 3, "2018-12-08 00:00:00", 0.0, "Bear claws scratch. :(" ),
+	(7, 8, 5, 6, "2018-12-08 00:00:00", 5.0, "This elephant is all i want and more" ),
+	(8, 6, 3, 8, "2018-12-08 00:00:00", 4.0, "Great!" ),
+	(9, 6, 5, 8, "2018-12-08 00:00:00", 2.5, "OK :/"),
+	(10, 7, 5, 7, "2018-12-08 00:00:00", 2.0, "Less than ok."),
+	(11, 6, 5, 8, "2018-12-10 00:00:00", 4.0, "Really good!" ),
+	(12, 5, 8, 10, "2018-12-10 00:00:00", 5.0, "Wow! would use again" ),
+	(13, 9, 5, 11, "2018-12-11 00:00:00", 3.0, "Better than I thought" ),
+	(14, 6, 5, 14, "2018-12-11 00:00:00", 2.5, "Average. But a really nice person!" ),
+	(15, 7, 5, 13, "2018-12-12 00:00:00", 3.5, "A little better than ok" );
     
 INSERT INTO jobCategory (jobCategoryId, jobCategoryDesc) VALUES 
 	("BUSGEN", "Business"),
@@ -140,12 +162,16 @@ INSERT INTO jobCategory (jobCategoryId, jobCategoryDesc) VALUES
     ("TECFUN", "Technology Fundamentals");
     
 INSERT INTO orders (order_id, requestOrderUser_id, postOrderUser_id, posting_id, description, dateRequested, dateResponsed, dateCompleted, status) VALUES
-	(1, 1, 6, 1, "The finest jackets made from free-range cats", cast("2018-12-04 00:00:00" as datetime), cast("2018-12-05 00:00:00" as datetime), cast("2018-12-07 00:00:00 as datetime" as datetime), "Pending"),
+	(1, 1, 6, 1, "The finest jackets made from free-range cats", cast("2018-12-04 00:00:00" as datetime), cast("2018-12-05 00:00:00" as datetime), cast("2018-12-07 00:00:00" as datetime), "Pending"),
 	(2, 2, 5, 4, "This is my thesis project. Please come. My mark depends on it", cast("2018-12-04 00:00:00" as datetime), cast("2018-12-05 00:00:00" as datetime), cast("2018-12-07 00:00:00" as datetime), "Approved"),
 	(3, 5, 6, 1, "The finest jackets made from free-range cats", cast("2018-12-05 00:00:00" as datetime), cast("2018-12-07 00:00:00" as datetime), cast("2018-12-10 00:00:00" as datetime), "Completed"),
 	(4, 5, 4, 2, "Traditional. Please stop asking if I will do pixel art for you", cast("2018-12-05 00:00:00" as datetime), cast("2018-12-07 00:00:00" as datetime), cast("2018-12-10 00:00:00" as datetime), "Pending"),
 	(5, 5, 1, 5, "I will enforce your lines. No bollards needd", cast("2018-12-05 00:00:00" as datetime), cast("2018-12-07 00:00:00" as datetime), cast("2018-12-11 00:00:00" as datetime), "Approved"),
-	(6, 5, 7, 3, "Not that kind of massage. I'm a professional", cast("2018-12-06 00:00:00" as datetime), cast("2018-12-09 00:00:00" as datetime), cast("2018-12-12 00:00:00" as datetime), "Completed");
+	(6, 8, 12, 9, "Nude, clothed, drapery studies. I have a lot of props!", cast("2018-12-06 00:00:00" as datetime), cast("2018-12-09 00:00:00" as datetime), cast("2018-12-12 00:00:00" as datetime), "Completed"),
+	(7, 7, 12, 9, "Nude, clothed, drapery studies. I have a lot of props!", cast("2018-12-06 00:00:00" as datetime), cast("2018-12-09 00:00:00" as datetime), cast("2018-12-12 00:00:00" as datetime), "Pending"),
+	(8, 2, 5, 10, "Java, J2EE, Zim. It has everything and an expanding playerbase. Please try!", cast("2018-12-06 00:00:00" as datetime), cast("2018-12-09 00:00:00" as datetime), cast("2018-12-12 00:00:00" as datetime), "Completed"),
+	(9, 1, 5, 10, "Java, J2EE, Zim. It has everything and an expanding playerbase. Please try!", cast("2018-12-06 00:00:00" as datetime), cast("2018-12-09 00:00:00" as datetime), cast("2018-12-12 00:00:00" as datetime), "Approved"),
+	(10, 4, 5, 10,"Java, J2EE, Zim. It has everything and an expanding playerbase. Please try!", cast("2018-12-06 00:00:00" as datetime), cast("2018-12-09 00:00:00" as datetime), cast("2018-12-12 00:00:00" as datetime), "Completed");
 
 
 
