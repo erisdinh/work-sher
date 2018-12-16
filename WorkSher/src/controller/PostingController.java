@@ -59,6 +59,13 @@ public class PostingController extends HttpServlet {
 		String action = request.getParameter("action");
 		
 		if (action.equalsIgnoreCase("search")) {
+			String searchTerm = request.getParameter("searchTerm");
+			
+			
+			forward = LIST_POSTINGS;
+			request.setAttribute("postings", PostingDAO.getSearchResults(searchTerm));
+			
+		} else if (action.equalsIgnoreCase("advsearch")) {
 			String searchTitle = request.getParameter("title");
 			String searchJobCategory = request.getParameter("jobCategory");
 			String searchDescription = request.getParameter("description");
@@ -114,9 +121,15 @@ public class PostingController extends HttpServlet {
 		posting.setDescription(request.getParameter("description"));
 		posting.setCompensation(request.getParameter("compensation"));
 		posting.setStatus(request.getParameter("status"));
-		InputStream portfolio = request.getPart("portfolio").getInputStream();
+		Part portfolioPart = request.getPart("portfolio");
+		InputStream portfolio = portfolioPart.getInputStream();
 		posting.setPortfolio(portfolio);
 		
+		String portfolioType = portfolioPart.getContentType();
+		posting.setPortfolioType(portfolioType);
+		int portfolioLength = Math.toIntExact(portfolioPart.getSize());
+		System.out.println(portfolioLength);
+		posting.setPortfolioLength(portfolioLength);
 		
 		
 		//// what

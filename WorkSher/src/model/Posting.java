@@ -19,6 +19,8 @@ public class Posting implements Serializable {
 	private String compensation;
 	private String status;
 	private InputStream portfolio;
+	private String portfolioType;
+	private int portfolioLength;
 	private InputStream portfolioThumb;
 	private Date dateCreated;
 	private Date dateUpdated;
@@ -135,6 +137,22 @@ public class Posting implements Serializable {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public String getPortfolioType() {
+		return portfolioType;
+	}
+
+	public void setPortfolioType(String portfolioType) {
+		this.portfolioType = portfolioType;
+	}
+
+	public int getPortfolioLength() {
+		return portfolioLength;
+	}
+
+	public void setPortfolioLength(int portfolioLength) {
+		this.portfolioLength = portfolioLength;
 	}
 	
 }
