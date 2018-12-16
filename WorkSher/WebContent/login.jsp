@@ -7,7 +7,6 @@
 <title>WorkSher | Log in</title>
 <link rel="stylesheet" type="text/css" href="css/main.css">
 <style type="text/css">
-
 html, body {
 	background-color: #393E46;
 }
