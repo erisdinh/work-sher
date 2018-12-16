@@ -12,7 +12,6 @@ public class UserDAO {
 	private static Connection conn = null;
 	
 	// Method to add the user to the database
-	// TESTED - This works
 	public static void addUser(User user) {	
 		try {
 			conn = DBUtil.getConnection();
@@ -37,6 +36,25 @@ public class UserDAO {
 		}
 	}
 
+	// Method to change the user's role
+	public static void deleteUser(User user) {
+		try {
+			conn = DBUtil.getConnection();
+			PreparedStatement pStmt = conn.prepareStatement("UPDATE users SET"
+													      + " name = ?,"
+														  + " role = ?"
+														  + " WHERE user_id = ?");					
+			pStmt.setString(1, (user.getName() + " (deleted user)"));
+			pStmt.setString(2, "deleted");
+			pStmt.setLong(3, user.getUserid());
+			pStmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.closeConnection(conn);
+		}
+	}
+	
 	// Method to update user details in database
 	public static void updateUser(User user) {
 		try {

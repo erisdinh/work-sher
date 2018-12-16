@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,20 +25,33 @@ public class Login extends HttpServlet {
 		// Get parameters from the login form
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-	
+		String feedback = "";
+		String url;
+		
 		// Check if the username and matching password are in the database
 		User user = UserDAO.authenticateUser(username, password);
 		
-		// If login is valid, action to be taken
+		// If login is valid
 		if (user != null) {
-			// Create a new session and associate it with the user
-			HttpSession session = request.getSession();
-			session.setAttribute("currentUser", user);	
-			response.sendRedirect("homepage.jsp");
 			
-		// If invalid, go to registration page
+			// Check if user is trying to access a deleted account
+			if (user.getRole().equalsIgnoreCase("deleted")) {
+				feedback = "ERROR: This account has been deleted. Please contact an administrator to reinstate it.";
+				url = "login.jsp";
+				
+			} else { // If account exists and has not been deleted
+				// Create a new session and associate it with the user
+				HttpSession session = request.getSession();
+				session.setAttribute("currentUser", user);	
+				url = "homepage.jsp";
+			}	
+		// If invalid, set error message to display on page
 		} else {
-			response.sendRedirect("register.jsp");
-		}
+			feedback = "ERROR: Incorrect username or password.";
+			url = "login.jsp";
+		}		
+		request.setAttribute("feedback", feedback);
+		RequestDispatcher rd = request.getRequestDispatcher(url);
+		rd.forward(request, response);
 	}
 }

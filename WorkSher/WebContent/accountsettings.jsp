@@ -17,6 +17,7 @@
 	<label for="currpassword">Current Password: </label><input type="password" id="currpassword" name="currpassword" required><br>
 	<input type="submit" id="submit" value="Save Changes" disabled>
 	</form>
+	<a href="ManageAccount?action=delete">Delete Account</a>
 </body>
 <script type="text/javascript">
 document.getElementById("newpassword").addEventListener("keyup", checkPass); 
