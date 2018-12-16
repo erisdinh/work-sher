@@ -6,6 +6,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<script>
+</script>
 <title>Insert title here</title>
 </head>
 <% 
@@ -36,8 +38,16 @@
 						<td><input type = "text" name = "user">
 						<td>Description: </td>
 						<td><input type = "text" name = "description"></td>
+					</tr>
+					<tr>
+						<td>Start Date:</td>
+						<td><input type = "date" name = "startDate" min = "2018-12-01 "id = "startDate"></td>
+						<td>End Date:</td>
+						<td><input type = "date" name = "startDate"max = "2018-12-01" id = "endDate"></td>
+						
 						<td><input type = "submit" value = "search"></td>
 					</tr>
+					
 				</table>
 		</form>
 	</div>

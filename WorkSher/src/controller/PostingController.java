@@ -18,6 +18,7 @@ import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Enumeration;
 
 import javax.imageio.ImageIO;
 import javax.servlet.RequestDispatcher;
@@ -133,6 +134,17 @@ public class PostingController extends HttpServlet {
 		posting.setDescription(request.getParameter("description"));
 		posting.setCompensation(request.getParameter("compensation"));
 		posting.setStatus(request.getParameter("status"));
+		System.out.println("in PC: " + request.getParameter("dateUpdated"));
+		try {
+			Date dateUpdated = new SimpleDateFormat("dd/MM/yyyy").parse(request.getParameter("dateUpdated"));
+			posting.setDateUpdated(dateUpdated);
+		} catch (ParseException ex) {
+			ex.printStackTrace();
+		}
+//		Date dateUpdated = new java.sql.Date(     ((Date)request.getAttribute("dateUpdated")).getTime()     );
+//		posting.setDateUpdated(dateUpdated);
+		
+		//posting.setDateUpdated(request.getParameter("dateUpdated"));
 		Part portfolioPart = request.getPart("portfolio");
 		InputStream portfolio = portfolioPart.getInputStream();
 		posting.setPortfolio(portfolio);

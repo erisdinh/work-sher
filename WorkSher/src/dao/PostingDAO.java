@@ -58,18 +58,22 @@ public class PostingDAO {
 		System.out.println("updating: " + posting.getPortfolioType());
 		try {
 			conn = DBUtil.getConnection();
-			PreparedStatement pStmt = conn.prepareStatement("UPDATE posting SET jobCategory = ?, title = ?, description = ?, compensation = ?, status = ?, portfolio = ?, portfoliotype = ?, portfoliolength = ? WHERE posting_id = ?");
+			PreparedStatement pStmt = conn.prepareStatement("UPDATE posting SET jobCategory = ?, title = ?, description = ?, compensation = ?, status = ?, portfolio = ?, portfoliotype = ?, portfoliolength = ?, dateUpdated = ? WHERE posting_id = ?");
 			pStmt.setString(1, posting.getJobCategory());
 			pStmt.setString(2, posting.getTitle());
 			pStmt.setString(3, posting.getDescription());
 			pStmt.setString(4, posting.getCompensation());
 			pStmt.setString(5, posting.getStatus());
 			pStmt.setBlob(6, posting.getPortfolio());
+			
 
 			pStmt.setString(7, posting.getPortfolioType());
 			pStmt.setInt(8, posting.getPortfolioLength());
-
-			pStmt.setLong(9, posting.getPostingId());
+			System.out.println(posting.getDateUpdated());
+			System.out.println(posting.getDateUpdated().getTime());
+			pStmt.setDate(9, new java.sql.Date(posting.getDateUpdated().getTime()));
+			
+			pStmt.setLong(10, posting.getPostingId());
 			
 			pStmt.executeUpdate();
 		} catch (SQLException ex) {
