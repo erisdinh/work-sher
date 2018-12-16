@@ -85,7 +85,27 @@ public class PostingController extends HttpServlet {
 			forward = LIST_POSTINGS;
 			request.setAttribute("postings", PostingDAO.getAdvancedSearchResults(searchTitle, searchJobCategory, searchDescription, searchUser));
 			
-		} else if (action.equalsIgnoreCase("delete")) {
+		} else if (action.equalsIgnoreCase("deactivate")) {
+			int postingId = Integer.parseInt(request.getParameter("postingId"));
+			
+			PostingDAO.deactivatePostingById(postingId);
+			forward = LIST_POSTINGS;
+			
+			request.setAttribute("postings", PostingDAO.getAllPostings());
+			
+		
+		} else if (action.equalsIgnoreCase("activate")) {
+			int postingId = Integer.parseInt(request.getParameter("postingId"));
+			
+			PostingDAO.activatePostingById(postingId);
+			forward = LIST_POSTINGS;
+			
+			request.setAttribute("postings", PostingDAO.getAllPostings());
+			
+		
+		}
+		
+		else if (action.equalsIgnoreCase("delete")) {
 			int postingId = Integer.parseInt(request.getParameter("postingId"));
 			
 			PostingDAO.deletePostingById(postingId);
@@ -107,6 +127,7 @@ public class PostingController extends HttpServlet {
 			if (action.equalsIgnoreCase("edit")) {
 				forward = INSERT_OR_EDIT;
 			} else {
+
 				forward = VIEW;
 			}
 		} else {

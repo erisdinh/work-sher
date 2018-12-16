@@ -1,23 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Order</title>
+<title>Insert title here</title>
 </head>
 <body>
 	<h1>Order Information:</h1>
 	<table border=1>
-		<c:if test="${type=='old'}">
-			<tr>
-				<td>OrderID:</td>
-				<td>${order.orderid}</td>
+		<tr>
+			<td>OrderID:</td>
+			<td>${order.orderid}</td>
 		</tr>
-		</c:if>
 		<tr>
 			<td>PostingID:</td>
 			<td>${order.posting.postingId}</td>
@@ -75,31 +70,5 @@
 			</c:if>
 		</c:if>
 	</table>
-	
-	</br>
-	
-	<form action="ManageOrder">
-		<c:if test="${currentUser.userid==order.requestUser.userid}">
-			<c:if test="${order.status=='Pending'}">
-				<button type="submit" value="cancel" name="action">Cancel</button>
-				<button type="submit" value="edit" name="action">Edit</button>
-			</c:if>
-			<c:if test="${order.status=='Approved'}">
-				<button type="submit" value="cancel" name="action">Cancel</button>
-			</c:if>
-		</c:if>
-		<c:if test="${currentUser.userid==order.postUser.userid}">
-			<c:if test="${order.status=='Pending'}">
-				<button type="submit" value="reject" name="action">Reject</button>
-				<button type="submit" value="approve" name="action">Approve</button>
-			</c:if>
-			<c:if test="${order.status=='Approved'}">
-				<button type="submit" value="complete" name="action">Complete</button>
-			</c:if>
-		</c:if>
-		<c:if test="${order.status=='Completed'}">
-				<button type="submit" value="review" name="action">Review</button>
-		</c:if>
-	</form>
 </body>
 </html>
