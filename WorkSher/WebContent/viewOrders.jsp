@@ -94,9 +94,7 @@ table {
 }
 
 #pageButton {
-	position: absolute;
-	right: 10%;
-	bottom: 3%;
+	text-align: right;
 }
 </style>
 </head>
