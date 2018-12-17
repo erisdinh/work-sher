@@ -22,31 +22,20 @@
 	request.setAttribute("postings", postings);
 %>
 <body>
-
-	<div id = "postingsTable">
-		<table border = 1>
-			<thead>
-				<tr>
-					<th>Job Category</th>
-					<th>Title</th>
-					<th>Classmate</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach var = "posting" items = "${postings }">
-				<tr>
-					<td><c:out value = "${posting.jobCategory }"/></td>
-					<td><a href="PostingController?action=view&postingId=<c:out value = "${posting.postingId}"/>"><c:out value = "${posting.title}"/></a></td>
-					<td><c:out value = "${posting.username }"/></td>
-				</tr>
-				</c:forEach>
-			</tbody>
-		</table>
-	</div>
-	<div id = "postingsDivs">
-	<c:forEach var = "posting" items = "${postings}">
-		<div><a href="PostingController?action=view&postingId=<c:out value = "${posting.postingId}"/>">"<c:out value = "${posting.title}"/>" from user: <c:out value = "${posting.username }"/></div></a><br>
+	<div id = "posting-nav-menu">
+		<c:forEach var = "category" items = "${categories }">
+			<p><a href="PostingController?action=catSearch&jobCategory=<c:out value ="${category.jobCategoryId }"/>" class = "posting-nav-menu-items"><c:out value ="${category.jobCategoryDesc } "   /></a></p>
+			<input hidden name = "action" value = "advsearch">
 		</c:forEach>
 	</div>
+	
+		<c:forEach items="${postings}" var="posting">
+		<div class="posting">
+		<h3><a href="PostingController?action=view&postingId=${posting.postingId}">${posting.title}</a></h3>
+		<p>${posting.username }</p>
+		<p>${posting.description}</p>
+		<p class = "compensation">Compensation: <b>${posting.compensation}</b></p>
+		</div>
+	</c:forEach>
 </body>
 </html>

@@ -19,7 +19,7 @@
 			<div class="menu-items" id="profile-dropdown">
 				<a href="accountsettings.jsp" class="menu-item">Settings</a> 
 				<a href="LoadProfile?userId=${currentUser.userid}" class="menu-item">Public Profile</a>
-				<a href="" class="menu-item">Logout</a>
+				<a href="Login?action=logout" class="menu-item">Logout</a>
 			</div>
 		</div>
 		<div class="drop-menu">

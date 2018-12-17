@@ -69,21 +69,35 @@ public class PostingController extends HttpServlet {
 			
 		} else if (action.equalsIgnoreCase("catSearch")) {
 			String searchTitle = "";
-			String searchJobCategory = request.getParameter("jobCategory");
+			String searchJobCategory = request.getParameter("jobCategory").toLowerCase();
 			String searchDescription = "";
 			String searchUser = "";
-
+			String searchStartDate = "2018-12-01";
+			String searchEndDate = "2999-12-31";
 			forward = LIST_POSTINGS;
-			request.setAttribute("postings", PostingDAO.getAdvancedSearchResults(searchTitle, searchJobCategory, searchDescription, searchUser));
+			request.setAttribute("postings", PostingDAO.getAdvancedSearchResults(searchTitle, searchJobCategory, searchDescription, searchUser, searchStartDate, searchEndDate));
 			
 		} else if (action.equalsIgnoreCase("advsearch")) {
-			String searchTitle = request.getParameter("title");
-			String searchJobCategory = request.getParameter("jobCategory");
-			String searchDescription = request.getParameter("description");
-			String searchUser = request.getParameter("user");
-
+			String searchTitle = request.getParameter("title").toLowerCase();
+			String searchJobCategory = request.getParameter("jobCategory").toLowerCase();
+			String searchDescription = request.getParameter("description").toLowerCase();
+			String searchUser = request.getParameter("user").toLowerCase();
+			String searchStartDate = request.getParameter("startDate");
+			String searchEndDate = request.getParameter("endDate");
+			System.out.println(searchStartDate + " " + searchEndDate);
+			//			try {
+//				Date startDate = new SimpleDateFormat("dd/MM/yyyy").parse(request.getParameter("startDate"));
+//				
+//			} catch (ParseException e) {
+//				e.printStackTrace();
+//			}
+//			try {
+//				Date endDate = new SimpleDateFormat("dd/MM/yyyy").parse(request.getParameter("endDate"));
+//			} catch (ParseException e) {
+//				e.printStackTrace();
+//			}
 			forward = LIST_POSTINGS;
-			request.setAttribute("postings", PostingDAO.getAdvancedSearchResults(searchTitle, searchJobCategory, searchDescription, searchUser));
+			request.setAttribute("postings", PostingDAO.getAdvancedSearchResults(searchTitle, searchJobCategory, searchDescription, searchUser, searchStartDate, searchEndDate));
 			
 		} else if (action.equalsIgnoreCase("deactivate")) {
 			int postingId = Integer.parseInt(request.getParameter("postingId"));

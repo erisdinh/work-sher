@@ -54,4 +54,20 @@ public class Login extends HttpServlet {
 		RequestDispatcher rd = request.getRequestDispatcher(url);
 		rd.forward(request, response);
 	}
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String action = request.getParameter("action");
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("currentUser");
+		String feedback = "";
+		
+		if (action.equalsIgnoreCase("logout")) {
+			session.removeAttribute("currentUser");
+			feedback = "You have been logged out.";
+		}
+		
+		request.setAttribute("feedback", feedback);
+		RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+		rd.forward(request, response);
+	}
 }

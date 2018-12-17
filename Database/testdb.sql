@@ -112,17 +112,17 @@ INSERT INTO posting (posting_id, user_id, username, jobCategory, title, descript
 	(2, 4, "Gee", "ANIGAM", "Character Designs", "Traditional. Please stop asking if I will do pixel art for you", "Ceramics", "active", "2018-12-03 00:00:00",  "2018-12-05 00:00:00"),
 	(3, 7, "Bruno", "APPHEA", "Massage", "Not that kind of massage. I'm a professional", "Website", "active", "2018-12-03 00:00:00", "2018-12-12 00:00:00"),
 	(4, 5, "Peetz", "VISPER", "1 person show", "This is my thesis project. Please come. My mark depends on it", "Something good?", "active", "2018-12-03 00:00:00",  "2018-12-09 00:00:00"),
-	(5, 9, "DrProfessor", "APPHEA", "Phrenology", "I will enforce your lines. No bollards needd", "Website", "active", "2018-12-03 00:00:00", "2018-12-11 00:00:00"),
+	(5, 10, "DrProfessor", "APPHEA", "Phrenology", "I will enforce your lines. No bollards needd", "Website", "active", "2018-12-03 00:00:00", "2018-12-11 00:00:00"),
 	(6, 8, "BikeGuy", "CHEMEN", "Dwarf Elephants", "Genetically engineered! Thank you, coop!", "Website", "active", "2018-12-03 00:00:00", "2018-12-11 00:00:00"),
-	(7, 7, "Bruno", "COMSTU", "Personal mascot", "I will enforce your lines. No bollards needd", "Website", "active", "2018-12-03 00:00:00", "2018-12-11 00:00:00"),
+	(7, 7, "Bruno", "APPHEA", "Personal mascot", "I will enforce your lines. No bollards needd", "Website", "active", "2018-12-03 00:00:00", "2018-12-11 00:00:00"),
 	(8, 7, "DrAbstract", "BUSGEN", "Small Business accounting", "I have a lot of experience", "Website", "active", "2018-12-06 00:00:00", "2018-12-13 00:00:00"),
-	(9, 9, "DrProfessor", "EDUCAT", "Introduction to Semiotics Tutor", "I will enforce your lines. No bollards needd", "Website", "active", "2018-12-07 00:00:00", "2018-12-11 00:00:00"),
+	(9, 10, "DrProfessor", "EDUCAT", "Introduction to Semiotics Tutor", "I will enforce your lines. No bollards needd", "Website", "active", "2018-12-07 00:00:00", "2018-12-11 00:00:00"),
 	(10, 5, "Peetz", "ANIGAM", "Multi-platform platforming game", "Java, J2EE, Zim. It has everything and an expanding playerbase. Please try!", "Loyalty", "active", "2018-12-08 00:00:00", "2018-12-12 00:00:00"),
-	(11, 9, "DrProfessor", "APPHEA", "Matholosophy", "I have a very specific set of skills which... are not in much demand now", "Website", "active", "2018-12-10 00:00:00", "2018-12-14 00:00:00"),
-	(12, 9, "DrProfessor", "DESILL", "Life drawing model", "Nude, clothed, drapery studies. I have a lot of props!", "Website", "active", "2018-12-11 00:00:00", "2018-12-11 00:00:00"),
-	(13, 7, "TBFan", "FILMTV", "Play-by-play commentary", "I will enforce your lines. No bollards needd", "Website", "active", "2018-12-11 00:00:00", "2018-12-13 00:00:00"),
+	(11, 10, "DrProfessor", "APPHEA", "Matholosophy", "I have a very specific set of skills which... are not in much demand now", "Website", "active", "2018-12-10 00:00:00", "2018-12-14 00:00:00"),
+	(12, 10, "DrProfessor", "DESILL", "Life drawing model", "Nude, clothed, drapery studies. I have a lot of props!", "Website", "active", "2018-12-11 00:00:00", "2018-12-11 00:00:00"),
+	(13, 8, "TBFan", "FILMTV", "Play-by-play commentary", "I will enforce your lines. No bollards needd", "Website", "active", "2018-12-11 00:00:00", "2018-12-13 00:00:00"),
 	(14, 6, "DrAbstract", "TECFUN", "ZimJS Accreditation", "Learn ZimJS from the man himself!", "None needed!", "active", "2018-12-12 00:00:00", "2018-12-13 00:00:00"),
-	(15, 9, "DrProfessor", "APPHEA", "Massage", "Yes, that kind of massage", "Negotiable", "active", "2018-12-12 00:00:00", "2018-12-13 00:00:00");
+	(15, 10, "DrProfessor", "APPHEA", "Massage", "Yes, that kind of massage", "Negotiable", "active", "2018-12-12 00:00:00", "2018-12-13 00:00:00");
 
 INSERT INTO reviews (review_id, for_user_id, from_user_id, order_id, review_date, review_rating, review_text) VALUES
 	(1, 6, 1, 1, "2018-12-05 00:00:00", 0.5, "This feels more like coyote than cat" ),
@@ -153,7 +153,6 @@ INSERT INTO jobCategory (jobCategoryId, jobCategoryDesc) VALUES
     ("MATART", "Material Art and Design"),
     ("APPCOM", "Applied Computing"),
     ("CHEMEN", "Chemical and Environmental Sciences"),
-    ("COMSTU", "Community Studies"),
     ("PUBSAF", "Public Safety"),
     ("HUMSOC", "Humanities & Social Sciences"),
     ("EDUCAT", "Education"),

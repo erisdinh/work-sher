@@ -17,7 +17,7 @@
 		<c:if test = "${posting.status == 'inactive'}">
 			This is an inactive post and you are unable to place orders for it</br>
 		</c:if>
-		User: ${posting.username}</br>
+		User: <a href="LoadProfile?userId=<c:out value = "${posting.userId }"/>">${posting.username}</a></br>
 		Title: ${posting.title }</br>
 		Category: ${posting.jobCategory}</br>
 		Description: ${posting.description }</br>
