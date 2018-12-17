@@ -30,19 +30,13 @@
 		</div>
 		<div class="drop-menu">
 			<div class="menu-title" id="orders-menu">Orders</div>
-			<c:choose>
-				<c:when test="${currentUser.role=='admin'}">
-					<div class="menu-items" id="orders-dropdown">
-						<a href="viewOrders.jsp?initial=true&load=all" class="menu-item">View All Orders</a> 
-					</div> 
-				</c:when>
-				<c:otherwise>
-					<div class="menu-items" id="orders-dropdown">
-						<a href="viewOrders.jsp?initial=true&load=received" class="menu-item">Received Orders</a> 
-						<a href="viewOrders.jsp?initial=true&load=requested" class="menu-item">Placed Orders</a>
-					</div> 
-				</c:otherwise>
-			</c:choose>
+				<div class="menu-items" id="orders-dropdown">
+					<c:if test = "${currentUser.role.equalsIgnoreCase('admin')}">
+					<a href="viewOrders.jsp?initial=true&load=all" class="menu-item">View All Orders</a>
+					</c:if>
+					<a href="viewOrders.jsp?initial=true&load=received" class="menu-item">Received Orders</a> 
+					<a href="viewOrders.jsp?initial=true&load=requested" class="menu-item">Placed Orders</a>
+				</div> 
 		</div>
 		<div class="drop-menu">
 			<div class="menu-title">Reviews</div>

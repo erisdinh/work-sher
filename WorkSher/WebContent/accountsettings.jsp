@@ -40,11 +40,26 @@ input[type=text], input[type=password] {
 	margin-left: auto;
 	margin-right: auto;
 }
+
+#submit:disabled {
+	color: #00ADB5;
+	background-color: white;
+	border: solid 1px #00ADB5;
+}
+
+.feedback {
+	color: #FC3C3C;
+	font-size: 0.75em;
+	font-style: italic;
+	display: block;
+	text-align: center;
+}
 </style>
 </head>
 <body>
 	<jsp:include page="nav.jsp"></jsp:include>
 	<h2>Account Settings for ${currentUser.name}</h2>
+	<p class = "feedback">${feedback}</p>
 	<form action="ManageAccount" method="POST">
 	<span class="label">Username:</span> <p class ="username">${currentUser.username}</p><br>
 	<label for="name">Name: </label><input type="text" id="name" name="name" placeholder="${currentUser.name}"><br>
