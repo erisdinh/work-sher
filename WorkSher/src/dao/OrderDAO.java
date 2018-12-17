@@ -205,7 +205,7 @@ public class OrderDAO {
 
 			while (rs.next()) {
 				Order order = new Order();
-				order.setOrderid(rs.getInt("order_id"));
+				order.setOrderid(rs.getLong("order_id"));
 
 				long requestUserId = rs.getLong("requestOrderUser_id");
 				User requestUser = UserDAO.getUserById(requestUserId);
@@ -319,6 +319,7 @@ public class OrderDAO {
 	}
 
 	public static ArrayList<Order> searchReceivedOrdersByJobCategory(long tempRequestUserId, String jobCategory) {
+		System.out.println("searchReceivedOrders");
 		ArrayList<Order> receivedOrders = new ArrayList<>();
 
 		Connection connection = null;
@@ -337,7 +338,7 @@ public class OrderDAO {
 
 			while (rs.next()) {
 				Order order = new Order();
-				order.setOrderid(rs.getInt("order_id"));
+				order.setOrderid(rs.getLong("order_id"));
 
 				long requestUserId = rs.getLong("requestOrderUser_id");
 				User requestUser = UserDAO.getUserById(requestUserId);
@@ -358,6 +359,7 @@ public class OrderDAO {
 				order.setStatus(rs.getString("status"));
 
 				receivedOrders.add(order);
+				System.out.println("search successfully");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -387,7 +389,7 @@ public class OrderDAO {
 
 			while (rs.next()) {
 				Order order = new Order();
-				order.setOrderid(rs.getInt("order_id"));
+				order.setOrderid(rs.getLong("order_id"));
 
 				long requestUserId = rs.getLong("requestOrderUser_id");
 				User requestUser = UserDAO.getUserById(requestUserId);
@@ -428,7 +430,7 @@ public class OrderDAO {
 
 			connection = DBUtil.getConnection();
 			PreparedStatement pstmt = connection.prepareStatement(
-					"select * from orders where postOrderUser_id = ? and posting_id in (select posting_id from posting where title like '%?%') order by order_id desc");
+					"select * from orders where postOrderUser_id = ? and posting_id in (select posting_id from posting where title like ?) order by order_id desc");
 
 			pstmt.setLong(1, tempPostUserId);
 			pstmt.setString(2, title);
@@ -437,7 +439,7 @@ public class OrderDAO {
 
 			while (rs.next()) {
 				Order order = new Order();
-				order.setOrderid(rs.getInt("order_id"));
+				order.setOrderid(rs.getLong("order_id"));
 
 				long requestUserId = rs.getLong("requestOrderUser_id");
 				User requestUser = UserDAO.getUserById(requestUserId);
@@ -478,7 +480,7 @@ public class OrderDAO {
 
 			connection = DBUtil.getConnection();
 			PreparedStatement pstmt = connection.prepareStatement(
-					"select * from orders where requestOrderUser_id = ? and posting_id in (select posting_id from posting where title like '%?%') order by order_id desc");
+					"select * from orders where requestOrderUser_id = ? and posting_id in (select posting_id from posting where title like ?) order by order_id desc");
 
 			pstmt.setLong(1, tempRequestUserId);
 			pstmt.setString(2, title);
@@ -487,7 +489,7 @@ public class OrderDAO {
 
 			while (rs.next()) {
 				Order order = new Order();
-				order.setOrderid(rs.getInt("order_id"));
+				order.setOrderid(rs.getLong("order_id"));
 
 				long requestUserId = rs.getLong("requestOrderUser_id");
 				User requestUser = UserDAO.getUserById(requestUserId);
@@ -537,7 +539,7 @@ public class OrderDAO {
 
 			while (rs.next()) {
 				Order order = new Order();
-				order.setOrderid(rs.getInt("order_id"));
+				order.setOrderid(rs.getLong("order_id"));
 
 				long requestUserId = rs.getLong("requestOrderUser_id");
 				User requestUser = UserDAO.getUserById(requestUserId);
@@ -587,7 +589,7 @@ public class OrderDAO {
 
 			while (rs.next()) {
 				Order order = new Order();
-				order.setOrderid(rs.getInt("order_id"));
+				order.setOrderid(rs.getLong("order_id"));
 
 				long requestUserId = rs.getLong("requestOrderUser_id");
 				User requestUser = UserDAO.getUserById(requestUserId);
@@ -636,7 +638,7 @@ public class OrderDAO {
 
 			while (rs.next()) {
 				Order order = new Order();
-				order.setOrderid(rs.getInt("order_id"));
+				order.setOrderid(rs.getLong("order_id"));
 
 				long requestUserId = rs.getLong("requestOrderUser_id");
 				User requestUser = UserDAO.getUserById(requestUserId);
@@ -686,7 +688,7 @@ public class OrderDAO {
 
 			while (rs.next()) {
 				Order order = new Order();
-				order.setOrderid(rs.getInt("order_id"));
+				order.setOrderid(rs.getLong("order_id"));
 
 				long requestUserId = rs.getLong("requestOrderUser_id");
 				User requestUser = UserDAO.getUserById(requestUserId);
@@ -735,7 +737,7 @@ public class OrderDAO {
 
 			while (rs.next()) {
 				Order order = new Order();
-				order.setOrderid(rs.getInt("order_id"));
+				order.setOrderid(rs.getLong("order_id"));
 
 				long requestUserId = rs.getLong("requestOrderUser_id");
 				User requestUser = UserDAO.getUserById(requestUserId);

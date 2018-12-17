@@ -43,6 +43,7 @@ public class LoadOrders extends HttpServlet {
 				orders = OrderDAO.getReceivedOrders(user.getUserid());
 			} else if (searchBy.equals("jobCategory")) {
 				String jobCategory = request.getParameter("category");
+				System.out.println(jobCategory);
 				orders = OrderDAO.searchReceivedOrdersByJobCategory(user.getUserid(), jobCategory);
 			} else if (searchBy.equals("title")) {
 				String title = request.getParameter("title");
