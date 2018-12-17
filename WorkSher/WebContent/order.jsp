@@ -9,15 +9,32 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>WorkSher | Order Information</title>
+<link rel="stylesheet" href="css/main.css" type="text/css">
 <style type="text/css">
-html,body {
-	height: 100%;
-	min-height: 100%;
-}
-
 .body {
 	height: 100%;
-	min-height: 100%;
+	width: 80%;
+	background-color: white;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 1%;
+	border-radius: 15px;
+	font-size: 25px;
+}
+
+button {
+	background-color: #00ADB5;
+	font-family: Arial, sans-serif;
+	font-size: 1em;
+	color: white;
+	height: 2em;
+	border: none;
+	border-radius: 2px;
+}
+
+#message{
+	color: red;
+	font-style: italic;
 }
 </style>
 </head>
@@ -33,11 +50,11 @@ html,body {
 
 	<div class="body">
 		<c:if test="${orderMessage!=null}">
-			<span>${orderMessage}</span>
+			<span id="message">${orderMessage}</span>
 		</c:if>
 
-		<h1>Order Information:</h1>
-		<table border=1>
+		<h1>Order Information</h1>
+		<table>
 			<c:if test="${type=='old'}">
 				<tr>
 					<td>OrderID:</td>
@@ -47,14 +64,14 @@ html,body {
 			<c:if
 				test="${currentUser.userid==order.requestUser.userid || currentUser.role=='admin'}">
 				<tr>
-					<td>Posted User:</td>
+					<td>Post User:</td>
 					<td>${order.postUser.username}</td>
 				</tr>
 			</c:if>
 			<c:if
 				test="${currentUser.userid==order.postUser.userid || currentUser.role=='admin'}">
 				<tr>
-					<td>Requested User:</td>
+					<td>Request User:</td>
 					<td>${order.requestUser.username}</td>
 				</tr>
 			</c:if>
@@ -79,23 +96,23 @@ html,body {
 				<td>${order.description}</td>
 			</tr>
 			<tr>
-				<td>Order Status:</td>
+				<td>Status:</td>
 				<td>${order.status}</td>
 			</tr>
 			<c:if test="${type=='old'}">
 				<tr>
-					<td>Order Requested Date:</td>
+					<td>Requested Date:</td>
 					<td>${order.dateRequested}</td>
 				</tr>
 			</c:if>
 			<c:if test="${order.status!='Pending' && type=='old'}">
 				<tr>
-					<td>Order Response Date:</td>
+					<td>Responsed Date:</td>
 					<td>${order.dateResponsed}</td>
 				</tr>
 				<c:if test="${order.status=='Completed'}">
 					<tr>
-						<td>Order Completed Date:</td>
+						<td>Completed Date:</td>
 						<td>${order.dateCompleted}</td>
 					</tr>
 				</c:if>
@@ -146,7 +163,7 @@ html,body {
 					</c:if>
 				</form>
 				<form action="order.jsp" method="post">
-					<button type="submit" value="delete" name="action">Delete</button>
+					</br><button id="delete "type="submit" value="delete" name="action">Delete</button>
 				</form>
 			</c:if>
 			<c:if test="${param.action=='delete'}">
@@ -160,6 +177,5 @@ html,body {
 			</c:if>
 		</c:if>
 	</div>
-	<jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>

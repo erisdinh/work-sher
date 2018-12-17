@@ -5,15 +5,41 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>WorkSher | Create Order</title>
+<link rel="stylesheet" href="css/main.css" type="text/css">
 <style type="text/css">
-html, body {
-	height: 100%;
-	min-height: 100%;
-}
-
 .body {
 	height: 100%;
-	min-height: 100%;
+	width: 80%;
+	background-color: white;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 1%;
+	border-radius: 15px;
+}
+
+td {
+	font-family: Arial, sans-serif;
+	font-size: 1em;
+	color: #393E46;
+	margin: 1%;
+	padding: 10px;
+}
+
+.btn{
+	position: absolute;
+	left: 45%;
+	right: 45%;
+	bottom: 5%;
+}
+
+table {
+	width: 100%;
+}
+
+textarea{
+	resize: none; 
+	width: 600px; 
+	height: 150px;
 }
 </style>
 </head>
@@ -23,7 +49,7 @@ html, body {
 		<form action="ManageOrder" method="post">
 			<h1>Create New Order</h1>
 			<div>
-				<table border=1>
+				<table>
 					<tr>
 						<td>PostingID:</td>
 						<td>${posting.postingId}</td>
@@ -50,19 +76,15 @@ html, body {
 					</tr>
 					<tr>
 						<td>Order Description:</td>
-						<td><textarea
-								style="resize: none; width: 500px; height: 150px;"
-								name="description"
-								placeholder="Enter your order description here...">
-						</textarea></td>
+						<td>
+							<textarea name="description" placeholder="Enter your order description here..."></textarea>
+						</td>
 					</tr>
 				</table>
 			</div>
 			</br>
-			<button type="submit" name="action" value="create">Create
-				Order</button>
+			<button class="btn" type="submit" name="action" value="create">Create Order</button>
 		</form>
 	</div>
-	<jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>
