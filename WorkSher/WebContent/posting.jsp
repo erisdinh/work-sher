@@ -73,7 +73,7 @@
 					</c:forEach>
 				</table>
 				<c:if test="${numReviews > 5}">
-					<a href="ReviewController?action=load&forUserId=${user.userid}&referrer=profileReviews">See More Reviews</a>
+					<a href="ReviewController?action=load&referrer=posting&postingId=${posting.postingId}">See More Reviews</a>
 				</c:if>
 			</c:otherwise>
 		</c:choose>
