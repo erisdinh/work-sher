@@ -20,15 +20,15 @@
 }
 
 .next-button {
-display: flex;
+	display: flex;
 	margin: 5px;
-	padding: 1%;
-	height: 
+	padding: 10%;
 }
 
 .prev-button {
-display: flex;
+	display: flex;
 	margin: 5px;
+	padding: 10%;
 }
 
 #review-form {
@@ -53,7 +53,7 @@ tr.rev-rating img {
 a.btn {
 	display: inline-block;
 	height: 1.25em;
-	padding: 1%;
+	padding: 0.5%;
 	font-weight: lighter;
 }
 

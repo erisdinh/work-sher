@@ -26,6 +26,22 @@
 p {
 	margin:0;
 }
+td, th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+th {
+
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #00ADB5;
+  color: white;
+  }
+tr:nth-child(even) {
+background-color: #f2f2f2;
+}
+
 #post-a-job {
 
 	text-decoration: none;
@@ -44,7 +60,7 @@ a.posting-nav-menu-items {
 	text-decoration: none;
 	font-weight: lighter;
 	display: block;
-	line-height: 1.5em;
+	line-height: 2em;
 	text-align: center;
 	padding: 1%;
 	color: #393E46;
@@ -57,6 +73,9 @@ a.posting-nav-menu-items {
 }
 table {
 	width:100%;
+}
+thead {
+	
 }
 
 </style>

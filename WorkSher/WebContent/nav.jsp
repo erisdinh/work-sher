@@ -24,7 +24,9 @@
 		<div class="drop-menu">
 			<div class="menu-title">Postings</div>
 			<div class="menu-items">
-				<a href="${pageContext.request.contextPath}/PostingController?action=listPostings" class="menu-item">View Postings</a>
+				<a href="${pageContext.request.contextPath}/PostingController?action=listPostings" class="menu-item">View All Postings</a>
+				<a href="PostingController?action=userPostings" class="menu-item">View My Postings</a>
+				<a href="PostingController?action=insert" class="menu-item">Create New Posting</a>
 			</div>
 		</div>
 		<div class="drop-menu">

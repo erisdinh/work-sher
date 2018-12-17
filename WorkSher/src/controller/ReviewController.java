@@ -172,7 +172,6 @@ public class ReviewController extends HttpServlet {
 				forwardUrl = POSTING_REDIRECT + postingId;
 			}
 		} else if (action.equals("leaveReview")) {
-			HttpSession session = request.getSession();
 			forwardUrl = LEAVE_REVIEW;
 
 		} else { // load reviews
