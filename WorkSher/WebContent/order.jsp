@@ -101,11 +101,13 @@
 				<c:if test="${order.status=='Approved'}">
 					<button type="submit" value="complete" name="action">Complete</button>
 				</c:if>
-				<c:if test="${order.status=='Completed'}">
-					<button type="submit" value="review" name="action">Review</button>
-				</c:if>
 			</c:if>
 		</c:if>
+	</form>
+	<c:if test="${order.status=='Completed'}">
+		<form action="ReviewController">
+		<button type="submit" name="action" value="leaveReview">Review</button>
+	</c:if>
 	</form>
 	<c:if test="${currentUser.role=='admin' && param.action!='delete'}">
 		<form action="order.jsp" method="post">
@@ -113,7 +115,7 @@
 		</form>
 	</c:if>
 	<c:if test="${param.action=='delete'}">
-		<form action="ManageOrder"">
+		<form action="ManageOrder">
 			<div>
 				<span>Do you want to delete this order?</span>
 				<button type="submit" value="skip" name="action">Cancel</button>
