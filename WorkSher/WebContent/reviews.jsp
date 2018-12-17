@@ -22,6 +22,8 @@
 .next-button {
 display: flex;
 	margin: 5px;
+	padding: 1%;
+	height: 
 }
 
 .prev-button {

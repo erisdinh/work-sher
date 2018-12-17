@@ -34,6 +34,7 @@ public class ReviewController extends HttpServlet {
 	private static final String PROFILE_REDIRECT = "LoadProfile?userId=";
 	private static final String REVIEWS_REDIRECT = "ReviewController?action=load";
 	private static final String POSTING_REDIRECT = "PostingController?action=view&postingId=";
+	private static final String LEAVE_REVIEW = "leaveReview.jsp";
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -50,9 +51,13 @@ public class ReviewController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println("in doGet");
+		String referrer = "";
 		String action = request.getParameter("action");
 		System.out.println("ACTION: " + action);
-		String referrer = request.getParameter("referrer");
+
+		if (request.getParameter("referrer") != null) {
+			referrer = request.getParameter("referrer");
+		}
 
 		List<Review> reviews = new ArrayList<Review>();
 
@@ -151,6 +156,7 @@ public class ReviewController extends HttpServlet {
 
 		} else if (action.equalsIgnoreCase("delete")) {
 			long reviewId = Long.parseLong(request.getParameter("reviewId"));
+
 			ReviewDAO.deleteReviewById(reviewId);
 
 			if (referrer.equalsIgnoreCase("profile")) {
@@ -160,8 +166,14 @@ public class ReviewController extends HttpServlet {
 			} else if (referrer.equalsIgnoreCase("profileReviews")) {
 				forwardUrl = REVIEWS_REDIRECT + "&forUserId=" + forUserId;
 			} else {
+				HttpSession session = request.getSession();
+				Posting posting = (Posting) session.getAttribute("posting");
+				postingId = posting.getPostingId();
 				forwardUrl = POSTING_REDIRECT + postingId;
 			}
+		} else if (action.equals("leaveReview")) {
+			HttpSession session = request.getSession();
+			forwardUrl = LEAVE_REVIEW;
 
 		} else { // load reviews
 
@@ -203,6 +215,8 @@ public class ReviewController extends HttpServlet {
 			review.setReviewRating(reviewRating);
 			review.setReviewText(reviewText);
 
+			long postingId = review.getPostingId();
+
 			ReviewDAO.editReview(review);
 
 			if (referrer.equalsIgnoreCase("profile")) {
@@ -210,6 +224,8 @@ public class ReviewController extends HttpServlet {
 			} else if (referrer.equalsIgnoreCase("reviews")) {
 				forwardUrl = "ReviewController?action=load&fromUserId=" + review.getFromUserId() + "&referrer="
 						+ referrer;
+			} else {
+				forwardUrl = POSTING_REDIRECT + postingId;
 			}
 
 		} else {
@@ -222,17 +238,17 @@ public class ReviewController extends HttpServlet {
 			double reviewRating = Double.parseDouble(request.getParameter("reviewRating"));
 			String reviewText = request.getParameter("reviewText");
 
-				Review review = new Review();
+			Review review = new Review();
 
-				review.setForUserId(forUserId);
-				review.setFromUserId(user.getUserid());
-				review.setOrderId(orderId);
-				review.setPostingId(postingId);
-				review.setReviewRating(reviewRating);
-				review.setReviewText(reviewText);
+			review.setForUserId(forUserId);
+			review.setFromUserId(user.getUserid());
+			review.setOrderId(orderId);
+			review.setPostingId(postingId);
+			review.setReviewRating(reviewRating);
+			review.setReviewText(reviewText);
 
-				ReviewDAO.addReview(review);
-				forwardUrl = "LoadOrder?orderid=" + orderId;
+			ReviewDAO.addReview(review);
+			forwardUrl = "LoadOrder?orderid=" + orderId;
 		}
 
 		response.sendRedirect(forwardUrl);
