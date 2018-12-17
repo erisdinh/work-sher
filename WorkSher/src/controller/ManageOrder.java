@@ -41,7 +41,7 @@ public class ManageOrder extends HttpServlet {
 
 		if (action.equals("cancel")) {
 
-			order.setStatus("Cancel");
+			order.setStatus("Cancelled");
 			OrderDAO.updateOrder(order);
 
 		} else if (action.equals("update")) {
@@ -80,7 +80,8 @@ public class ManageOrder extends HttpServlet {
 
 			OrderDAO.responseOrder(order);
 			order = OrderDAO.getOrderById(order.getOrderid());
-
+			
+			session.setAttribute("type", "new");
 			session.setAttribute("order", order);
 
 			response.sendRedirect("order.jsp");

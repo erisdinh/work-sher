@@ -44,7 +44,7 @@
 		</table>
 	</div>
 	<div id = "postingsDivs">
-	<c:forEach var = "posting" items = "${postings }">
+	<c:forEach var = "posting" items = "${postings}">
 		<div><a href="PostingController?action=view&postingId=<c:out value = "${posting.postingId}"/>">"<c:out value = "${posting.title}"/>" from user: <c:out value = "${posting.username }"/></div></a><br>
 		</c:forEach>
 	</div>

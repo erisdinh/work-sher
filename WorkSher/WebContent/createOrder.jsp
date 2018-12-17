@@ -17,12 +17,12 @@
 					<td>${posting.postingId}</td>
 				</tr>
 				<tr>
-					<td>Posting Title:</td>
-					<td>${posting.title}</td>
-				</tr>
-				<tr>
 					<td>Posted User:</td>
 					<td>${posting.username}</td>
+				</tr>
+				<tr>
+					<td>Posting Title:</td>
+					<td>${posting.title}</td>
 				</tr>
 				<tr>
 					<td>Category:</td>
@@ -38,18 +38,17 @@
 				</tr>
 				<tr>
 					<td>Order Description:</td>
-					<td>
-						<textarea
+					<td><textarea
 							style="resize: none; width: 500px; height: 150px;"
 							name="description"
 							placeholder="Enter your order description here...">
-						</textarea>
-					</td>
+						</textarea></td>
 				</tr>
 			</table>
 		</div>
 		</br>
-		<button type="submit" name="action" value="create">Create Order</button>
+		<button type="submit" name="action" value="create">Create
+			Order</button>
 	</form>
 </body>
 </html>
