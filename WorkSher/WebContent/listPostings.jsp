@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>WorkSher | Postings</title>
 <link rel="stylesheet" type="text/css" href="css/main.css">
 <style type="text/css">
 #postings-parent {
@@ -32,15 +32,15 @@ td, th {
 }
 th {
 
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
+  padding-top: 10px;
+  padding-bottom: 10px;
   background-color: #00ADB5;
   color: white;
   }
 tr:nth-child(even) {
 background-color: #f2f2f2;
 }
+tr:hover {background-color: #f5f5f5;}
 
 #post-a-job {
 
@@ -64,7 +64,7 @@ a.posting-nav-menu-items {
 	text-align: center;
 	padding: 1%;
 	color: #393E46;
-	background-color: #ddd;
+	background-color: #f2f2f2;
 }
 .posting-nav-menu-items:hover {
 

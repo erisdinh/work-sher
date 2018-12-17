@@ -90,7 +90,7 @@ label {
 			<label for ="description">Description: </label><input class = "adv-search" type = "text" name = "description"></br>
 			<label for ="title">Start Date: </label><input type = "date" class = "adv-search" name = "startDate" min = "2018-12-01" id = "startDate" value = "2018-12-01"></br>
 			<label for ="title">End Date: </label><input type = "date" class = "adv-search" name = "endDate" min = "2018-12-01" id = "endDate" value = "2018-12-02"></br>
-			<input id = "adv-search-submit" type = "submit" value = "search">
+			<input class = "adv-search-submit" type = "submit" value = "search">
 		</form>
 	</section>
 </body>

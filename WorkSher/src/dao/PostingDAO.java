@@ -26,6 +26,7 @@ public class PostingDAO {
 			pStmt.setString(4, posting.getTitle());
 			pStmt.setString(5, posting.getDescription());
 			pStmt.setString(6, posting.getCompensation());
+			System.out.println("in DAO: " + posting.getStatus());
 			pStmt.setString(7, posting.getStatus());
 			pStmt.setBlob(8, posting.getPortfolio());
 			pStmt.setString(9, posting.getPortfolioType());

@@ -204,7 +204,7 @@ public class PostingController extends HttpServlet {
 
 		if (postingIdString == null || postingIdString.isEmpty()) {
 			PostingDAO.addPosting(posting);
-
+			System.out.println("in pc: " + posting.getStatus());
 		} else {
 			posting.setPostingId(Integer.parseInt(postingIdString));
 			PostingDAO.updatePosting(posting);
