@@ -11,10 +11,10 @@
 <title>WorkSher | 
 <c:choose>
 <c:when test = "${posting.status != null }">
-Edit Posting
+Update Posting
 </c:when>
 <c:otherwise>
-New Posting
+Create Posting
 </c:otherwise>
 </c:choose>
 </title>
@@ -32,9 +32,14 @@ section {
 	border-radius: 15px;
 }
 textarea {
-	margin: 10px; 
-}
 
+}
+#fix {
+margin:0;
+}
+#center-posting {
+	text-align:center;
+}
 form {
 	width: 60%;
 	margin-left: auto;
@@ -50,7 +55,8 @@ margin:0;
 }
 
 .posting-input {
-	width: 60%;
+	width: 57%;
+	margin:0;
 	
 }
 
@@ -89,8 +95,10 @@ margin:0;
 		<label for ="dateUpdated">Latest Date Updated: </label><input readonly value = "<c:out value = "${posting.dateUpdated }"/>"/></br>
 		</c:when>
 		<c:otherwise>
-			<h2>Make a new Posting</h2>
+		<div id = "center-posting">
+			<h2>Create a Posting</h2>
 			<p>Share your talents with your fellow classmates!</p>
+		</div>
 		</c:otherwise>
 		</c:choose>
 		<label for ="username">User: </label><input readonly name = "username" value = "<c:out value = "${currentUser.username }"/>"/>
@@ -110,10 +118,12 @@ margin:0;
 			</c:forEach>
 		</select>
 		</br>
-		<label for ="title">Title: </label><input type = "text" required name = "title" value = "<c:out value = "${posting.title }"/>"/></br>
+		<label for ="title">Title: </label><input class = "posting-input" type = "text" required name = "title" value = "<c:out value = "${posting.title }"/>"/></br>
+		<div>
 		<label for ="description">Description: </label>
- <textarea name = "description" required rows = "8" cols = "40"><c:out value = "${posting.description }"/></textarea></br>
-		<label for ="compensation">Compensation: </label><input type = "text" name = "compensation" value = "<c:out value = "${posting.compensation }"/>"/></br>
+ 		<textarea name = "description" required rows = "8" cols = "40"><c:out value = "${posting.description }"/></textarea></br>
+		</div>
+		<p><label for ="compensation">Compensation: </label><input class = "posting-input" id = "fix" type = "text" name = "compensation" value = "<c:out value = "${posting.compensation }"/>"/></p>
 		<c:if test = "${posting.status != null }">
 		Status: 
 		<select name = "status">
