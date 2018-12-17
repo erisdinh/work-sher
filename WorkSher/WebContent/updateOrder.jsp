@@ -5,6 +5,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>WorkSher | Update Order</title>
+<style type="text/css">
+html,body {
+	height: 100%;
+	min-height: 100%;
+}
+
+.body {
+	height: 100%;
+	min-height: 100%;
+}
+</style>
 </head>
 <body>
 	<jsp:include page="nav.jsp"></jsp:include>
