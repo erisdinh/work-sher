@@ -16,9 +16,9 @@
 }
 #posting-nav-menu {
 	width:20%;
+	display: inline-block;
 }
 #postings-list {
-
 	float:right;
 	width:80%;
 }
