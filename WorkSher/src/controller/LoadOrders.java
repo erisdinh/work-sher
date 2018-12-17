@@ -20,7 +20,6 @@ public class LoadOrders extends HttpServlet {
 
 	public LoadOrders() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -32,7 +31,7 @@ public class LoadOrders extends HttpServlet {
 		// get parameters and attributes from request
 		String load = request.getParameter("load");
 		
-		User currentUser = (User) session.getAttribute("currentUser");
+		User user = (User) session.getAttribute("currentUser");
 		
 		// set action to session
 		session.setAttribute("load", load);
@@ -41,15 +40,54 @@ public class LoadOrders extends HttpServlet {
 		
 			// if load is received, load all received orders
 			if(load.equals("received")) {
-				orders = OrderDAO.getReceivedOrders(currentUser.getUserid());
+				String searchBy = request.getParameter("searchBy");
+				if(searchBy.equals("jobCategory")) {
+					String jobCategory = request.getParameter("category");
+					orders = OrderDAO.searchReceivedOrdersByJobCategory(user.getUserid(), jobCategory);
+				} else if(searchBy.equals("title")) {
+					String title = request.getParameter("title");
+					orders = OrderDAO.searchReceivedOrdersByTitle(user.getUserid(), title);
+				} else if(searchBy.equals("status")) {
+					String status = request.getParameter("status");
+					orders = OrderDAO.searchReceivedOrdersByStatus(user.getUserid(), status);
+				} else {
+					orders = OrderDAO.getReceivedOrders(user.getUserid());
+				}
 				
 				// if load is requested, load all requested orders
-			} else if (load.equals("requested")) {
-				orders = OrderDAO.getRequestedOrders(currentUser.getUserid());
+			} else if (load.equals("placed")) {
+
+				
+				String searchBy = request.getParameter("searchBy");
+				if(searchBy.equals("jobCategory")) {
+					String jobCategory = request.getParameter("category");
+					orders = OrderDAO.searchPlacedOrdersByJobCategory(user.getUserid(), jobCategory);
+				} else if(searchBy.equals("title")) {
+					String title = request.getParameter("title");
+					orders = OrderDAO.searchPlacedOrdersByTitle(user.getUserid(), title);
+				} else if(searchBy.equals("status")) {
+					String status = request.getParameter("status");
+					orders = OrderDAO.searchPlacedOrdersByStatus(user.getUserid(), status);
+				} else {
+					orders = OrderDAO.getPlacedOrders(user.getUserid());
+				}
 				
 				// if load is all (only for admin), load all existing orders
 			} else if (load.equals("all")) {
-				orders = OrderDAO.getAllOrders();
+				
+				String searchBy = request.getParameter("searchBy");
+				if(searchBy.equals("jobCategory")) {
+					String jobCategory = request.getParameter("category");
+					orders = OrderDAO.searchOrdersByJobCategory(jobCategory);
+				} else if(searchBy.equals("title")) {
+					String title = request.getParameter("title");
+					orders = OrderDAO.searchOrdersByTitle(title);
+				} else if(searchBy.equals("status")) {
+					String status = request.getParameter("status");
+					orders = OrderDAO.searchOrdersByStatus(status);
+				} else {
+					orders = OrderDAO.getAllOrders();
+				}
 			}
 			
 			session.setAttribute("orders", orders);

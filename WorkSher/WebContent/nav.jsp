@@ -2,7 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -30,19 +30,13 @@
 		</div>
 		<div class="drop-menu">
 			<div class="menu-title" id="orders-menu">Orders</div>
-			<c:choose>
-				<c:when test="${currentUser.role=='admin'}">
-					<div class="menu-items" id="orders-dropdown">
-						<a href="viewOrders.jsp?initial=true&load=all" class="menu-item">View All Orders</a> 
-					</div> 
-				</c:when>
-				<c:otherwise>
-					<div class="menu-items" id="orders-dropdown">
-						<a href="viewOrders.jsp?initial=true&load=received" class="menu-item">Received Orders</a> 
-						<a href="viewOrders.jsp?initial=true&load=requested" class="menu-item">Placed Orders</a>
-					</div> 
-				</c:otherwise>
-			</c:choose>
+				<div class="menu-items" id="orders-dropdown">
+					<c:if test = "${currentUser.role.equalsIgnoreCase('admin')}">
+					<a href="viewOrders.jsp?initial=true&load=all" class="menu-item">View All Orders</a>
+					</c:if>
+					<a href="viewOrders.jsp?initial=true&load=received" class="menu-item">Received Orders</a> 
+					<a href="viewOrders.jsp?initial=true&load=requested" class="menu-item">Placed Orders</a>
+				</div> 
 		</div>
 		<div class="drop-menu">
 			<div class="menu-title">Reviews</div>
@@ -52,7 +46,7 @@
 		</div>
 		<div id="search-bar">
 			<form action = "PostingController">
-			<input hidden name = "action" value = "search">
+			<input name = "action" value = "search" hidden>
 			<input type = "text" name = "searchTerm" placeholder = "Enter Search Criteria">
 			<input type = "submit" value = "Search">
 			<br>

@@ -37,7 +37,7 @@
 			<form action = "editPosting.jsp"><input type = "submit" value = "Edit Your Post"></form>
 		</c:if>
 		<c:if test="${posting.status == 'active' }">
-    	   	<c:if test="${currentUser.userid!=posting.userId || currentUser.role=='user'}">
+    	   	<c:if test="${currentUser.userid!=posting.userId && currentUser.role=='user'}">
       	      <a href="createOrder.jsp"><button>Create New Order</button></a>
         	</c:if>
    		</c:if>
