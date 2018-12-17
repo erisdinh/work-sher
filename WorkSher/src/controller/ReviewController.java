@@ -33,6 +33,7 @@ public class ReviewController extends HttpServlet {
 	private static final String EDIT_REVIEW = "editReview.jsp";
 	private static final String PROFILE_REDIRECT = "LoadProfile?userId=";
 	private static final String REVIEWS_REDIRECT = "ReviewController?action=load";
+	private static final String POSTING_REDIRECT = "PostingController?action=view&postingId=";
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -87,6 +88,9 @@ public class ReviewController extends HttpServlet {
 		} else if (referrer.equalsIgnoreCase("reviews")) {
 			request.setAttribute("fromUserId", fromUserId);
 			reviews = ReviewDAO.getReviewsByFromUserId(fromUserId);
+		} else {
+			request.setAttribute("postingId", postingId);
+			reviews = ReviewDAO.getReviewsByPostingId(postingId);
 		}
 
 		// Load previous review page
@@ -155,6 +159,8 @@ public class ReviewController extends HttpServlet {
 				forwardUrl = REVIEWS_REDIRECT + "&fromUserId=" + fromUserId;
 			} else if (referrer.equalsIgnoreCase("profileReviews")) {
 				forwardUrl = REVIEWS_REDIRECT + "&forUserId=" + forUserId;
+			} else {
+				forwardUrl = POSTING_REDIRECT + postingId;
 			}
 
 		} else { // load reviews

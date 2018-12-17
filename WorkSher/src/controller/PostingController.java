@@ -45,31 +45,33 @@ import model.Review;
 @MultipartConfig
 public class PostingController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
 	private static String VIEW = "/posting.jsp";
 	private static String INSERT_OR_EDIT = "/editPosting.jsp";
 	private static String LIST_POSTINGS = "/listPostings.jsp";
-    public PostingController() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+	public PostingController() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		String forward = "";
 		HttpSession session = request.getSession();
-		
+
 		String action = request.getParameter("action");
-		
+
 		if (action.equalsIgnoreCase("search")) {
 			String searchTerm = request.getParameter("searchTerm");
-			
-			
+
 			forward = LIST_POSTINGS;
 			request.setAttribute("postings", PostingDAO.getSearchResults(searchTerm));
-			
+
 		} else if (action.equalsIgnoreCase("catSearch")) {
 			String searchTitle = "";
 			String searchJobCategory = request.getParameter("jobCategory").toLowerCase();
@@ -78,8 +80,9 @@ public class PostingController extends HttpServlet {
 			String searchStartDate = "2018-12-01";
 			String searchEndDate = "2999-12-31";
 			forward = LIST_POSTINGS;
-			request.setAttribute("postings", PostingDAO.getAdvancedSearchResults(searchTitle, searchJobCategory, searchDescription, searchUser, searchStartDate, searchEndDate));
-			
+			request.setAttribute("postings", PostingDAO.getAdvancedSearchResults(searchTitle, searchJobCategory,
+					searchDescription, searchUser, searchStartDate, searchEndDate));
+
 		} else if (action.equalsIgnoreCase("advsearch")) {
 			String searchTitle = request.getParameter("title").toLowerCase();
 			String searchJobCategory = request.getParameter("jobCategory").toLowerCase();
@@ -88,64 +91,69 @@ public class PostingController extends HttpServlet {
 			String searchStartDate = request.getParameter("startDate");
 			String searchEndDate = request.getParameter("endDate");
 			System.out.println(searchStartDate + " " + searchEndDate);
-			//			try {
-//				Date startDate = new SimpleDateFormat("dd/MM/yyyy").parse(request.getParameter("startDate"));
-//				
-//			} catch (ParseException e) {
-//				e.printStackTrace();
-//			}
-//			try {
-//				Date endDate = new SimpleDateFormat("dd/MM/yyyy").parse(request.getParameter("endDate"));
-//			} catch (ParseException e) {
-//				e.printStackTrace();
-//			}
+			// try {
+			// Date startDate = new
+			// SimpleDateFormat("dd/MM/yyyy").parse(request.getParameter("startDate"));
+			//
+			// } catch (ParseException e) {
+			// e.printStackTrace();
+			// }
+			// try {
+			// Date endDate = new
+			// SimpleDateFormat("dd/MM/yyyy").parse(request.getParameter("endDate"));
+			// } catch (ParseException e) {
+			// e.printStackTrace();
+			// }
 			forward = LIST_POSTINGS;
-			request.setAttribute("postings", PostingDAO.getAdvancedSearchResults(searchTitle, searchJobCategory, searchDescription, searchUser, searchStartDate, searchEndDate));
-			
+			request.setAttribute("postings", PostingDAO.getAdvancedSearchResults(searchTitle, searchJobCategory,
+					searchDescription, searchUser, searchStartDate, searchEndDate));
+
 		} else if (action.equalsIgnoreCase("deactivate")) {
 			int postingId = Integer.parseInt(request.getParameter("postingId"));
-			
+
 			PostingDAO.deactivatePostingById(postingId);
 			forward = LIST_POSTINGS;
-			
+
 			request.setAttribute("postings", PostingDAO.getAllPostings());
-			
-		
+
 		} else if (action.equalsIgnoreCase("activate")) {
 			int postingId = Integer.parseInt(request.getParameter("postingId"));
-			
+
 			PostingDAO.activatePostingById(postingId);
 			forward = LIST_POSTINGS;
-			
+
 			request.setAttribute("postings", PostingDAO.getAllPostings());
-			
-		
+
 		}
-		
+
 		else if (action.equalsIgnoreCase("delete")) {
 			int postingId = Integer.parseInt(request.getParameter("postingId"));
-			
+
 			PostingDAO.deletePostingById(postingId);
 			forward = LIST_POSTINGS;
-			
+
 			request.setAttribute("postings", PostingDAO.getAllPostings());
-			
-		
+
 		} else if (action.equalsIgnoreCase("listPostings")) {
 			forward = LIST_POSTINGS;
 			request.setAttribute("postings", PostingDAO.getAllPostings());
-		} else if (!action.equalsIgnoreCase("insert")){
+		} else if (!action.equalsIgnoreCase("insert")) {
 			int postingId = Integer.parseInt(request.getParameter("postingId"));
-			
+
 			Posting posting = PostingDAO.getPostingById(postingId);
-			
-			//request.setAttribute("posting", posting);
+
+			// request.setAttribute("posting", posting);
 			session.setAttribute("posting", posting);
 			if (action.equalsIgnoreCase("edit")) {
 				forward = INSERT_OR_EDIT;
 			} else {
 				List<Review> reviews = ReviewDAO.getReviewsByPostingId(postingId);
-				request.setAttribute("reviews", reviews);
+				request.setAttribute("numReviews", reviews.size());
+				if (reviews.size() > 5) {
+					request.setAttribute("reviews", reviews.subList(0, 5));
+				} else {
+					request.setAttribute("reviews", reviews);
+				}
 				forward = VIEW;
 			}
 		} else {
@@ -155,17 +163,18 @@ public class PostingController extends HttpServlet {
 		RequestDispatcher view = request.getRequestDispatcher(forward);
 		view.forward(request, response);
 	}
-	
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		HttpSession session = request.getSession();
-	
+
 		Posting posting = new Posting();
-		User currentUser = (User)session.getAttribute("currentUser");
-		
+		User currentUser = (User) session.getAttribute("currentUser");
+
 		posting.setUserId(currentUser.getUserid()); // TO DO, get from
 		posting.setUsername(currentUser.getUsername());
 		posting.setJobCategory(request.getParameter("jobCategory"));
@@ -180,14 +189,15 @@ public class PostingController extends HttpServlet {
 		} catch (ParseException ex) {
 			ex.printStackTrace();
 		}
-//		Date dateUpdated = new java.sql.Date(     ((Date)request.getAttribute("dateUpdated")).getTime()     );
-//		posting.setDateUpdated(dateUpdated);
-		
-		//posting.setDateUpdated(request.getParameter("dateUpdated"));
+		// Date dateUpdated = new java.sql.Date(
+		// ((Date)request.getAttribute("dateUpdated")).getTime() );
+		// posting.setDateUpdated(dateUpdated);
+
+		// posting.setDateUpdated(request.getParameter("dateUpdated"));
 		Part portfolioPart = request.getPart("portfolio");
 		InputStream portfolio = portfolioPart.getInputStream();
 		posting.setPortfolio(portfolio);
-		
+
 		String portfolioType = portfolioPart.getContentType();
 		if (!portfolioType.equals("application/octet-stream")) {
 			posting.setPortfolioType(portfolioType);
@@ -198,34 +208,35 @@ public class PostingController extends HttpServlet {
 			posting.setPortfolioLength(portfolioLength);
 		}
 		String postingIdString = request.getParameter("postingId");
-		
+
 		if (postingIdString == null || postingIdString.isEmpty()) {
 			PostingDAO.addPosting(posting);
-			
+
 		} else {
 			posting.setPostingId(Integer.parseInt(postingIdString));
 			PostingDAO.updatePosting(posting);
 		}
-	    response.setHeader("Cache-Control", "no-cache"); //HTTP 1.1
-	    response.setHeader("Pragma", "no-cache"); //HTTP 1.0
-	    response.setDateHeader("Expires", 0);
-	    
+		response.setHeader("Cache-Control", "no-cache"); // HTTP 1.1
+		response.setHeader("Pragma", "no-cache"); // HTTP 1.0
+		response.setDateHeader("Expires", 0);
+
 		RequestDispatcher view = request.getRequestDispatcher(LIST_POSTINGS);
 		request.setAttribute("postings", PostingDAO.getAllPostings());
 		view.forward(request, response);
 	}
-//	 https://docs.oracle.com/javaee/6/tutorial/doc/glraq.html
+
+	// https://docs.oracle.com/javaee/6/tutorial/doc/glraq.html
 	private String getFileName(final Part part) {
 		System.out.println("in getFileName!");
-	    for (String content : part.getHeader("content-disposition").split(";")) {
-	    	System.out.println(content);
-	        if (content.trim().startsWith("filename")) {
-	        	String fileName = content.substring(content.indexOf('=') + 1).trim().replace("\"", "");
-	            System.out.println(fileName);
-	        	return fileName.substring(fileName.lastIndexOf('/') + 1).substring(fileName.lastIndexOf('\\') + 1);
-	            
-	        }
-	    }
-	    return null;
+		for (String content : part.getHeader("content-disposition").split(";")) {
+			System.out.println(content);
+			if (content.trim().startsWith("filename")) {
+				String fileName = content.substring(content.indexOf('=') + 1).trim().replace("\"", "");
+				System.out.println(fileName);
+				return fileName.substring(fileName.lastIndexOf('/') + 1).substring(fileName.lastIndexOf('\\') + 1);
+
+			}
+		}
+		return null;
 	}
 }
