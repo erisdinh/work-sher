@@ -246,7 +246,7 @@ public class PostingDAO {
 							} 
 						// description & username
 						else {
-							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN users u ON p.user_id = u.user_id WHERE LOWER(username) LIKE ? AND LOWER(description> LIKE ? " + append + " ORDER BY dateCreated DESC");
+							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN users u ON p.user_id = u.user_id WHERE LOWER(u.username) LIKE ? AND LOWER(description) LIKE ? " + append + " ORDER BY dateCreated DESC");
 							pStmt.setString(1, searchUser);
 							pStmt.setString(2,  searchDesc);
 						}
@@ -261,7 +261,7 @@ public class PostingDAO {
 						}
 						// category and user
 						else {
-							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN users u ON p.user_id = u.user_id WHERE LOWER(username) LIKE ? AND jobCategory = ?");
+							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN users u ON p.user_id = u.user_id WHERE LOWER(u.username) LIKE ? AND jobCategory = ?");
 							pStmt.setString(1,  searchUser);
 							pStmt.setString(2,  searchCategory);		
 						}
@@ -275,7 +275,7 @@ public class PostingDAO {
 							pStmt.setString(2,  searchCategory);		
 						}
 						// category & description & username
-						else {pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN users u ON p.user_id = u.user_id WHERE LOWER(username) LIKE ? AND LOWER(description) LIKE ? AND jobCategory = ?");
+						else {pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN users u ON p.user_id = u.user_id WHERE LOWER(u.username) LIKE ? AND LOWER(description) LIKE ? AND jobCategory = ?");
 							pStmt.setString(1,  searchUser);
 							pStmt.setString(2,  searchDesc);
 							pStmt.setString(3,  searchCategory);
@@ -297,7 +297,7 @@ public class PostingDAO {
 						} 
 						// title & user
 						else {
-							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN users u ON p.user_id = u.user_id WHERE LOWER(username) LIKE ? AND LOWER(title) LIKE ? " + append + " ORDER BY dateCreated DESC");
+							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN users u ON p.user_id = u.user_id WHERE LOWER(u.username) LIKE ? AND LOWER(title) LIKE ? " + append + " ORDER BY dateCreated DESC");
 							pStmt.setString(1,  searchUser);
 							pStmt.setString(2,  searchTitle);
 						}
@@ -314,7 +314,7 @@ public class PostingDAO {
 						} 
 						// title & description & user
 						else {
-							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN users u ON p.user_id = u.user_id WHERE LOWER(username) LIKE ? AND LOWER(description) LIKE ? AND LOWER(title) LIKE ? " + append + " ORDER BY dateCreated DESC");
+							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN users u ON p.user_id = u.user_id WHERE LOWER(u.username) LIKE ? AND LOWER(description) LIKE ? AND LOWER(title) LIKE ? " + append + " ORDER BY dateCreated DESC");
 							pStmt.setString(1,  searchUser);
 							pStmt.setString(2,  searchDesc);
 							pStmt.setString(3,  searchTitle);				
@@ -334,7 +334,7 @@ public class PostingDAO {
 						} 
 						// title & category & user
 						else {
-							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN users u ON p.user_id = u.user_id WHERE LOWER(username) LIKE ? AND jobCategory = ? AND LOWER(title) LIKE ? " + append + " ORDER BY dateCreated DESC");
+							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN users u ON p.user_id = u.user_id WHERE LOWER(u.username) LIKE ? AND jobCategory = ? AND LOWER(title) LIKE ? " + append + " ORDER BY dateCreated DESC");
 							pStmt.setString(1,  searchUser);
 							pStmt.setString(2,  searchCategory);
 							pStmt.setString(3,  searchTitle);
@@ -352,7 +352,7 @@ public class PostingDAO {
 						}
 						// EVERYTHING!!!!
 						else {
-							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN users u ON p.user_id = u.user_id WHERE LOWER(username) LIKE ? AND LOWER(description) LIKE ? AND jobCategory = ? AND LOWER(title) LIKE ? " + append + " ORDER BY dateCreated DESC");
+							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN users u ON p.user_id = u.user_id WHERE LOWER(u.username) LIKE ? AND LOWER(description) LIKE ? AND jobCategory = ? AND LOWER(title) LIKE ? " + append + " ORDER BY dateCreated DESC");
 							pStmt.setString(1,  searchUser);
 							pStmt.setString(2,  searchDesc);
 							pStmt.setString(3,  searchCategory);
