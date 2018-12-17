@@ -10,6 +10,7 @@ public class Review implements Serializable {
 	private String fromUsername;
 	private long orderId;
 	private long postingId;
+	private String postingTitle;
 	private long reviewId;
 	private Date reviewDate;
 	private double reviewRating;
@@ -114,6 +115,14 @@ public class Review implements Serializable {
 
 	public long getPostingId() {
 		return postingId;
+	}
+	
+	public void setPostingTitle(String postingTitle) {
+		this.postingTitle = postingTitle;
+	}
+	
+	public String getPostingTitle() {
+		return postingTitle;
 	}
 
 	public void setPostingId(long postingId) {

@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import dao.OrderDAO;
 import dao.PostingDAO;
 import dao.ReviewDAO;
+import model.Order;
 import model.Posting;
 import model.Review;
 import model.User;
@@ -79,7 +80,7 @@ public class ReviewController extends HttpServlet {
 		}
 
 		String forwardUrl = null;
-		
+
 		if (referrer.equalsIgnoreCase("profileReviews") || referrer.equalsIgnoreCase("profile")) {
 			request.setAttribute("forUserId", forUserId);
 			reviews = ReviewDAO.getReviewsByForUserId(forUserId);
@@ -97,11 +98,10 @@ public class ReviewController extends HttpServlet {
 			}
 
 			request.setAttribute("pageNum", pageNum);
-			
-			if (revEndIndex > reviews.size()) {
+			revEndIndex = (int) (pageNum * PAGE_SIZE);
+
+			if (revEndIndex >= reviews.size()) {
 				revEndIndex = reviews.size();
-			} else {
-				revEndIndex = (int) (pageNum * PAGE_SIZE);
 			}
 
 			if (pageNum > 1) {
@@ -112,9 +112,9 @@ public class ReviewController extends HttpServlet {
 			// Load next review page
 		} else if (action.equalsIgnoreCase("next")) {
 			int pageNum = Integer.parseInt(String.valueOf(request.getParameter("pageNum")));
-			
+
 			int arraySize = reviews.size();
-			
+
 			if (pageNum < arraySize / PAGE_SIZE) {
 				pageNum++;
 			}
@@ -122,7 +122,7 @@ public class ReviewController extends HttpServlet {
 			revEndIndex = (int) (pageNum * PAGE_SIZE);
 
 			request.setAttribute("pageNum", pageNum);
-					
+
 			if (revEndIndex > arraySize) {
 				revEndIndex = arraySize;
 			}
@@ -130,7 +130,7 @@ public class ReviewController extends HttpServlet {
 			if (pageNum > 1) {
 				revStartIndex = (int) (pageNum * PAGE_SIZE - PAGE_SIZE);
 			}
-		
+
 			forwardUrl = LOAD_REVIEWS;
 
 		} else if (action.equalsIgnoreCase("edit")) {
@@ -152,7 +152,7 @@ public class ReviewController extends HttpServlet {
 			if (referrer.equalsIgnoreCase("profile")) {
 				forwardUrl = PROFILE_REDIRECT + forUserId;
 			} else if (referrer.equalsIgnoreCase("reviews")) {
-					forwardUrl = REVIEWS_REDIRECT + "&fromUserId=" + fromUserId;
+				forwardUrl = REVIEWS_REDIRECT + "&fromUserId=" + fromUserId;
 			} else if (referrer.equalsIgnoreCase("profileReviews")) {
 				forwardUrl = REVIEWS_REDIRECT + "&forUserId=" + forUserId;
 			}
@@ -178,7 +178,11 @@ public class ReviewController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 
-		String action = request.getParameter("action");
+		String action = "";
+
+		if (request.getParameter("action") != null) {
+			action = request.getParameter("action");
+		}
 		String referrer = request.getParameter("referrer");
 		System.out.println("Action: " + action);
 		String forwardUrl = null;
@@ -194,11 +198,12 @@ public class ReviewController extends HttpServlet {
 			review.setReviewText(reviewText);
 
 			ReviewDAO.editReview(review);
-			
+
 			if (referrer.equalsIgnoreCase("profile")) {
 				forwardUrl = PROFILE_REDIRECT + review.getForUserId();
 			} else if (referrer.equalsIgnoreCase("reviews")) {
-				forwardUrl = "ReviewController?action=load&fromUserId=" + review.getFromUserId() + "&referrer=" + referrer;
+				forwardUrl = "ReviewController?action=load&fromUserId=" + review.getFromUserId() + "&referrer="
+						+ referrer;
 			}
 
 		} else {
@@ -211,17 +216,17 @@ public class ReviewController extends HttpServlet {
 			double reviewRating = Double.parseDouble(request.getParameter("reviewRating"));
 			String reviewText = request.getParameter("reviewText");
 
-			Review review = new Review();
+				Review review = new Review();
 
-			review.setForUserId(forUserId);
-			review.setFromUserId(user.getUserid());
-			review.setOrderId(orderId);
-			review.setPostingId(postingId);
-			review.setReviewRating(reviewRating);
-			review.setReviewText(reviewText);
+				review.setForUserId(forUserId);
+				review.setFromUserId(user.getUserid());
+				review.setOrderId(orderId);
+				review.setPostingId(postingId);
+				review.setReviewRating(reviewRating);
+				review.setReviewText(reviewText);
 
-			ReviewDAO.addReview(review);
-			request.getRequestDispatcher("LoadOrder?orderId=" + orderId).forward(request, response);
+				ReviewDAO.addReview(review);
+				forwardUrl = "LoadOrder?orderid=" + orderId;
 		}
 
 		response.sendRedirect(forwardUrl);
