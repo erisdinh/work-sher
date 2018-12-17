@@ -50,10 +50,8 @@ public class ReviewController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("in doGet");
 		String referrer = "";
 		String action = request.getParameter("action");
-		System.out.println("ACTION: " + action);
 
 		if (request.getParameter("referrer") != null) {
 			referrer = request.getParameter("referrer");
@@ -100,7 +98,6 @@ public class ReviewController extends HttpServlet {
 
 		// Load previous review page
 		if (action.equalsIgnoreCase("prev")) {
-			System.out.println("prev");
 			int pageNum = Integer.parseInt(String.valueOf(request.getParameter("pageNum")));
 			if (pageNum > 1) {
 				pageNum--;
@@ -147,7 +144,6 @@ public class ReviewController extends HttpServlet {
 			Review review = ReviewDAO.getReviewById(reviewId);
 			request.setAttribute("review", review);
 
-			System.out.println(review.toString());
 			Posting posting = PostingDAO.getPostingById(review.getPostingId());
 			request.setAttribute("posting", posting);
 			request.setAttribute("fromUserId", fromUserId);
@@ -201,7 +197,6 @@ public class ReviewController extends HttpServlet {
 			action = request.getParameter("action");
 		}
 		String referrer = request.getParameter("referrer");
-		System.out.println("Action: " + action);
 		String forwardUrl = null;
 
 		if (action.equalsIgnoreCase("edit")) {

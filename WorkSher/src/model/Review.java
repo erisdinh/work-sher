@@ -161,10 +161,5 @@ public class Review implements Serializable {
 	public void setReviewText(String reviewText) {
 		this.reviewText = reviewText;
 	}
-	
-	@Override
-	public String toString() {
-		return "(ReviewID: " + reviewId + ", ForUserID: " + forUserId + ", FromUserID: " + fromUserId + ", OrderID: " + orderId + ", PostingID: " + postingId + "ReviewText: " + reviewText + ")";
-	}
 
 }
