@@ -41,5 +41,42 @@
       	      <a href="createOrder.jsp"><button>Create New Order</button></a>
         	</c:if>
    		</c:if>
+   		
+   			<section class="reviews">
+		<h2>Reviews</h2>
+		<c:choose>
+		<c:when test="${reviews.isEmpty()}">
+		This posting does not have any reviews yet! :(
+		</c:when>
+			<c:otherwise>
+				<table class="reviews-table">
+					<c:forEach var="review" items="${reviews}" varStatus="status">
+						<tr class = "rev-rating">
+							<td><p><img src="images/${review.reviewImgUrl}"/> ${review.reviewRating}</p></td>
+						</tr>
+						<tr class = "rev-from">
+							<td><a href="LoadProfile?userId=${review.fromUserId}"><c:out value="${review.fromUsername}" /></a> on <c:out value="${review.reviewDate}" /></td>							
+						</tr>
+						<tr class = "rev-body">
+							<td><c:out value="${review.reviewText}" /></td>
+						</tr>
+						<tr class = "rev-manage">
+						<td>
+							<c:if test="${review.fromUserId == currentUser.userid}">
+							<a href="ReviewController?action=edit&reviewId=${review.reviewId}&fromUserId=${review.fromUserId}&referrer=posting&forUserId=${review.forUserId}" class="btn">Edit</a>			
+							</c:if>
+							<c:if test="${review.fromUserId == currentUser.userid || currentUser.role.equals('admin')}">
+							<a href="ReviewController?action=delete&reviewId=${review.reviewId}&fromUserId=${review.fromUserId}&referrer=posting&forUserId=${review.forUserId}" class="btn">Delete</a>
+							</c:if>
+						</td>
+						</tr>
+					</c:forEach>
+				</table>
+				<c:if test="${numReviews > 5}">
+					<a href="ReviewController?action=load&forUserId=${user.userid}&referrer=profileReviews">See More Reviews</a>
+				</c:if>
+			</c:otherwise>
+		</c:choose>
+	</section>
 </body>
 </html>
