@@ -12,22 +12,17 @@
 <link rel="stylesheet" type="text/css" href="css/main.css">
 <style type="text/css">
 #postings-parent {
-	display:flex;
-	flex-direction:row;
+	width:100%;
 }
 #posting-nav-menu {
-	flex-grow:1;
-	text-align: center;
-	display: block;
-	
-	color: white;
+	width:20%;
 }
 #postings-list {
-	flex-grow:2;
-}
-body {
 
+	float:right;
+	width:80%;
 }
+
 p {
 	margin:0;
 }
@@ -35,14 +30,7 @@ p {
 
 	text-decoration: none;
 	font-weight: lighter;
-	display: block;
-	line-height: 1.5em;
-	text-align: center;
-	padding: 1%;
-	background-color: #ddd;
-	text-decoration: none;
-	font-weight: lighter;
-	display: block;
+	width:100%;
 	line-height: 1.5em;
 	text-align: center;
 	padding: 1%;
@@ -70,33 +58,6 @@ a.posting-nav-menu-items {
 table {
 	width:100%;
 }
-.drop-menu, .search-bar {
-	text-align: center;
-	display: inline-block;
-	margin: auto;
-	color: white;
-}
-
-.drop-menu:hover .menu-items {
-	display: block;
-}
-
-.drop-menu:hover {
-	cursor: pointer;
-	background-color: #00ADB5;
-}
-
-.drop-menu {
-	width: 15%;
-}
-
-.menu-title {
-	line-height: 3em;
-	text-align: center;
-	text-transform: uppercase;
-	font-weight: lighter;
-	letter-spacing: 0.1em;
-}
 
 </style>
 </head>
@@ -105,8 +66,9 @@ table {
 	request.setAttribute("categories", categories);
 %>
 <body>
+<jsp:include page="nav.jsp"></jsp:include>
+
 <div id = "postings-parent">
-</div>	<jsp:include page="nav.jsp"></jsp:include>
 	<div id = "posting-nav-menu">
 		<p><a href="${pageContext.request.contextPath}/PostingController?action=listPostings" class = "posting-nav-menu-items">All Categories</a></p>
 		<c:forEach var = "category" items = "${categories }">
@@ -124,12 +86,14 @@ table {
 					<th>Date Updated</th>
 					<th>Job Category</th>
 					<th>Title</th>
-					<c:if test = "${currentUser.role == 'admin'}">
+					<c:choose>
+					<c:when test = "${currentUser.role == 'admin'}">
 					<th colspan = 3>Management</th>
-					</c:if>
-					<c:if test = "${currentUser.userid == posting.userId }">
+					</c:when>
+					<c:otherwise>
 					<th colspan = 2>Management</th>
-					</c:if>
+					</c:otherwise>
+					</c:choose>
 				</tr>
 			</thead>
 			<tbody>
