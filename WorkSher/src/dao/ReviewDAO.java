@@ -73,8 +73,10 @@ public class ReviewDAO {
 		try {
 			conn = DBUtil.getConnection();
 			
-			PreparedStatement stmt = conn.prepareStatement("SELECT users.username, reviews.* FROM reviews "
-					+ "INNER JOIN users on reviews.for_user_id=users.user_id WHERE review_id=?");
+			PreparedStatement stmt = conn.prepareStatement("SELECT posting.posting_id, users.username, reviews.* FROM reviews "
+					+ "INNER JOIN users ON reviews.for_user_id=users.user_id "
+					+ "INNER JOIN orders ON orders.order_id=reviews.order_id "
+					+ "INNER JOIN posting ON orders.posting_id=posting.posting_id WHERE review_id=?");
 			stmt.setLong(1, reviewId);
 			ResultSet rs = stmt.executeQuery();
 			
@@ -84,6 +86,7 @@ public class ReviewDAO {
 				review.setFromUserId(rs.getLong("from_user_id"));
 				review.setForUsername(rs.getString("username"));
 				review.setReviewDate(new Date(rs.getDate("review_date").getTime()));
+				review.setPostingId(rs.getLong("posting_id"));
 				review.setOrderId(rs.getLong("order_id"));
 				review.setReviewRating(rs.getDouble("review_rating"));
 				review.setReviewText(rs.getString("review_text"));
