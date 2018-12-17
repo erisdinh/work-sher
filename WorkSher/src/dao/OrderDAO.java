@@ -15,7 +15,6 @@ import java.util.ArrayList;
 
 public class OrderDAO {
 
-	// Tested - It works!! YEAH!!!!
 	public static void addOrder(Order order) {
 
 		Connection connection = null;

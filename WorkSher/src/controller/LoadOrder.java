@@ -38,8 +38,4 @@ public class LoadOrder extends HttpServlet {
 
 		response.sendRedirect("order.jsp");
 	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-	}
 }

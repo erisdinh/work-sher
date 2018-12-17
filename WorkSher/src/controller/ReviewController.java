@@ -20,9 +20,6 @@ import model.Posting;
 import model.Review;
 import model.User;
 
-/**
- * Servlet implementation class ReviewController
- */
 @WebServlet("/ReviewController")
 public class ReviewController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -36,18 +33,10 @@ public class ReviewController extends HttpServlet {
 	private static final String POSTING_REDIRECT = "PostingController?action=view&postingId=";
 	private static final String LEAVE_REVIEW = "leaveReview.jsp";
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
 	public ReviewController() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String referrer = "";
