@@ -38,7 +38,7 @@
 				<c:otherwise>
 					<div class="menu-items" id="orders-dropdown">
 						<a href="viewOrders.jsp?initial=true&load=received" class="menu-item">Received Orders</a> 
-						<a href="viewOrders.jsp?initial=true&load=requested" class="menu-item">Placed Orders</a>
+						<a href="viewOrders.jsp?initial=true&load=placed" class="menu-item">Placed Orders</a>
 					</div> 
 				</c:otherwise>
 			</c:choose>
