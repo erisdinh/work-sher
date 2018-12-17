@@ -48,12 +48,6 @@ h3 {
 	margin-bottom: 0.5%;
 }
 
-.compensation {
-	text-transform: uppercase;
-	font-size: 0.8em;
-	padding-top: 1%;
-}
-
 a.btn {
 	display: inline-block;
 	height: 1.25em;

@@ -1,18 +1,15 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mysql.jdbc.Statement;
 
 import model.JobCategory;
 import model.Posting;
-import model.User;
 import util.DBUtil;
 
 public class PostingDAO {
@@ -473,7 +470,6 @@ public class PostingDAO {
 		
 		try {
 			conn = DBUtil.getConnection();
-		//	PreparedStatement pStmt = conn.prepareStatement("SELECT * FROM posting WHERE )
 			
 		} catch (SQLException ex) {
 			
@@ -545,7 +541,7 @@ public class PostingDAO {
 	public static void deleteAllReviewsForPostingId(long postingId) {
 		try {
 			conn = DBUtil.getConnection();
-			PreparedStatement pStmt = conn.prepareStatement("DELETE FROM reviews WHERE posting_id = ?");
+			PreparedStatement pStmt = conn.prepareStatement("DELETE * FROM posting p JOIN orders o ON p.posting_id = o.posting_id JOIN reviews r ON p.posting_id = r.posting_id WHERE posting_id = ?");
 				pStmt.setLong(1, postingId);
 				
 				pStmt.executeUpdate();
