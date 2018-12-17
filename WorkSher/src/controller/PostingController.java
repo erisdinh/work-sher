@@ -66,7 +66,13 @@ public class PostingController extends HttpServlet {
 
 		String action = request.getParameter("action");
 
-		if (action.equalsIgnoreCase("search")) {
+		if (action.equalsIgnoreCase("userPostings")) {
+			User currentUser = (User)session.getAttribute("currentUser");
+			long currentUserId = currentUser.getUserid();
+			forward = LIST_POSTINGS;
+			request.setAttribute("postings", PostingDAO.getPostingsByUserId(currentUserId));
+
+		} else if (action.equalsIgnoreCase("search")) {
 			String searchTerm = request.getParameter("searchTerm");
 
 			forward = LIST_POSTINGS;
@@ -90,20 +96,7 @@ public class PostingController extends HttpServlet {
 			String searchUser = request.getParameter("user").toLowerCase();
 			String searchStartDate = request.getParameter("startDate");
 			String searchEndDate = request.getParameter("endDate");
-			System.out.println(searchStartDate + " " + searchEndDate);
-			// try {
-			// Date startDate = new
-			// SimpleDateFormat("dd/MM/yyyy").parse(request.getParameter("startDate"));
-			//
-			// } catch (ParseException e) {
-			// e.printStackTrace();
-			// }
-			// try {
-			// Date endDate = new
-			// SimpleDateFormat("dd/MM/yyyy").parse(request.getParameter("endDate"));
-			// } catch (ParseException e) {
-			// e.printStackTrace();
-			// }
+
 			forward = LIST_POSTINGS;
 			request.setAttribute("postings", PostingDAO.getAdvancedSearchResults(searchTitle, searchJobCategory,
 					searchDescription, searchUser, searchStartDate, searchEndDate));
