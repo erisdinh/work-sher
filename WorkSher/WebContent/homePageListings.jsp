@@ -68,9 +68,6 @@ h3 {
 	List <JobCategory> categories = PostingDAO.getAllJobCategories(); 
 	request.setAttribute("categories", categories);
 	List<Posting> postings = PostingDAO.getHomePageResults();
-	for (int i = 0; i < postings.size(); i++) {
-		System.out.println(postings.get(i).getTitle());
-	}
 	request.setAttribute("postings", postings);
 %>
 <body>
