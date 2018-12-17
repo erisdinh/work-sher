@@ -183,7 +183,7 @@ public class PostingDAO {
 			conn = DBUtil.getConnection();
 			searchTerm = "%" + searchTerm + "%";
 			
-			PreparedStatement pStmt = conn.prepareStatement("SELECT * FROM posting WHERE LOWER(title) LIKE ? OR LOWER(description) LIKE ? OR LOWER(username) LIKE ? OR LOWER(jobCategory) LIKE ?");
+			PreparedStatement pStmt = conn.prepareStatement("SELECT * FROM posting WHERE LOWER(title) LIKE ? OR LOWER(description) LIKE ? OR LOWER(username) LIKE ? OR LOWER(jobCategory) LIKE ? ORDER BY dateCreated DESC");
 			pStmt.setString(1, searchTerm);
 			pStmt.setString(2, searchTerm);
 			pStmt.setString(3, searchTerm);
@@ -216,7 +216,7 @@ public class PostingDAO {
 		return postings;
 	}
 	
-	public static List<Posting> getAdvancedSearchResults(String searchTitle, String searchCategory, String searchDesc, String searchUser) {
+	public static List<Posting> getAdvancedSearchResults(String searchTitle, String searchCategory, String searchDesc, String searchUser, String searchStartDate, String searchEndDate) {
 
 		if (!searchTitle.equals("")) {
 			searchTitle = "%" + searchTitle + "%";
@@ -234,6 +234,9 @@ public class PostingDAO {
 		try {
 			conn = DBUtil.getConnection();
 			PreparedStatement pStmt = conn.prepareStatement("SELECT * FROM posting");
+			String append = " AND dateCreated > '" + searchStartDate + "' AND dateCreated  < '" +searchEndDate +"'";
+			
+			
 			if (searchTitle.equals("") || searchTitle == null) {
 				if (searchCategory.equals("") || searchCategory == null) {
 					if (searchDesc.equals("") || searchDesc == null) {
@@ -241,18 +244,18 @@ public class PostingDAO {
 							// keep original statement
 						} else {
 							// only username
-							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN users u ON p.user_id = u.user_id WHERE LOWER(username) LIKE ?");
+							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN users u ON p.user_id = u.user_id WHERE LOWER(p.username) LIKE ?" + append + " ORDER BY dateCreated DESC");
 							pStmt.setString(1, searchUser);
 						}
 					} else {
 						// description
 						if (searchUser.equals("") || searchUser == null) {
-							pStmt = conn.prepareStatement("SELECT * FROM posting WHERE LOWER(description) LIKE ?");
+							pStmt = conn.prepareStatement("SELECT * FROM posting WHERE LOWER(description) LIKE ? " + append + " ORDER BY dateCreated DESC");
 							pStmt.setString(1, searchDesc);
 							} 
 						// description & username
 						else {
-							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN users u ON p.user_id = u.user_id WHERE LOWER(username) LIKE ? AND LOWER(description> LIKE ?");
+							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN users u ON p.user_id = u.user_id WHERE LOWER(username) LIKE ? AND LOWER(description> LIKE ? " + append + " ORDER BY dateCreated DESC");
 							pStmt.setString(1, searchUser);
 							pStmt.setString(2,  searchDesc);
 						}
@@ -299,12 +302,12 @@ public class PostingDAO {
 						// user does not exist
 						// title only
 						if (searchUser.equals("") || searchUser == null) {
-							pStmt = conn.prepareStatement("SELECT * FROM posting WHERE LOWER(title) LIKE ?");
+							pStmt = conn.prepareStatement("SELECT * FROM posting WHERE LOWER(title) LIKE ? " + append + " ORDER BY dateCreated DESC");
 							pStmt.setString(1,  searchTitle);		
 						} 
 						// title & user
 						else {
-							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN users u ON p.user_id = u.user_id WHERE LOWER(username) LIKE ? AND LOWER(title) LIKE ?");
+							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN users u ON p.user_id = u.user_id WHERE LOWER(username) LIKE ? AND LOWER(title) LIKE ? " + append + " ORDER BY dateCreated DESC");
 							pStmt.setString(1,  searchUser);
 							pStmt.setString(2,  searchTitle);
 						}
@@ -314,14 +317,14 @@ public class PostingDAO {
 						// user does not exist
 						// title & description
 						if (searchUser.equals("") || searchUser == null) {
-							pStmt = conn.prepareStatement("SELECT * FROM posting WHERE LOWER(description) LIKE ? AND LOWER(title) LIKE ?");
+							pStmt = conn.prepareStatement("SELECT * FROM posting WHERE LOWER(description) LIKE ? AND LOWER(title) LIKE ? " + append + " ORDER BY dateCreated DESC");
 							pStmt.setString(1,  searchDesc);
 							pStmt.setString(2,  searchTitle);
 							
 						} 
 						// title & description & user
 						else {
-							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN users u ON p.user_id = u.user_id WHERE LOWER(username) LIKE ? AND LOWER(description) LIKE ? AND LOWER(title) LIKE ?");
+							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN users u ON p.user_id = u.user_id WHERE LOWER(username) LIKE ? AND LOWER(description) LIKE ? AND LOWER(title) LIKE ? " + append + " ORDER BY dateCreated DESC");
 							pStmt.setString(1,  searchUser);
 							pStmt.setString(2,  searchDesc);
 							pStmt.setString(3,  searchTitle);				
@@ -335,13 +338,13 @@ public class PostingDAO {
 						// user does not exist
 						// title & category
 						if (searchUser.equals("") || searchUser == null) {	
-							pStmt = conn.prepareStatement("SELECT * FROM posting WHERE jobCategory = ? AND LOWER(title) LIKE ?");
+							pStmt = conn.prepareStatement("SELECT * FROM posting WHERE jobCategory = ? AND LOWER(title) LIKE ? " + append + " ORDER BY dateCreated DESC");
 							pStmt.setString(1,  searchCategory);
 							pStmt.setString(2,  searchTitle);
 						} 
 						// title & category & user
 						else {
-							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN users u ON p.user_id = u.user_id WHERE LOWER(username) LIKE ? AND jobCategory = ? AND LOWER(title) LIKE ?");
+							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN users u ON p.user_id = u.user_id WHERE LOWER(username) LIKE ? AND jobCategory = ? AND LOWER(title) LIKE ? " + append + " ORDER BY dateCreated DESC");
 							pStmt.setString(1,  searchUser);
 							pStmt.setString(2,  searchCategory);
 							pStmt.setString(3,  searchTitle);
@@ -352,14 +355,14 @@ public class PostingDAO {
 						// user does not exist
 						// title, category, description
 						if (searchUser.equals("") || searchDesc == null) {
-							pStmt = conn.prepareStatement("SELECT * FROM posting WHERE LOWER(description) LIKE ? AND jobCategory = ? AND LOWER(title) LIKE ?");
+							pStmt = conn.prepareStatement("SELECT * FROM posting WHERE LOWER(description) LIKE ? AND jobCategory = ? AND LOWER(title) LIKE ? " + append + " ORDER BY dateCreated DESC");
 							pStmt.setString(1,  searchDesc);
 							pStmt.setString(2,  searchCategory);
 							pStmt.setString(3,  searchTitle);
 						}
 						// EVERYTHING!!!!
 						else {
-							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN users u ON p.user_id = u.user_id WHERE LOWER(username) LIKE ? AND LOWER(description) LIKE ? AND jobCategory = ? AND LOWER(title) LIKE ?");
+							pStmt = conn.prepareStatement("SELECT * FROM posting p JOIN users u ON p.user_id = u.user_id WHERE LOWER(username) LIKE ? AND LOWER(description) LIKE ? AND jobCategory = ? AND LOWER(title) LIKE ? " + append + " ORDER BY dateCreated DESC");
 							pStmt.setString(1,  searchUser);
 							pStmt.setString(2,  searchDesc);
 							pStmt.setString(3,  searchCategory);
@@ -397,7 +400,7 @@ public class PostingDAO {
 		List<Posting> postings = new ArrayList<>();
 		try {
 			conn  = DBUtil.getConnection();
-			PreparedStatement pStmt = conn.prepareStatement("SELECT * FROM posting WHERE user_id = ?");
+			PreparedStatement pStmt = conn.prepareStatement("SELECT * FROM posting WHERE user_id = ? ORDER BY dateCreated DESC");
 			pStmt.setLong(1, userId);
 	
 			ResultSet rSet = pStmt.executeQuery();

@@ -7,15 +7,21 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <script type="text/javascript">
-	document.addEventListener("DOMContentLoaded", function() {
-		var startDate = document.getElementById("startDate");
-		var endDate = document.getElementById("endDate");
-		var today = new Date();
-		var day = today.getDate();
-		var month = today.getMonth();
-		var year = today.getFullYear();
-		
+document.addEventListener("DOMContentLoaded", function() {
+	var startDate = document.getElementById("startDate");
+	var endDate = document.getElementById("endDate");
+	var today = new Date();
+	var initialEndDate = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+	endDate.value = initialEndDate;
+	startDate.max = endDate.value;
+
+	startDate.addEventListener("change", function() {
+		endDate.min = startDate.value;
 	})
+	endDate.addEventListener("change", function() {
+		startDate.max = endDate.value;
+	})
+})
 </script>
 <title>Insert title here</title>
 </head>
@@ -31,33 +37,33 @@
 		<h3>Search</h3>
 		<form action = "PostingController">
 			<input hidden name = "action" value = "advsearch">
-				<table>
-					<tr>
-						<td>
+
 							<select name = "jobCategory">
 							<option selected value = "">No category selected</option>
 								<c:forEach var = "category" items = "${categories }">
 										<option value = "${category.jobCategoryId }">${category.jobCategoryDesc }</option>
 								</c:forEach>
 							</select>
-						</td>
-						<td>Title: </td>
-						<td><input type = "text" name = "title">
-						<td>User: </td>
-						<td><input type = "text" name = "user">
-						<td>Description: </td>
-						<td><input type = "text" name = "description"></td>
-					</tr>
-					<tr>
-						<td>Start Date:</td>
-						<td><input type = "date" name = "startDate" min = "2018-12-01 "id = "startDate"></td>
-						<td>End Date:</td>
-						<td><input type = "date" name = "startDate" min = "2018-12-01" id = "endDate"></td>
-						
-						<td><input type = "submit" value = "search"></td>
-					</tr>
+						</br>
+						Title: 
+						<input type = "text" name = "title"></br>
+						User: 
+						<input type = "text" name = "user"></br>
+						Description: 
+						<input type = "text" name = "description"></br>
 					
-				</table>
+					
+						Start Date:
+						<input type = "date" name = "startDate" min = "2018-12-01" id = "startDate" value = "2018-12-01"></br>
+						End Date:
+						<input type = "date" name = "endDate" min = "2018-12-01" id = "endDate" value = "2018-12-02"></br>
+
+		
+
+						<input type = "submit" value = "search">
+					
+					
+
 		</form>
 	</div>
 </body>

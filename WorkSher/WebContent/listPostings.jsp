@@ -9,39 +9,134 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="css/main.css">
+<style type="text/css">
+#postings-parent {
+	display:flex;
+	flex-direction:row;
+}
+#posting-nav-menu {
+	flex-grow:1;
+	text-align: center;
+	display: block;
+	
+	color: white;
+}
+#postings-list {
+	flex-grow:2;
+}
+body {
+
+}
+p {
+	margin:0;
+}
+#post-a-job {
+
+	text-decoration: none;
+	font-weight: lighter;
+	display: block;
+	line-height: 1.5em;
+	text-align: center;
+	padding: 1%;
+	background-color: #ddd;
+	text-decoration: none;
+	font-weight: lighter;
+	display: block;
+	line-height: 1.5em;
+	text-align: center;
+	padding: 1%;
+	background-color: #393E46;
+	
+}
+.date-col {
+	text-align:center;
+}
+a.posting-nav-menu-items {
+	text-decoration: none;
+	font-weight: lighter;
+	display: block;
+	line-height: 1.5em;
+	text-align: center;
+	padding: 1%;
+	color: #393E46;
+	background-color: #ddd;
+}
+.posting-nav-menu-items:hover {
+
+	cursor: pointer;
+	background-color: #00ADB5;
+}
+table {
+	width:100%;
+}
+.drop-menu, .search-bar {
+	text-align: center;
+	display: inline-block;
+	margin: auto;
+	color: white;
+}
+
+.drop-menu:hover .menu-items {
+	display: block;
+}
+
+.drop-menu:hover {
+	cursor: pointer;
+	background-color: #00ADB5;
+}
+
+.drop-menu {
+	width: 15%;
+}
+
+.menu-title {
+	line-height: 3em;
+	text-align: center;
+	text-transform: uppercase;
+	font-weight: lighter;
+	letter-spacing: 0.1em;
+}
+
+</style>
 </head>
 <% 
 	List <JobCategory> categories = PostingDAO.getAllJobCategories(); 
 	request.setAttribute("categories", categories);
 %>
 <body>
-	<jsp:include page="nav.jsp"></jsp:include>
-	<div id = "viewByCategories">
-		<a href="${pageContext.request.contextPath}/PostingController?action=listPostings">All Categories</a></br>
+<div id = "postings-parent">
+</div>	<jsp:include page="nav.jsp"></jsp:include>
+	<div id = "posting-nav-menu">
+		<p><a href="${pageContext.request.contextPath}/PostingController?action=listPostings" class = "posting-nav-menu-items">All Categories</a></p>
 		<c:forEach var = "category" items = "${categories }">
-			<a href="PostingController?action=catSearch&jobCategory=<c:out value ="${category.jobCategoryId }"/>"><c:out value ="${category.jobCategoryDesc } "   /></a></br>
+			<p><a href="PostingController?action=catSearch&jobCategory=<c:out value ="${category.jobCategoryId }"/>" class = "posting-nav-menu-items"><c:out value ="${category.jobCategoryDesc } "   /></a></p>
 			<input hidden name = "action" value = "advsearch">
 		</c:forEach>
 	</div>
 	
-	<div id = "results">
-		<table border = 1>
+	<div id = "postings-list">
+	<p id = "post-a-job"><a href="PostingController?action=insert">Post a job!</a>
+		<table>
 			<thead>
 				<tr>
 					<th>Date Created</th>
 					<th>Date Updated</th>
 					<th>Job Category</th>
 					<th>Title</th>
-					<c:if test = "${currentUser.role == 'admin' || currentUser.userid == posting.userId}">
+					<c:if test = "${currentUser.role == 'admin'}">
 					<th colspan = 3>Management</th>
+					</c:if>
+					<c:if test = "${currentUser.userid == posting.userId }">
+					<th colspan = 2>Management</th>
 					</c:if>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach var = "posting" items = "${postings }">
 				<tr>
-					<td><c:out value = "${posting.dateCreated }"/></td>
-					<td><c:out value = "${posting.dateUpdated }"/></td>
+					<td class = "date-col"><c:out value = "${posting.dateCreated }"/></td>
+					<td class = "date-col"><c:out value = "${posting.dateUpdated }"/></td>
 					<td><c:out value = "${posting.jobCategory }"/></td>
 					<td><a href="PostingController?action=view&postingId=<c:out value = "${posting.postingId}"/>"><c:out value = "${posting.title}"/></a></td>
 					<c:if test = "${(currentUser.role) == 'admin' || currentUser.userid == posting.userId}">
@@ -63,6 +158,6 @@
 			</tbody>
 		</table>
 	</div>
-	<p><a href="PostingController?action=insert">Post a job!</a>
+</div>	
 </body>
 </html>
