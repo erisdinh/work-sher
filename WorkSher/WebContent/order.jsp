@@ -36,6 +36,10 @@ button {
 	color: red;
 	font-style: italic;
 }
+
+.nobr {
+	display: inline-block;
+}
 </style>
 </head>
 <body>
@@ -151,7 +155,7 @@ button {
 				</form>
 			</c:if>
 			<c:if test="${currentUser.role=='admin' && param.action!='delete'}">
-				<form action="ManageOrder">
+				<form action="ManageOrder" class="nobr">
 					<c:if test="${order.status=='Pending'}">
 						<button type="submit" value="cancel" name="action">Cancel</button>
 						<button type="submit" value="update" name="action">Update</button>
@@ -162,8 +166,8 @@ button {
 						<button type="submit" value="complete" name="action">Complete</button>
 					</c:if>
 				</form>
-				<form action="order.jsp" method="post">
-					</br><button id="delete "type="submit" value="delete" name="action">Delete</button>
+				<form action="order.jsp" method="post" class="nobr">
+					<button id="delete "type="submit" value="delete" name="action">Delete</button>
 				</form>
 			</c:if>
 			<c:if test="${param.action=='delete'}">

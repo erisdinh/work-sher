@@ -25,7 +25,6 @@ public class LoadOrder extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("In LoadOrder");
 
 		// get session from request
 		HttpSession session = request.getSession();

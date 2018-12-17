@@ -102,7 +102,6 @@ public class UserDAO {
 	}	
 	
 	// Method used for authenticating users during login
-	// TESTED - This works
 	public static User authenticateUser(String username, String password) {
 		User user = new User();
 		
@@ -156,6 +155,7 @@ public class UserDAO {
 		return isAdmin;
 	}
 	
+	// Method to check whether or not a username is already taken
 	public static boolean checkUsername(String username) {		
 		boolean usernameTaken = false;
 		

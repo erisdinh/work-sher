@@ -319,7 +319,6 @@ public class OrderDAO {
 	}
 
 	public static ArrayList<Order> searchReceivedOrdersByJobCategory(long tempPostUserId, String jobCategory) {
-		System.out.println("searchReceivedOrders");
 		ArrayList<Order> receivedOrders = new ArrayList<>();
 		Connection connection = null;
 		ResultSet rs = null;
@@ -358,7 +357,6 @@ public class OrderDAO {
 				order.setStatus(rs.getString("status"));
 
 				receivedOrders.add(order);
-				System.out.println("search successfully");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
