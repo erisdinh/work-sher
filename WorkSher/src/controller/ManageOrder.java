@@ -87,7 +87,7 @@ public class ManageOrder extends HttpServlet {
 
 			order.setStatus("Completed");
 
-			OrderDAO.responseOrder(order);
+			OrderDAO.markCompletedOrder(order);
 			order = OrderDAO.getOrderById(order.getOrderid());
 			
 			orderMessage = "Marked the completed order!";
