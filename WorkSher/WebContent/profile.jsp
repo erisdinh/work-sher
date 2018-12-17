@@ -54,13 +54,14 @@ h3 {
 	padding-top: 1%;
 }
 
-.btn {
-	height: 1.5em;
-	padding: 2%;
+a.btn {
+	display: inline-block;
+	height: 1.25em;
+	padding: 1%;
 	font-weight: lighter;
 }
 
-.btn:visited, .btn:hover {
+a.btn:visited, a.btn:hover {
 	color: white;
 	text-decoration: none;
 }
