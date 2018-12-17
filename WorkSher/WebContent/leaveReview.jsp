@@ -9,10 +9,50 @@
 <title>WorkSher | Leave Review</title>
 <link rel="stylesheet" href="css/main.css" type="text/css">
 <style>
+h2 {
+	text-align: center;
+}
+
+#submit {
+	display: block;
+	width: 40%;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 1%;
+}
+
+
+label {
+	width: 30%;
+	padding: 0;
+	margin: 0.5%;
+}
+
+input[type=number], textarea {
+	border: solid 1px #393E46;
+	border-radius: 2px;
+	font-family: Arial, sans-serif;
+	font-size: 1em;
+	color: #393E46;
+	padding: 0.5%;
+	margin: 0.5%;
+	float: left;
+}
+
+form {
+	width: 40%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+p {
+	padding: 0.5%;
+	margin: 1%;
+}
 </style>
 </head>
 <body>
-	<h1>
+	<h2>
 		Leave a review for
 		<c:choose>
 			<c:when test="${currentUser.userid == order.requestUser.userid}">
@@ -22,9 +62,10 @@
 				<c:out value="${order.requestUser.name}" />
 			</c:otherwise>
 		</c:choose>
-	</h1>
-	<label id="review-posting">Posting: </label><p>${order.posting.title}</p>
+	</h2>
+	
 	<form method="post" action="ReviewController">
+		<label id="review-posting">Posting: </label><p>${order.posting.title}</p>
 		<input type="hidden" value="${currentUser.userid}" name="fromUserId" />
 		<input type="hidden" value="${order.posting.postingId}" name="postingId" />
 		<input type="hidden" value="${order.orderid}" name="orderId" />
@@ -38,10 +79,11 @@
 					name="forUserId" />
 			</c:otherwise>
 		</c:choose>
-		Rating: <input type="number" min="1" max="5" step="0.5" name="reviewRating" required /> <br> Review: <br>
-		<textarea rows="5" cols="50" name="reviewText"></textarea>
+		<label id="review-rating">Rating:</label><input type="number" min="1" max="5" step="0.5" name="reviewRating" value="1" required /> <br> 
+		<label id="review-text">Review:</label>
+		<textarea name="reviewText" placeholder="Enter review here!" rows="5" cols="40"></textarea>
 		<br>
-		<input type="submit" value="Submit Review" />
+		<input type="submit" value="Submit Review" class="btn" id="submit" />
 	</form>
 </body>
 </html>
