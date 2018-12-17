@@ -1,19 +1,16 @@
-footer {
-	position: absolute;
-	left: 0;
-	bottom: 0;
-	height: 3em; width : 100%;
-	background-color: #393E46;
-	color: white;
-	text-align: center;
-	width: 100%;
+html, body {
+	height: 100%;
 }
 
-.footer a {
+footer a {
 	color: #00ADB5;
 }
 
-.footer {
-  margin: auto;
-  padding: 15px;
+footer{
+	height: 30px;
+    padding-top: 15px;
+    padding-left: 15px;
+    color: white; 
+    background-color: #424242;
+    text-align: center;
 }

@@ -4,15 +4,21 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="css/footer.css">
 </head>
 <body>
-	<footer> 
-		<div class="footer">© <a href="homepage.jsp">The Elite Four</a> |
-		<script>
-    	  document.write(new Date().getFullYear());
-    	</script> 
-    	</div>
-    </footer>
+	<footer>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8">
+				© <a href="homepage.jsp">The Elite Four</a> |
+				<script>
+				document.write(new Date().getFullYear());
+			</script>
+			</div>
+		</div>
+	</div>
+	</footer>
 </body>
 </html>
