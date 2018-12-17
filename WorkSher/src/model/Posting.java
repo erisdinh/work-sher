@@ -25,7 +25,7 @@ public class Posting implements Serializable {
 	private Date dateUpdated;
 	
 	public Posting() {
-		//portfolio = new ArrayList<>();
+
 	}
 	
 	// constructors with arguments

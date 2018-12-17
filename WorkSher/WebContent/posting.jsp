@@ -14,29 +14,32 @@
 <body>
 
 	<jsp:include page="nav.jsp"></jsp:include>
-	User: ${posting.username}
-	</br> Title: ${posting.title }
-	</br> Category: ${posting.jobCategory}
-	</br> Description: ${posting.description }
-	</br> Compensation: ${posting.compensation}
-	</br> Portfolio
-	</br>
-	<c:choose>
-		<c:when test="${posting.portfolioType != null}">
-			<img
-				src="${pageContext.request.contextPath}/ImageServlet?ps=${posting.postingId}"
-				style="width: 400px">
-
-		</c:when>
-		<c:otherwise>
-			<img src="images/portofolioPlaceholder.jpg">
-		</c:otherwise>
-	</c:choose>
-	</br>
-	<c:if test="${posting.status == 'active' }">
-		<c:if test="${currentUser.userid!=posting.userId}">
-			<a href="createOrder.jsp"><button>Create New Order</button></a>
+		<c:if test = "${posting.status == 'inactive'}">
+			This is an inactive post and you are unable to place orders for it</br>
 		</c:if>
-	</c:if>
+		User: ${posting.username}</br>
+		Title: ${posting.title }</br>
+		Category: ${posting.jobCategory}</br>
+		Description: ${posting.description }</br>
+		Compensation: ${posting.compensation}</br>
+		Portfolio</br>
+		<c:choose>
+			<c:when test = "${posting.portfolioType != null}">
+				<img src= "${pageContext.request.contextPath}/ImageServlet?ps=${ posting.postingId}" style = "width:400px">
+				
+			</c:when>
+			<c:otherwise>
+				<img src = "images/portofolioPlaceholder.jpg">
+			</c:otherwise>
+		</c:choose>
+		</br>
+		<c:if test = "${currentUser.userid == posting.userId}">
+			<form action = "editPosting.jsp"><input type = "submit" value = "Edit Your Post"></form>
+		</c:if>
+		<c:if test="${posting.status == 'active' }">
+    	   	<c:if test="${currentUser.userid!=posting.userId || currentUser.role=='user'}">
+      	      <a href="createOrder.jsp"><button>Create New Order</button></a>
+        	</c:if>
+   		</c:if>
 </body>
 </html>

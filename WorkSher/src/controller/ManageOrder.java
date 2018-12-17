@@ -85,6 +85,13 @@ public class ManageOrder extends HttpServlet {
 
 			response.sendRedirect("order.jsp");
 
+		} else if (action.equals("confirm")) {
+			
+			OrderDAO.deleteOrder(order.getOrderid());
+			response.sendRedirect("viewOrders.jsp?initial=true&load=all");
+			
+		} else if(action.equals("skip")) {
+			response.sendRedirect("order.jsp");
 		}
 	}
 
@@ -109,7 +116,7 @@ public class ManageOrder extends HttpServlet {
 			order.setPostUser(UserDAO.getUserById(posting.getUserId()));
 			order.setPosting(posting);
 			order.setDescription(orderDescription);
-			order.setStatus("pending");
+			order.setStatus("Pending");
 
 			// add new order to database
 			OrderDAO.addOrder(order);

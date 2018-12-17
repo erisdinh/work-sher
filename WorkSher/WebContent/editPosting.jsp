@@ -24,11 +24,11 @@
 	<form action = "PostingController" method = "POST" enctype ="multipart/form-data" >
 		<input hidden name = "postingId" value = "<c:out value = "${posting.postingId }"/>"/>
 		Date Posted: <input readonly name = "dateCreated" value = "<c:out value = "${posting.dateCreated }"/>"/></br>
-		Date Updated: <input readonly value = "<c:out value = "${posting.dateUpdated }"/>"/></br>
+		Latest Date Updated: <input readonly value = "<c:out value = "${posting.dateUpdated }"/>"/></br>
 		User: <input readonly name = "username" value = "<c:out value = "${currentUser.username }"/>"/>
-		<input hidden name="dateUpdated" value = "<fmt:formatDate pattern = "dd/MM/yyyy" value = "${dateUpdated }"/>">
+		<input hidden name="dateUpdated" value = "<fmt:formatDate pattern = "dd/MM/yyyy" value = "${dateUpdated }"/>"></br>
 		Category: <% System.out.println(categories.get(0).getJobCategoryDesc()); %>
-		<select name = "jobCategory">
+		<select name = "jobCategory" required>
 			<c:forEach var = "category" items = "${categories }">
 				<c:choose>
 					<c:when test = "${category.jobCategoryId == posting.jobCategory }">
@@ -42,17 +42,29 @@
 			</c:forEach>
 		</select>
 		</br>
-		Title: <input type = "text" name = "title" value = "<c:out value = "${posting.title }"/>"/></br>
-		Description</br> <textarea name = "description" rows = "8" cols = "40"><c:out value = "${posting.description }"/></textarea></br>
+		Title: <input type = "text" required name = "title" value = "<c:out value = "${posting.title }"/>"/></br>
+		Description</br> <textarea name = "description" required rows = "8" cols = "40"><c:out value = "${posting.description }"/></textarea></br>
 		Compensation: <input type = "text" name = "compensation" value = "<c:out value = "${posting.compensation }"/>"/></br>
 		<c:if test = "${posting.status != null }">
 		Status: 
 		<select name = "status">
-			<option value = "active">Active</option>
-			<option value = "inactive">Inactive</option>
+			<c:choose>
+				<c:when test = "${posting.status == 'active'}">	
+					<option value = "active" selected>Active</option>
+					<option value = "inactive">Inactive</option>
+				</c:when>
+				<c:otherwise>
+					<option value = "active">Active</option>
+					<option value = "inactive" selected>Inactive</option>
+				</c:otherwise>
+			</c:choose>
 		</select>
 		</c:if>
-		<input type = "file" name = "portfolio" accept = "image/*">
+		</br>
+		<fieldset>
+		<legend>Upload an image!</legend>
+			<input type = "file" name = "portfolio" accept = "image/*">
+		</fieldset>
 		</br>
 		<input type = "submit" value = "Sher!">
 	</form>

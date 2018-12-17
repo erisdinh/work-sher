@@ -12,6 +12,7 @@
 
 <!--  TODO: Add links to different application functions here -->
 <body>
+	<h1 id="nav-header"><a href="homepage.jsp">Work<span class="highlight">Sher</span></a></h1>
 	<div id="nav-bar">
 		<div class="drop-menu">
 			<div class="menu-title" id="profile-menu">Profile</div>
@@ -49,11 +50,11 @@
 				<a href="ReviewController?action=load&fromUserId=${currentUser.userid}" class="menu-item">View Reviews</a>
 			</div>
 		</div>
-		<div class="search-bar">
-			Search: 		<form action = "PostingController">
+		<div id="search-bar">
+			<form action = "PostingController">
 			<input hidden name = "action" value = "search">
 			<input type = "text" name = "searchTerm" placeholder = "Enter Search Criteria">
-			<input type = "submit" value = "submit">
+			<input type = "submit" value = "Search">
 			<br>
 			<a href="advancedSearch.jsp">Advanced Search</a>
 		</form>

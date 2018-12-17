@@ -4,20 +4,57 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Account Settings</title>
+<title>WorkSher | Account Settings</title>
+<link rel="stylesheet" type="text/css" href="css/main.css">
+<style>
+h2 {
+	text-align: center;
+}
+
+form {
+	width: 70%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+label, .label {
+	width: 30%;
+	margin: 0.5%;
+}
+
+.username {
+	display: inline-block;
+	text-align: left;
+	padding: 0.5%;
+	margin: 0.5%;
+}
+
+input[type=text], input[type=password] {
+	width: 50%;
+	margin: 0.5%;
+}
+
+#submit {
+	display: block;
+	width: 20%;
+	margin-left: auto;
+	margin-right: auto;
+}
+</style>
 </head>
 <body>
 	<jsp:include page="nav.jsp"></jsp:include>
+	<h2>Account Settings for ${currentUser.name}</h2>
 	<form action="ManageAccount" method="POST">
-	<span class="label">Username:</span> ${currentUser.username}<br>
+	<span class="label">Username:</span> <p class ="username">${currentUser.username}</p><br>
 	<label for="name">Name: </label><input type="text" id="name" name="name" placeholder="${currentUser.name}"><br>
 	<label for="email">Email: </label><input type="text" id="email" name="email" placeholder="${currentUser.email}"><br>
 	<label for="newpassword">New Password: </label><input type="password" id="newpassword" name="newpassword"><br>
 	<label for="newpassword2">Re-Enter New Password: </label><input type="password" id="newpassword2" name="newpassword2"><br>
 	<label for="currpassword">Current Password: </label><input type="password" id="currpassword" name="currpassword" required><br>
 	<input type="submit" id="submit" value="Save Changes" disabled>
-	</form>
-	<a href="ManageAccount?action=delete">Delete Account</a>
+	<center><a href="ManageAccount?action=delete">Delete Account</a></center>
+	</form>	
 </body>
 <script type="text/javascript">
 document.getElementById("newpassword").addEventListener("keyup", checkPass); 

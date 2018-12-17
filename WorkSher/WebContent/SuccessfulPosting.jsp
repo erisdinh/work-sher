@@ -8,5 +8,6 @@
 </head>
 <body>
 
+	<jsp:forward page="/PostingController?action=listPostings"/>
 </body>
 </html>

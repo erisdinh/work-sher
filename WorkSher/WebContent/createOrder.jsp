@@ -8,13 +8,17 @@
 </head>
 <body>
 	<jsp:include page="nav.jsp"></jsp:include>
-	<form action="ManageOrder" id="createOrder" method="post">
+	<form action="ManageOrder" method="post">
 		<h1>Create New Order</h1>
 		<div>
-			<table id="postingInformation" border=1>
+			<table border=1>
 				<tr>
 					<td>PostingID:</td>
 					<td>${posting.postingId}</td>
+				</tr>
+				<tr>
+					<td>Posting Title:</td>
+					<td>${posting.title}</td>
 				</tr>
 				<tr>
 					<td>Posted User:</td>
@@ -34,16 +38,18 @@
 				</tr>
 				<tr>
 					<td>Order Description:</td>
-					<td><textarea
+					<td>
+						<textarea
 							style="resize: none; width: 500px; height: 150px;"
 							name="description"
-							placeholder="Enter your order description here..."></textarea></td>
+							placeholder="Enter your order description here...">
+						</textarea>
+					</td>
 				</tr>
 			</table>
 		</div>
 		</br>
-		<button type="submit" name="action" value="create">Create
-			Order</button>
+		<button type="submit" name="action" value="create">Create Order</button>
 	</form>
 </body>
 </html>
