@@ -34,28 +34,41 @@
 	</section>
 	
 	<section class="reviews">
-	<c:choose>
-		<c:when test="${reviews.isEmpty()}">
+		<h2>Reviews</h2>
+		<c:choose>
+			<c:when test="${reviews.isEmpty()}">
 		${user.name} does not have any reviews yet! :(
 		</c:when>
-		<c:otherwise>
-			<table class="reviews-table">
-				<c:forEach var="review"
-					items="${reviews}"
-					varStatus="status">
-					<tr>
-						<td><c:out value="${review.forUsername}" /></td>
-						<td><img src="images/${review.reviewImgUrl}" width="50px" /></td>
-						<td><c:out value="${review.reviewDate}" /></td>
-					</tr>
-					<tr>
-						<td><c:out value="${review.reviewText}" /></td>
-					</tr>
-				</c:forEach>
-			</table>
-			<a href="ReviewController?action=load&forUserId=${user.userid}" />See More Reviews</a>
-		</c:otherwise>
-	</c:choose>
+			<c:otherwise>
+				<table class="reviews-table">
+					<c:forEach var="review" items="${reviews}" varStatus="status">
+						<tr>
+							<td>
+								From: <a href="LoadProfile?userId=${review.fromUserId}"><c:out value="${review.fromUsername}" /></a>
+								</td>
+							<td><img src="images/${review.reviewImgUrl}" width="50px" /></td>
+							<td><c:out value="${review.reviewDate}" /></td>
+							<c:if test="${review.fromUserId == currentUser.userid}">
+							<td>
+								<a href="ReviewController?action=edit&reviewId=${review.reviewId}&fromUserId=${review.fromUserId}&referrer=profile&forUserId=${review.forUserId}">Edit</a>
+							</td>
+							</c:if>
+							<c:if test="${review.fromUserId == currentUser.userid || currentUser.role.equals('admin')}">
+							<td>
+								<a href="ReviewController?action=delete&reviewId=${review.reviewId}&fromUserId=${review.fromUserId}&referrer=profile&forUserId=${review.forUserId}">Delete</a>
+							</td>
+							</c:if>
+						</tr>
+						<tr>
+							<td><c:out value="${review.reviewText}" /></td>
+						</tr>
+					</c:forEach>
+				</table>
+				<c:if test="${numReviews > 5}">
+					<a href="ReviewController?action=load&forUserId=${user.userid}&referrer=profileReviews">See More Reviews</a>
+				</c:if>
+			</c:otherwise>
+		</c:choose>
 	</section>
 </body>
 </html>
