@@ -243,11 +243,12 @@ public class OrderDAO {
 
 			connection = DBUtil.getConnection();
 			PreparedStatement pstmt = connection
-					.prepareStatement("update orders set description = ?, status = ? where order_id = ?");
+					.prepareStatement("update orders set description = ?, status = ?, dateResponsed = ? where order_id = ?");
 
 			pstmt.setString(1, order.getDescription());
 			pstmt.setString(2, order.getStatus());
-			pstmt.setLong(1, order.getOrderid());
+			pstmt.setTimestamp(3, java.sql.Timestamp.valueOf(java.time.LocalDateTime.now()));
+			pstmt.setLong(4, order.getOrderid());
 
 			pstmt.executeUpdate();
 
@@ -264,7 +265,7 @@ public class OrderDAO {
 		try {
 			connection = DBUtil.getConnection();
 			PreparedStatement pstmt = connection
-					.prepareStatement("update orders set dateResponsed = ?, status = ? " + "where order_id = ?");
+					.prepareStatement("update orders set dateResponsed = ?, status = ? where order_id = ?");
 
 			pstmt.setTimestamp(1, java.sql.Timestamp.valueOf(java.time.LocalDateTime.now()));
 			pstmt.setString(2, order.getStatus());

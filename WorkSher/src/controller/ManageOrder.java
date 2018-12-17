@@ -34,16 +34,24 @@ public class ManageOrder extends HttpServlet {
 			throws ServletException, IOException {
 
 		String action = request.getParameter("action");
-
+		
 		HttpSession session = request.getSession();
-
 		Order order = (Order) session.getAttribute("order");
-
+		
+		String orderMessage = null;
+		
 		if (action.equals("cancel")) {
 
 			order.setStatus("Cancelled");
 			OrderDAO.updateOrder(order);
-
+			order = OrderDAO.getOrderById(order.getOrderid());
+			
+			orderMessage = "Cancelled your order!";
+			
+			request.setAttribute("orderMessage", orderMessage);
+			session.setAttribute("order", order);
+			request.getRequestDispatcher("order.jsp").forward(request, response);
+			
 		} else if (action.equals("update")) {
 
 			response.sendRedirect("updateOrder.jsp");
@@ -52,12 +60,15 @@ public class ManageOrder extends HttpServlet {
 
 			order.setStatus("Rejected");
 
+			request.setAttribute("orderMessage", orderMessage);
 			OrderDAO.responseOrder(order);
 			order = OrderDAO.getOrderById(order.getOrderid());
-
+			
+			orderMessage = "Rejected the order!";
+			
+			request.setAttribute("orderMessage", orderMessage);
 			session.setAttribute("order", order);
-
-			response.sendRedirect("order.jsp");
+			request.getRequestDispatcher("order.jsp").forward(request, response);
 
 		} else if (action.equals("approve")) {
 
@@ -66,9 +77,11 @@ public class ManageOrder extends HttpServlet {
 			OrderDAO.responseOrder(order);
 			order = OrderDAO.getOrderById(order.getOrderid());
 
+			orderMessage = "Approved the order!";
+			
+			request.setAttribute("orderMessage", orderMessage);
 			session.setAttribute("order", order);
-
-			response.sendRedirect("order.jsp");
+			request.getRequestDispatcher("order.jsp").forward(request, response);
 
 		} else if (action.equals("complete")) {
 
@@ -77,14 +90,18 @@ public class ManageOrder extends HttpServlet {
 			OrderDAO.responseOrder(order);
 			order = OrderDAO.getOrderById(order.getOrderid());
 			
-			session.setAttribute("type", "new");
+			orderMessage = "Marked the completed order!";
+			
+			request.setAttribute("orderMessage", orderMessage);
 			session.setAttribute("order", order);
-
-			response.sendRedirect("order.jsp");
+			request.getRequestDispatcher("order.jsp").forward(request, response);
 
 		} else if (action.equals("confirm")) {
 			
 			OrderDAO.deleteOrder(order.getOrderid());
+
+			session.removeAttribute("order");
+			
 			response.sendRedirect("viewOrders.jsp?initial=true&load=all");
 			
 		} else if(action.equals("skip")) {
@@ -100,6 +117,9 @@ public class ManageOrder extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		String orderDescription = request.getParameter("description");
+		
+		Order order = new Order();
+		String orderMessage = null;
 
 		if (action.equals("create")) {
 			
@@ -108,7 +128,6 @@ public class ManageOrder extends HttpServlet {
 			Posting posting = (Posting) session.getAttribute("posting");
 			
 			// create new order
-			Order order = new Order();
 			order.setRequestUser(currentUser);
 			order.setPostUser(UserDAO.getUserById(posting.getUserId()));
 			order.setPosting(posting);
@@ -117,19 +136,26 @@ public class ManageOrder extends HttpServlet {
 
 			// add new order to database
 			OrderDAO.addOrder(order);
-
-			// set new order as an attribute to request
-			session.setAttribute("order", order);
-			response.sendRedirect("order.jsp");
+			request.setAttribute("type", "new");
+			
+			orderMessage = "Created a new order!";
 			
 		} else if (action.equals("update")) {
 			
-			Order order = (Order) session.getAttribute("order");
+			order = (Order) session.getAttribute("order");
 			
 			order.setDescription(orderDescription);
-			
 			OrderDAO.updateOrder(order);
+			order = OrderDAO.getOrderById(order.getOrderid());
+			
+			orderMessage = "Successfully updated order!";
+		} else if(action.equals("skip")) {
+			order = (Order) session.getAttribute("order");
 		}
+		
+		request.setAttribute("orderMessage", orderMessage);
+		session.setAttribute("order", order);
+		request.getRequestDispatcher("order.jsp").forward(request, response);
 	}
 
 }

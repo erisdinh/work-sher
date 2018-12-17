@@ -151,6 +151,7 @@ public class ReviewController extends HttpServlet {
 
 		} else if (action.equalsIgnoreCase("delete")) {
 			long reviewId = Long.parseLong(request.getParameter("reviewId"));
+			
 			ReviewDAO.deleteReviewById(reviewId);
 
 			if (referrer.equalsIgnoreCase("profile")) {
@@ -160,6 +161,9 @@ public class ReviewController extends HttpServlet {
 			} else if (referrer.equalsIgnoreCase("profileReviews")) {
 				forwardUrl = REVIEWS_REDIRECT + "&forUserId=" + forUserId;
 			} else {
+				HttpSession session = request.getSession();
+				Posting posting = (Posting) session.getAttribute("posting");
+				postingId = posting.getPostingId();
 				forwardUrl = POSTING_REDIRECT + postingId;
 			}
 
@@ -202,6 +206,8 @@ public class ReviewController extends HttpServlet {
 
 			review.setReviewRating(reviewRating);
 			review.setReviewText(reviewText);
+			
+			long postingId = review.getPostingId();
 
 			ReviewDAO.editReview(review);
 
@@ -210,6 +216,8 @@ public class ReviewController extends HttpServlet {
 			} else if (referrer.equalsIgnoreCase("reviews")) {
 				forwardUrl = "ReviewController?action=load&fromUserId=" + review.getFromUserId() + "&referrer="
 						+ referrer;
+			} else {
+				forwardUrl = POSTING_REDIRECT + postingId;
 			}
 
 		} else {

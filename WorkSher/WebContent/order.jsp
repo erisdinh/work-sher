@@ -16,10 +16,14 @@
 		Order order = (Order) session.getAttribute("order");
 		boolean exist = ReviewDAO.checkIfReviewExists(user.getUserid(), order.getOrderid());
 		request.setAttribute("reviewExist", exist);
-		System.out.println("Exist: " + exist);
 	%>
 
 	<jsp:include page="nav.jsp"></jsp:include>
+	
+	<c:if test="${orderMessage!=null}"> 
+		<span>${orderMessage}</span>
+	</c:if>
+	
 	<h1>Order Information:</h1>
 	<table border=1>
 		<c:if test="${type=='old'}">
@@ -72,12 +76,12 @@
 				<td>${order.dateRequested}</td>
 			</tr>
 		</c:if>
-		<c:if test="${order.status!='pending' && type=='old'}">
+		<c:if test="${order.status!='Pending' && type=='old'}">
 			<tr>
 				<td>Order Response Date:</td>
 				<td>${order.dateResponsed}</td>
 			</tr>
-			<c:if test="${order.status=='completed'}">
+			<c:if test="${order.status=='Completed'}">
 				<tr>
 					<td>Order Completed Date:</td>
 					<td>${order.dateCompleted}</td>
@@ -111,7 +115,7 @@
 				</c:if>
 			</c:if>
 		</form>
-		<c:if test="${order.status=='Completed' && reviewExist=='false'}">
+		<c:if test="${order.status=='Completed' && reviewExist=='false'&& (currentUser.userid==order.requestUser.userid || currentUser.userid==order.postUser.userid)}">
 			<form action="ReviewController">
 				<button type="submit" name="action" value="leaveReview">Review</button>
 			</form>
@@ -123,6 +127,9 @@
 					<button type="submit" value="update" name="action">Update</button>
 					<button type="submit" value="reject" name="action">Reject</button>
 					<button type="submit" value="approve" name="action">Approve</button>
+				</c:if>
+				<c:if test="${order.status=='Approved'}">
+					<button type="submit" value="complete" name="action">Complete</button>
 				</c:if>
 			</form>
 			<form action="order.jsp" method="post">
