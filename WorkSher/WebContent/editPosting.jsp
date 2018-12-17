@@ -72,7 +72,7 @@ select {
 }
 
 #posting-submit {
-	text-align: center;
+
 	display: block;
 	width: 30%;
 	margin-left: auto;
@@ -155,11 +155,9 @@ select {
 			<input name = "status" value = "active" hidden>
 		</c:if>
 		</br>
-		<fieldset>
-		<legend>Upload an image!</legend>
-			<input type = "file" name = "portfolio" accept = "image/*">
-		</fieldset>
-		</br>
+
+		<label for="portfolio">Upload an image: </label><input type = "file" name = "portfolio" accept = "image/*">
+
 		<input id = "posting-submit" type = "submit" value = "Sher!">
 	</form>
 	</section>

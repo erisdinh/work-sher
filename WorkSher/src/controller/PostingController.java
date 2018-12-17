@@ -1,27 +1,13 @@
 package controller;
 
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Enumeration;
 import java.util.List;
 
-import javax.imageio.ImageIO;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -38,9 +24,6 @@ import dao.ReviewDAO;
 import model.Posting;
 import model.Review;
 
-/**
- * Servlet implementation class PostingController
- */
 @WebServlet("/PostingController")
 @MultipartConfig
 public class PostingController extends HttpServlet {
@@ -51,14 +34,8 @@ public class PostingController extends HttpServlet {
 	private static String LIST_POSTINGS = "/listPostings.jsp";
 
 	public PostingController() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String forward = "";
@@ -135,7 +112,7 @@ public class PostingController extends HttpServlet {
 
 			Posting posting = PostingDAO.getPostingById(postingId);
 
-			// request.setAttribute("posting", posting);
+
 			session.setAttribute("posting", posting);
 			if (action.equalsIgnoreCase("edit")) {
 				forward = INSERT_OR_EDIT;
@@ -157,10 +134,6 @@ public class PostingController extends HttpServlet {
 		view.forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
@@ -168,7 +141,7 @@ public class PostingController extends HttpServlet {
 		Posting posting = new Posting();
 		User currentUser = (User) session.getAttribute("currentUser");
 
-		posting.setUserId(currentUser.getUserid()); // TO DO, get from
+		posting.setUserId(currentUser.getUserid()); 
 		posting.setUsername(currentUser.getUsername());
 		posting.setJobCategory(request.getParameter("jobCategory"));
 		posting.setTitle(request.getParameter("title"));
@@ -201,8 +174,8 @@ public class PostingController extends HttpServlet {
 			posting.setPostingId(Integer.parseInt(postingIdString));
 			PostingDAO.updatePosting(posting);
 		}
-		response.setHeader("Cache-Control", "no-cache"); // HTTP 1.1
-		response.setHeader("Pragma", "no-cache"); // HTTP 1.0
+		response.setHeader("Cache-Control", "no-cache"); 
+		response.setHeader("Pragma", "no-cache"); 
 		response.setDateHeader("Expires", 0);
 
 		RequestDispatcher view = request.getRequestDispatcher(LIST_POSTINGS);
@@ -210,15 +183,4 @@ public class PostingController extends HttpServlet {
 		view.forward(request, response);
 	}
 
-	// https://docs.oracle.com/javaee/6/tutorial/doc/glraq.html
-	private String getFileName(final Part part) {
-		for (String content : part.getHeader("content-disposition").split(";")) {
-			if (content.trim().startsWith("filename")) {
-				String fileName = content.substring(content.indexOf('=') + 1).trim().replace("\"", "");
-				return fileName.substring(fileName.lastIndexOf('/') + 1).substring(fileName.lastIndexOf('\\') + 1);
-
-			}
-		}
-		return null;
-	}
 }

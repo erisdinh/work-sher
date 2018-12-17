@@ -545,6 +545,4 @@ public class PostingDAO {
 		}
 	}
 	
-	
-	
 }

@@ -15,54 +15,47 @@ import javax.servlet.http.HttpServletResponse;
 import dao.PostingDAO;
 import model.Posting;
 
-/**
- * Servlet implementation class ImageServlet
- */
+
 @WebServlet("/ImageServlet")
 public class ImageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public ImageServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+    // using https://coderanch.com/wiki/660125/Image-Servlet
+    // Hansen, Mark. “Image Servlet (Wiki Forum at Coderanch).” Coderanch, 1 Jan. 2016, coderanch.com/wiki/660125/Image-Servlet.
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println(Long.parseLong(request.getParameter("ps")));
-		
+	
 		Posting posting = PostingDAO.getPostingById(Long.parseLong(request.getParameter("ps")));
-		Posting test = PostingDAO.getPostingById(5);
-		System.out.println(posting.getDescription());
-
-		System.out.println("processing image" + posting.getPortfolioType());
-		System.out.println(posting.getPortfolioLength());
 		
 		
+		//  take blob from input array
 		InputStream is = posting.getPortfolio();
-		
 		byte[] buff = new byte[8000];
 		int bytesRead = 0;
 		
 		ByteArrayOutputStream bao = new ByteArrayOutputStream();
+		
+		// write the input stream as bytes
 		while ((bytesRead = is.read(buff))!= -1) {
 			bao.write(buff, 0, bytesRead);
 		}
-		
 		byte[] data = bao.toByteArray();
 		
+		// convert the byte array to an input array so it can be streamed
+		// as a byte
 		ByteArrayInputStream  bin = new ByteArrayInputStream(data);
 		
+		// retrieve necessary buffering data
 		response.setContentType(posting.getPortfolioType());
 		response.setContentLength(posting.getPortfolioLength());
  		ServletOutputStream oStream = response.getOutputStream();
 		byte[] buffer = new byte[1024];
 		int len;
+		
+		// send image as outputstream to be served by servlet
 		while((len = bin.read(buffer))!= -1) {
 			oStream.write(buffer, 0, len);
 		}
@@ -71,14 +64,6 @@ public class ImageServlet extends HttpServlet {
 		oStream.close();
 		
 		
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
 	}
 
 }
