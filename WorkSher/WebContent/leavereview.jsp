@@ -15,13 +15,14 @@
 				<c:out value="${order.requestUser.name}" />
 			</c:when>
 			<c:otherwise>
-				<c:out value="${order.postingUser.name}" />
+				<c:out value="${order.postUser.name}" />
 			</c:otherwise>
 		</c:choose>
 	</h1>
-	<form method="post" action="CreateReview">
+	<form method="post" action="ReviewController">
 		<input type="hidden" value="${currentUser.userid}" name="fromUserId" />
 		<input type="hidden" value="${order.posting.postingid}" name="postingId" />
+		<input type="hidden" value="${order.orderId}" />
 		<c:choose>
 			<c:when test="${currentUser.userId == order.requestUser.userid}">
 				<input type="hidden" value="${order.postingUser.userid}"
@@ -32,10 +33,9 @@
 					name="forUserId" />
 			</c:otherwise>
 		</c:choose>
-		Rating: <input type="number" min="1" max="5" step="0.5"
-			name="reviewRating" required /> <br> Review: <br>
+		Rating: <input type="number" min="1" max="5" step="0.5" name="reviewRating" required /> <br> Review: <br>
 		<textarea rows="5" cols="50" name="reviewText"></textarea>
-		<input type="submit" value="Test CreateReview" />
+		<input type="submit" value="Submit Review" />
 	</form>
 </body>
 </html>

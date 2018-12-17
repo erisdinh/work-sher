@@ -6,22 +6,42 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>View Reviews</title>
+<title><c:if test="${forUserId != null}">
+		User Reviews for ${reviews[0].forUsername}	
+	</c:if> <c:if test="${fromUserId != null}">
+		User Reviews from ${currentUser.username}
+	</c:if></title>
 </head>
 <body>
+<h1>Reviews You've Left</h1>
 	<c:choose>
 		<c:when test="${reviews.isEmpty()}">
 		You have not left any reviews!
 		</c:when>
 		<c:otherwise>
 			<table class="reviews-table">
-				<c:forEach var="review"
-					items="${reviews}"
-					varStatus="status">
+				<c:forEach var="review" items="${reviews}" varStatus="status">
 					<tr>
-						<td><c:out value="${review.forUsername}" /></td>
+						<td>
+						<c:if test="${forUserId != null}">
+							From: <a href="LoadProfile?userId=${review.fromUserId}"><c:out value="${review.fromUsername}" /></a>
+						</c:if>
+						<c:if test="${fromUserId != null}">
+							Review For: <a href="LoadProfile?userId=${review.forUserId}"><c:out value="${review.forUsername}" /></a>
+						</c:if>
+						</td>
 						<td><img src="images/${review.reviewImgUrl}" width="50px" /></td>
 						<td><c:out value="${review.reviewDate}" /></td>
+							<c:if test="${review.fromUserId == currentUser.userid}">
+							<td>
+								<a href="ReviewController?action=edit&reviewId=${review.reviewId}&fromUserId=${review.fromUserId}&referrer=${referrer}&forUserId=${review.forUserId}">Edit</a>
+							</td>
+							</c:if>
+							<c:if test="${review.fromUserId == currentUser.userid || currentUser.role.equals('admin')}">
+							<td>
+								<a href="ReviewController?action=delete&reviewId=${review.reviewId}&fromUserId=${review.fromUserId}&referrer=${referrer}&forUserId=${review.forUserId}">Delete</a>
+							</td>
+							</c:if>
 					</tr>
 					<tr>
 						<td><c:out value="${review.reviewText}" /></td>
@@ -31,6 +51,7 @@
 
 			<form class="prev-button-form" action="ReviewController" method="get">
 				<input type="hidden" name="action" value="prev" />
+				<input type="hidden" name="referrer" value="${referrer}" />
 				<c:if test="${forUserId != null}">
 					<input type="hidden" name="forUserId" value="${forUserId}" />
 				</c:if>
@@ -43,12 +64,12 @@
 				<c:if test="${postingId != null}">
 					<input type="hidden" name="postingId" value="${postingId}" />
 				</c:if>
-				<input type="hidden" name="pageNum" value="${pageNum}" /> <input
-					type="hidden" name="numReviews" value="${numReviews}" /> <input
-					type="submit" class="next-button" value="Prev" />
+				<input type="hidden" name="pageNum" value="${pageNum}" />
+				<input type="submit" class="next-button" value="Prev" />
 			</form>
 			<form class="next-button-form" action="ReviewController" method="get">
 				<input type="hidden" name="action" value="next" />
+				<input type="hidden" name="referrer" value="${referrer}" />
 				<c:if test="${forUserId != null}">
 					<input type="hidden" name="forUserId" value="${forUserId}" />
 				</c:if>
@@ -61,9 +82,8 @@
 				<c:if test="${postingId != null}">
 					<input type="hidden" name="postingId" value="${postingId}" />
 				</c:if>
-				<input type="hidden" name="pageNum" value="${pageNum}" /> <input
-					type="hidden" name="numReviews" value="${numReviews}" /> <input
-					type="submit" class="next-button" value="Next" />
+				<input type="hidden" name="pageNum" value="${pageNum}" />
+				<input type="submit" class="next-button" value="Next" />
 			</form>
 		</c:otherwise>
 	</c:choose>

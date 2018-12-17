@@ -3,18 +3,25 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ page import="java.util.List"%>
+<%@ page import="model.JobCategory, dao.PostingDAO"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>WorkSher | View Orders | ${currentUser.username}</title>
+<title>WorkSher | View Orders</title>
 </head>
 <body>
+	<%
+		List<JobCategory> categories = PostingDAO.getAllJobCategories();
+		request.setAttribute("categories", categories);
+	%>
 	<jsp:include page="nav.jsp"></jsp:include>
 	<c:choose>
 		<c:when test="${param.initial=='true'}">
-			<jsp:forward page="/LoadOrders?load=${param.load}" />
+			<c:set var="load" scope="session" value="${param.load }"/>
+			<jsp:forward page="/LoadOrders?load=${load}"/>
 		</c:when>
 		<c:otherwise>
 			<h1>Manage Orders</h1>
@@ -22,10 +29,65 @@
 				<c:if test="${load=='received'}">
 					<h1>Received Orders</h1>
 				</c:if>
-				<c:if test="${load=='requested'}">
+				<c:if test="${load=='placed'}">
 					<h1>Placed Orders</h1>
 				</c:if>
 			</div>
+			<div class="search">
+				<form action="LoadOrders">
+					<span>Search by: </span>
+					<select name="searchBy" id="searchBy">
+						<option value="search"></option>
+						<option value="jobCategory">Job Category</option>
+						<option value="title">Title</option>
+						<option value="status">Status</option>
+					</select>
+					<div class="search" id="jobCategory" style="display: none">
+						<select name="category">
+							<c:forEach items="${categories}" var="category">
+								<option id="category" value="${category.jobCategoryId}">${category.jobCategoryDesc}</option>
+							</c:forEach>
+						</select>
+					</div>
+					<div class="search" id="title" style="display: none">
+						<input type="text" name="title"
+							placeholder="Enter posting title here" />
+					</div>
+					<div class="search" id="statusDiv" style="display: none">
+						<select name="status">
+							<option value="Pending">Pending</option>
+							<option value="Cancelled">Cancelled</option>
+							<option value="Approved">Approved</option>
+							<option value="Rejected">Rejected</option>
+							<option value="Completed">Completed</option>
+						</select>
+					</div>
+					<input type="submit" value="Go" />
+				</form>
+			</div>
+			<script>
+				var searchBy = document.getElementById("searchBy");
+				var jobCategory = document.getElementById("jobCategory");
+				var title = document.getElementById("title");
+				var statusDiv = document.getElementById("statusDiv");
+
+				searchBy.addEventListener("change", function() {
+					var value = searchBy.options[searchBy.selectedIndex].value;
+					if (value == "jobCategory") {
+						jobCategory.style.display = "inline";
+						title.style.display = "none";
+						statusDiv.style.display = "none";
+					} else if (value == "title") {
+						title.style.display = "inline";
+						jobCategory.style.display = "none";
+						statusDiv.style.display = "none";
+					} else if (value == "status") {
+						statusDiv.style.display = "inline";
+						jobCategory.style.display = "none";
+						title.style.display = "none";
+					}
+				});
+			</script>
 			<c:if test="${fn:length(orders)!=0}">
 				<div>
 					<c:forEach items="${orders}" var="order" begin="${(param.page)*5}"
@@ -34,16 +96,20 @@
 							<table border=1>
 								<tr>
 									<td colspan=2><a href="LoadOrder?orderid=${order.orderid}">
-											<em><c:out value="OrderID: ${order.orderid}" /></em>
+											<c:out value="OrderID: ${order.orderid}" />
 									</a></td>
 								</tr>
 								<tr>
-									<td colspan=2><c:out
-											value="Posting ID: ${order.posting.postingId}" /></td>
+									<td><a
+										href="PostingController?action=view&postingId=${order.posting.postingId}"><c:out
+												value="Posting ID: ${order.posting.postingId}" /></a></td>
+									<td><c:out
+											value="Job Category: ${order.posting.jobCategory}" /></td>
 								</tr>
 								<tr>
-									<td colspan=2><c:out
-											value="Job Category: ${order.posting.jobCategory}" /></td>
+									<td colspan=2><a
+										href="PostingController?action=view&postingId=${order.posting.postingId}"><c:out
+												value="Posting Title: ${order.posting.title}" /></a></td>
 								</tr>
 								<c:if test="${load=='received'}">
 									<tr>
@@ -72,7 +138,7 @@
 								</br>
 							</table>
 							<c:if test="${status.last=='true' }">
-								<span>${status.count}/${fn:length(orders)}</span>
+								<span>${status.index+1}/${fn:length(orders)}</span>
 							</c:if>
 						</div>
 					</c:forEach>

@@ -33,7 +33,7 @@ input[type=text], input[type=password] {
 	margin: 1%;
 }
 
-input[type=submit] {
+input[type=submit], .btn {
 	background-color: #00ADB5;
 	font-family: Arial, sans-serif;
 	font-size: 1em;

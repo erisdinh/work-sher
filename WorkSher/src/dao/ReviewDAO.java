@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.Date;
 
 import model.Review;
+import model.User;
 import util.DBUtil;
 
 public class ReviewDAO {
@@ -19,13 +20,14 @@ public class ReviewDAO {
 		try {
 			conn = DBUtil.getConnection();
 			
-			PreparedStatement stmt = conn.prepareStatement("INSERT INTO reviews (for_user_id, from_user_id, posting_id, review_rating, review_text) "
-					+ "VALUES (?, ?, ?, ?, ?");
+			PreparedStatement stmt = conn.prepareStatement("INSERT INTO reviews (for_user_id, from_user_id, order_id, posting_id, review_rating, review_text) "
+					+ "VALUES (?, ?, ?, ?, ?, ?)");
 			stmt.setLong(1, review.getForUserId());
 			stmt.setLong(2, review.getFromUserId());
-			stmt.setLong(3, review.getPostingId());
-			stmt.setDouble(4, review.getReviewRating());
-			stmt.setString(5, review.getReviewText());
+			stmt.setLong(3, review.getOrderId());
+			stmt.setLong(4, review.getPostingId());
+			stmt.setDouble(5, review.getReviewRating());
+			stmt.setString(6, review.getReviewText());
 			stmt.executeUpdate();
 		
 		} catch (SQLException e) {
@@ -52,7 +54,7 @@ public class ReviewDAO {
 		}
 	}
 
-	public static void deleteReviewByReviewId(int reviewId) {
+	public static void deleteReviewById(long reviewId) {
 		try {
 			conn = DBUtil.getConnection();
 			
@@ -78,12 +80,17 @@ public class ReviewDAO {
 			
 			if (rs.next()) {
 				review.setReviewId(rs.getLong("review_id"));
-				review.setForUserId(rs.getLong("user_id"));
+				review.setForUserId(rs.getLong("for_user_id"));
 				review.setFromUserId(rs.getLong("from_user_id"));
 				review.setReviewDate(new Date(rs.getDate("review_date").getTime()));
+				review.setOrderId(rs.getLong("order_id"));
 				review.setPostingId(rs.getLong("posting_id"));
 				review.setReviewRating(rs.getDouble("review_rating"));
 				review.setReviewText(rs.getString("review_text"));
+				
+				User user = UserDAO.getUserById(review.getForUserId());
+				review.setForUsername(user.getUsername());
+				
 			}
 			
 		} catch (SQLException e) {
@@ -116,8 +123,12 @@ public class ReviewDAO {
 				review.setReviewDate(new Date(rs.getDate("review_date").getTime()));
 				review.setReviewRating(rs.getDouble("review_rating"));
 				review.setReviewText(rs.getString("review_text"));
+				
+				User user = UserDAO.getUserById(review.getFromUserId());
+				review.setFromUsername(user.getUsername());
 				reviews.add(review);
 			}
+		
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -149,6 +160,9 @@ public class ReviewDAO {
 				review.setReviewDate(new Date(rs.getDate("review_date").getTime()));
 				review.setReviewRating(rs.getDouble("review_rating"));
 				review.setReviewText(rs.getString("review_text"));
+				
+				User user = UserDAO.getUserById(review.getForUserId());
+				review.setForUsername(user.getUsername());
 				reviews.add(review);
 			}
 		} catch (SQLException e) {
@@ -189,6 +203,30 @@ public class ReviewDAO {
 		}
 		
 		return reviews;
+	}
+	
+	public static boolean checkIfReviewExists(long fromUserId, long orderId) {
+		boolean exists = false;
+		
+		try {
+			conn = DBUtil.getConnection();
+			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM reviews WHERE from_user_id=? AND order_id=?");
+			
+			stmt.setLong(1, fromUserId);
+			stmt.setLong(2, orderId);
+			
+			ResultSet rs = stmt.executeQuery();
+			
+			exists = rs.next();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBUtil.closeConnection(conn);
+		}
+		
+		
+		return exists;
 	}
 
 }

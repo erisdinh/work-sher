@@ -52,7 +52,7 @@ public class Review implements Serializable {
 			} else if (reviewRating == 1.5) {
 				reviewImgUrl = "rating1-5.png";
 			} else if (reviewRating == 2.0) {
-				reviewImgUrl = "rating2png";
+				reviewImgUrl = "rating2.png";
 			} else if (reviewRating == 2.5) {
 				reviewImgUrl = "rating2-5.png";
 			} else if (reviewRating == 3.0) {
@@ -151,6 +151,11 @@ public class Review implements Serializable {
 
 	public void setReviewText(String reviewText) {
 		this.reviewText = reviewText;
+	}
+	
+	@Override
+	public String toString() {
+		return "(ReviewID: " + reviewId + ", ForUserID: " + forUserId + ", FromUserID: " + fromUserId + ", OrderID: " + orderId + ", PostingID: " + postingId + "ReviewText: " + reviewText + ")";
 	}
 
 }

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>WorkSher | Update Order | ${currentUser.username}</title>
+<title>WorkSher | Update Order</title>
 </head>
 <body>
 	<jsp:include page="nav.jsp"></jsp:include>
