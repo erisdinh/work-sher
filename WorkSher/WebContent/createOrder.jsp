@@ -25,13 +25,6 @@ td {
 	padding: 10px;
 }
 
-.btn{
-	position: absolute;
-	left: 45%;
-	right: 45%;
-	bottom: 5%;
-}
-
 table {
 	width: 100%;
 }
@@ -83,7 +76,7 @@ textarea{
 				</table>
 			</div>
 			</br>
-			<button class="btn" type="submit" name="action" value="create">Create Order</button>
+			<center><button class="btn" type="submit" name="action" value="create">Create Order</button></center>
 		</form>
 	</div>
 </body>

@@ -50,15 +50,18 @@ h2 {
 label {
 	width: 30%;
 }
+
 .adv-search {
 	width: 60%;
-	margin:0.5%;
+	margin: 1%;
+	padding: 0.5%;
 }
 #label-job-category {
 	margin: 0;
 }
 select {
 	margin-left: 20px;
+	padding: 0.5%;
 }
 #adv-search-submit {
 	text-align: center;
