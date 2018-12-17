@@ -5,20 +5,54 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>WorkSher | Update Order</title>
+<link rel="stylesheet" href="css/main.css" type="text/css">
+<style type="text/css">
+.body {
+	height: 100%;
+	width: 80%;
+	background-color: white;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 1%;
+	border-radius: 15px;
+}
+
+td {
+	font-family: Arial, sans-serif;
+	font-size: 1em;
+	color: #393E46;
+	margin: 1%;
+	padding: 10px;
+}
+
+.btn {
+	position: absolute;
+	left: 45%;
+	right: 45%;
+	bottom: 5%;
+}
+
+table {
+	width: 100%;
+}
+
+textarea {
+	resize: none;
+	width: 600px;
+	height: 150px;
+}
+</style>
 </head>
 <body>
 	<jsp:include page="nav.jsp"></jsp:include>
-	<form action="ManageOrder" method="post">
-		<h1>Update Order</h1>
-		<table>
-			<tr>
-				<td>OrderID:</td>
-				<td>${order.orderid}</td>
-			</tr>
-		</table>
-		</br>
-		<div>
-			<table border=1>
+	<div class="body">
+		<form action="ManageOrder" method="post">
+			<h1>Update Order</h1>
+			<table>
+				<tr>
+					<td>OrderID:</td>
+					<td>${order.orderid}</td>
+				</tr>
 				<tr>
 					<td>PostingID:</td>
 					<td>${order.posting.postingId}</td>
@@ -41,14 +75,17 @@
 				</tr>
 				<tr>
 					<td>Order Description:</td>
-					<td><textarea style="resize:none;width: 400px;height:150px;" name="description" placeholder="${order.description}"></textarea></td>
+					<td><textarea
+							style="resize: none; width: 400px; height: 150px;"
+							name="description" placeholder="${order.description}"></textarea></td>
 				</tr>
 			</table>
-		</div>
-		</br>
-		<button type="submit" name="action" value="skip">Cancel</button>
-		<button type="submit" name="action" value="update">Update Order</button>
+	</div>
+	</br>
+	<button class="btn" type="submit" name="action" value="skip">Cancel</button>
+	<button class="btn" type="submit" name="action" value="update">Update
+		Order</button>
 	</form>
-	<jsp:include page="footer.jsp"></jsp:include>
+	</div>
 </body>
 </html>

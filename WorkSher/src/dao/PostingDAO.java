@@ -86,7 +86,6 @@ public class PostingDAO {
 	}
 
 	public static void updatePosting(Posting posting) {
-		System.out.println("updating: " + posting.getPortfolioType());
 		try {
 			conn = DBUtil.getConnection();
 			PreparedStatement pStmt = conn.prepareStatement("UPDATE posting SET jobCategory = ?, title = ?, description = ?, compensation = ?, status = ?, portfolio = ?, portfoliotype = ?, portfoliolength = ?, dateUpdated = ? WHERE posting_id = ?");
@@ -99,8 +98,6 @@ public class PostingDAO {
 		
 			pStmt.setString(7, posting.getPortfolioType());
 			pStmt.setInt(8, posting.getPortfolioLength());
-			System.out.println(posting.getDateUpdated());
-			System.out.println(posting.getDateUpdated().getTime());
 			pStmt.setDate(9, new java.sql.Date(posting.getDateUpdated().getTime()));
 			
 			pStmt.setLong(10, posting.getPostingId());
@@ -113,7 +110,6 @@ public class PostingDAO {
 		}
 	}
 	public static List<Posting> getAllPostings() {
-		System.out.println("hi");
 		List<Posting> postings = new ArrayList<>();
 		try {
 			conn = DBUtil.getConnection();
@@ -225,8 +221,6 @@ public class PostingDAO {
 			searchUser = "%" + searchUser + "%";
 		}
 		
-		System.out.println(searchTitle + " " + searchCategory + " " + searchDesc + " " + searchUser);
-		
 		List<Posting> postings = new ArrayList<>();
 		try {
 			conn = DBUtil.getConnection();
@@ -262,7 +256,6 @@ public class PostingDAO {
 					if (searchDesc.equals("") || searchDesc == null) {
 						// only category
 						if (searchUser.equals("") || searchUser == null) {
-							System.out.println(searchCategory);
 							pStmt = conn.prepareStatement("SELECT * FROM posting WHERE jobCategory = ?");
 							pStmt.setString(1,  searchCategory);
 						}
@@ -454,7 +447,7 @@ public class PostingDAO {
 				
 					posting.setPortfolio(rSet.getBlob("portfolio").getBinaryStream());
 				}
-				System.out.println("getting: " + posting.getPortfolioType());
+
 			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();

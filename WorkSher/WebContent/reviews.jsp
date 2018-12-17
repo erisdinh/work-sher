@@ -53,7 +53,7 @@ tr.rev-rating img {
 a.btn {
 	display: inline-block;
 	height: 1.25em;
-	padding: 1%;
+	padding: 0.5%;
 	font-weight: lighter;
 }
 

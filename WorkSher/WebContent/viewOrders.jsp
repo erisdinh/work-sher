@@ -11,6 +11,94 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>WorkSher | View Orders</title>
+<link rel="stylesheet" href="css/main.css" type="text/css">
+<style type="text/css">
+.body {
+	height: 100%;
+	width: 80%;
+	background-color: white;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 1%;
+	border-radius: 15px;
+}
+
+input[name='title'] {
+	border: solid 1px #393E46;
+	border-radius: 2px;
+	font-family: Arial, sans-serif;
+	font-size: 1em;
+	color: #393E46;
+	margin: 1%;
+	width: 300px;
+}
+
+select {
+	border: solid 1px #393E46;
+	border-radius: 2px;
+	font-family: Arial, sans-serif;
+	font-size: 1em;
+	color: #393E46;
+	padding: 0.5%;
+	margin: 1%;
+}
+
+select[name='jobCategory'], select[name='status'] {
+	width: 300px;
+}
+
+td, th {
+	border: 1px solid #ddd;
+	padding: 8px;
+	height: 35px;
+}
+
+th {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background-color: #00ADB5;
+	color: white;
+}
+
+tr:nth-child(even) {
+	background-color: #f2f2f2;
+}
+
+tr:hover {
+	background-color: #f5f5f5;
+}
+
+table {
+	width: 100%;
+}
+
+.date-col, .id-col {
+	text-align: center;
+}
+
+#numOrder {
+	font-size: 25px;
+	float: right;
+	color: #00ADB5;
+	margin-right: 8px;
+}
+
+#pageButton button {
+	background-color: #00ADB5;
+	font-family: Arial, sans-serif;
+	font-size: 1em;
+	color: white;
+	height: 2em;
+	border: none;
+	border-radius: 2px;
+}
+
+#pageButton {
+	position: absolute;
+	right: 10%;
+	bottom: 3%;
+}
+</style>
 </head>
 <body>
 	<%
@@ -24,14 +112,14 @@
 			<jsp:forward page="/LoadOrders?load=${load}" />
 		</c:when>
 		<c:otherwise>
-			<div>
+			<div class="body">
 				<h1>Manage Orders</h1>
 
 				<c:if test="${load=='received'}">
-					<h1>Received Orders</h1>
+					<h3>Received Orders</h3>
 				</c:if>
 				<c:if test="${load=='placed'}">
-					<h1>Placed Orders</h1>
+					<h3>Placed Orders</h3>
 				</c:if>
 
 				<c:if test="${orderMessage!=null}">
@@ -43,7 +131,7 @@
 						<span>You do not have any orders!!!</span>
 					</c:if>
 					<c:if test="${load=='placed'}">
-						<span>You have not made any orders.</span>
+						<span>You do not have any orders!</span>
 						</br>
 						<span>Check out <a
 							href="${pageContext.request.contextPath}/PostingController?action=listPostings">List
@@ -52,9 +140,9 @@
 					</c:if>
 				</c:if>
 
-				<c:if test="${fn:length(orders)!=0}">
-					<div class="search">
-						<form action="LoadOrders">
+				<div class="search">
+					<form action="LoadOrders">
+						<div id="searchDiv">
 							<span>Search by: </span> <select name="searchBy" id="searchBy">
 								<option value="search"></option>
 								<option value="jobCategory">Job Category</option>
@@ -81,92 +169,99 @@
 									<option value="Completed">Completed</option>
 								</select>
 							</div>
-							<input type="submit" value="Go" />
-						</form>
-					</div>
+							<input style="display: none" type="submit" id="searchButton"
+								name="searchButton" value="Go" />
+						</div>
+					</form>
 					<script>
-						var searchBy = document.getElementById("searchBy");
-						var jobCategory = document
-								.getElementById("jobCategory");
-						var title = document.getElementById("title");
-						var statusDiv = document.getElementById("statusDiv");
+							var searchBy = document.getElementById("searchBy");
+							var jobCategory = document
+									.getElementById("jobCategory");
+							var title = document.getElementById("title");
+							var statusDiv = document
+									.getElementById("statusDiv");
+							var searchButton = document
+									.getElementById("searchButton");
 
-						searchBy
-								.addEventListener(
-										"change",
-										function() {
-											var value = searchBy.options[searchBy.selectedIndex].value;
-											if (value == "jobCategory") {
-												jobCategory.style.display = "inline";
-												title.style.display = "none";
-												statusDiv.style.display = "none";
-											} else if (value == "title") {
-												title.style.display = "inline";
-												jobCategory.style.display = "none";
-												statusDiv.style.display = "none";
-											} else if (value == "status") {
-												statusDiv.style.display = "inline";
-												jobCategory.style.display = "none";
-												title.style.display = "none";
-											}
-										});
-					</script>
+							searchBy
+									.addEventListener(
+											"change",
+											function() {
+												var value = searchBy.options[searchBy.selectedIndex].value;
+												if (value == "jobCategory") {
+													jobCategory.style.display = "inline";
+													title.style.display = "none";
+													statusDiv.style.display = "none";
+													searchButton.style.display = "inline";
+												} else if (value == "title") {
+													title.style.display = "inline";
+													jobCategory.style.display = "none";
+													statusDiv.style.display = "none";
+													searchButton.style.display = "inline";
+												} else if (value == "status") {
+													statusDiv.style.display = "inline";
+													jobCategory.style.display = "none";
+													title.style.display = "none";
+													searchButton.style.display = "inline";
+												} else {
+													jobCategory.style.display = "none";
+													title.style.display = "none";
+													statusDiv.style.display = "none";
+													searchButton.style.display = "none";
+												}
+											});
+						</script>
+				</div>
+
+				<c:if test="${fn:length(orders)!=0}">
 					<div>
-						<c:forEach items="${orders}" var="order" begin="${(param.page)*5}"
-							end="${(param.page)*5+4}" varStatus="status">
-							<div>
-								<table border=1>
-									<tr>
-										<td colspan=2><a
-											href="LoadOrder?orderid=${order.orderid}"> <c:out
-													value="OrderID: ${order.orderid}" />
-										</a></td>
-									</tr>
-									<tr>
-										<td><a
-											href="PostingController?action=view&postingId=${order.posting.postingId}"><c:out
-													value="Posting ID: ${order.posting.postingId}" /></a></td>
-										<td><c:out
-												value="Job Category: ${order.posting.jobCategory}" /></td>
-									</tr>
-									<tr>
-										<td colspan=2><a
-											href="PostingController?action=view&postingId=${order.posting.postingId}"><c:out
-													value="Posting Title: ${order.posting.title}" /></a></td>
-									</tr>
-									<c:if test="${load=='received'}">
-										<tr>
-											<td colspan=2><c:out
-													value="Request User UserName: ${order.requestUser.username}" /></td>
-										</tr>
-										<tr>
-											<td colspan=2><c:out
-													value="Request User Full Name: ${order.requestUser.name}" /></td>
-										</tr>
-									</c:if>
-									<c:if test="${load=='requested'}">
-										<tr>
-											<td colspan=2><c:out
-													value="Post UserName: ${order.postUser.username }" /></td>
-										</tr>
-										<tr>
-											<td colspan=2><c:out
-													value="Post User Full Name: ${order.postUser.name}" /></td>
-										</tr>
-									</c:if>
-									<tr>
-										<td><c:out value="Date: ${order.dateRequested}" /></td>
-										<td><c:out value="Order status: ${order.status}" /></td>
-									</tr>
-									</br>
-								</table>
-								<c:if test="${status.last=='true' }">
-									<span>${status.index+1}/${fn:length(orders)}</span>
+						<table>
+							<tr>
+								<th>Date</th>
+								<th>OrderID</th>
+								<th>Category</th>
+								<th>Posting Title</th>
+								<c:if test="${load=='received' || currentUser.role=='admin'}">
+									<th>Request User</th>
 								</c:if>
-							</div>
-						</c:forEach>
+								<c:if test="${load=='requested' || currentUser.role=='admin'}">
+									<th>Post User</th>
+								</c:if>
+								<th>Status</th>
+							</tr>
+							<c:forEach items="${orders}" var="order"
+								begin="${(param.page)*5}" end="${(param.page)*5+4}"
+								varStatus="status">
+								<tr>
+									<td class="date-col">${order.dateRequested}</td>
+									<td class="id-col"><a
+										href="LoadOrder?orderid=${order.orderid}"> <c:out
+												value="${order.orderid}" />
+									</a></td>
+									<td><c:out value="${order.posting.jobCategory}" /></td>
+									<td><a
+										href="PostingController?action=view&postingId=${order.posting.postingId}"><c:out
+												value="${order.posting.title}" /></a></td>
+									<c:if test="${load=='received' || currentUser.role=='admin'}">
+										<td><c:out value="${order.requestUser.username}" /></td>
+									</c:if>
+									<c:if test="${load=='requested' || currentUser.role=='admin'}">
+										<td><c:out value="${order.postUser.username }" /></td>
+
+									</c:if>
+									<td><c:out value="${order.status}" /></td>
+								</tr>
+								<c:if test="${status.last=='true' }">
+									</br>
+									</br>
+									<span id="numOrder">${status.index+1}/${fn:length(orders)}</span>
+									</br>
+									</br>
+								</c:if>
+							</c:forEach>
+						</table>
 					</div>
-					<div>
+					<div id="pageButton">
 						<form action="viewOrders.jsp">
 							<c:if test="${numberOfOrderPages!= 1}">
 								<c:if test="${param.page > 0}">
@@ -187,6 +282,5 @@
 			</div>
 		</c:otherwise>
 	</c:choose>
-	<jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>

@@ -175,18 +175,12 @@ public class PostingController extends HttpServlet {
 		posting.setDescription(request.getParameter("description"));
 		posting.setCompensation(request.getParameter("compensation"));
 		posting.setStatus(request.getParameter("status"));
-		System.out.println("in PC: " + request.getParameter("dateUpdated"));
 		try {
 			Date dateUpdated = new SimpleDateFormat("dd/MM/yyyy").parse(request.getParameter("dateUpdated"));
 			posting.setDateUpdated(dateUpdated);
 		} catch (ParseException ex) {
 			ex.printStackTrace();
 		}
-		// Date dateUpdated = new java.sql.Date(
-		// ((Date)request.getAttribute("dateUpdated")).getTime() );
-		// posting.setDateUpdated(dateUpdated);
-
-		// posting.setDateUpdated(request.getParameter("dateUpdated"));
 		Part portfolioPart = request.getPart("portfolio");
 		InputStream portfolio = portfolioPart.getInputStream();
 		posting.setPortfolio(portfolio);
@@ -197,14 +191,12 @@ public class PostingController extends HttpServlet {
 
 			int portfolioLength = Math.toIntExact(portfolioPart.getSize());
 
-			System.out.println(portfolioLength);
 			posting.setPortfolioLength(portfolioLength);
 		}
 		String postingIdString = request.getParameter("postingId");
 
 		if (postingIdString == null || postingIdString.isEmpty()) {
 			PostingDAO.addPosting(posting);
-
 		} else {
 			posting.setPostingId(Integer.parseInt(postingIdString));
 			PostingDAO.updatePosting(posting);
@@ -220,12 +212,9 @@ public class PostingController extends HttpServlet {
 
 	// https://docs.oracle.com/javaee/6/tutorial/doc/glraq.html
 	private String getFileName(final Part part) {
-		System.out.println("in getFileName!");
 		for (String content : part.getHeader("content-disposition").split(";")) {
-			System.out.println(content);
 			if (content.trim().startsWith("filename")) {
 				String fileName = content.substring(content.indexOf('=') + 1).trim().replace("\"", "");
-				System.out.println(fileName);
 				return fileName.substring(fileName.lastIndexOf('/') + 1).substring(fileName.lastIndexOf('\\') + 1);
 
 			}

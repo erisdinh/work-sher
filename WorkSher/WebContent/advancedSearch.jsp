@@ -39,11 +39,11 @@ section {
 
 
 form {
-	width: 30%;
+	width: 60%;
 	margin-left: auto;
 	margin-right: auto;
 }
-h3 {
+h2 {
 	text-align:center;
 }
 
@@ -52,11 +52,18 @@ label {
 }
 .adv-search {
 	width: 60%;
+	margin:0.5%;
 }
-
+#label-job-category {
+	margin: 0;
+}
+select {
+	margin-left: 20px;
+}
 #adv-search-submit {
+	text-align: center;
 	display: block;
-	width: 100%;
+	width: 30%;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -73,25 +80,23 @@ label {
 %>
 <body>
 	<jsp:include page="nav.jsp"></jsp:include>
-		<section>
 
 		<form action = "PostingController">
-		<h3>Advanced Search</h3>
-			<input hidden name = "action" value = "advsearch">
+		<h2>Advanced Search</h2>
+			<label id = "label-job-category" for = "jobCategory">Category: </label><input hidden name = "action" value = "advsearch">
 				<select name = "jobCategory">
 					<option selected value = "">Select A Category (optional)</option>
 					<c:forEach var = "category" items = "${categories }">
 						<option value = "${category.jobCategoryId }">${category.jobCategoryDesc }</option>
 					</c:forEach>
-				</select>
+				</select></p>
 
 			<label for ="title">Title: </label><input class = "adv-search" type = "text" name = "title"></br>
-			<label for ="User">User: </label><input class = "adv-search" type = "text" name = "user"></br>
-			<label for ="description">Description: </label><input class = "adv-search" type = "text" name = "description"></br>
-			<label for ="title">Start Date: </label><input type = "date" class = "adv-search" name = "startDate" min = "2018-12-01" id = "startDate" value = "2018-12-01"></br>
-			<label for ="title">End Date: </label><input type = "date" class = "adv-search" name = "endDate" min = "2018-12-01" id = "endDate" value = "2018-12-02"></br>
-			<input id = "adv-search-submit" type = "submit" value = "search">
+			<p><label for ="User">User: </label><input class = "adv-search" type = "text" name = "user"></br></p>
+			<p><label for ="description">Description: </label><input class = "adv-search" type = "text" name = "description"></br></p>
+			<p><label for ="title">Start Date: </label><input type = "date" class = "adv-search" name = "startDate" min = "2018-12-01" id = "startDate" value = "2018-12-01"></br></p>
+			<p><label for ="title">End Date: </label><input type = "date" class = "adv-search" name = "endDate" min = "2018-12-01" id = "endDate" value = "2018-12-02"></br></p>
+			<p><input id = "adv-search-submit" type = "submit" value = "search"></p>
 		</form>
-	</section>
 </body>
 </html>
