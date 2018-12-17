@@ -190,7 +190,7 @@ public class ReviewDAO {
 			PreparedStatement stmt = conn.prepareStatement("SELECT posting.posting_id, posting.title, users.username, reviews.* FROM reviews "
 					+ "INNER JOIN orders ON orders.order_id=reviews.order_id "
 					+ "INNER JOIN users on users.user_id=reviews.from_user_id "
-					+ "INNER JOIN posting ON posting.posting_id=orders.posting_id WHERE posting.posting_id=?");
+					+ "INNER JOIN posting ON posting.posting_id=orders.posting_id WHERE posting.posting_id=? ORDER BY review_date DESC");
 			stmt.setLong(1, postingId);
 			ResultSet rs = stmt.executeQuery();
 			
