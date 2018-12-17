@@ -126,20 +126,6 @@ table {
 					<span>${orderMessage}</span>
 				</c:if>
 
-				<c:if test="${fn:length(orders)==0}">
-					<c:if test="${load=='received'}">
-						<span>You do not have any orders!!!</span>
-					</c:if>
-					<c:if test="${load=='placed'}">
-						<span>You do not have any orders!</span>
-						</br>
-						<span>Check out <a
-							href="${pageContext.request.contextPath}/PostingController?action=listPostings">List
-								Postings</a>!!!
-						</span>
-					</c:if>
-				</c:if>
-
 				<div class="search">
 					<form action="LoadOrders">
 						<div id="searchDiv">
@@ -212,6 +198,20 @@ table {
 											});
 						</script>
 				</div>
+				
+				<c:if test="${fn:length(orders)==0}">
+					<c:if test="${load=='received'}">
+						<span>You do not have any orders!!!</span>
+					</c:if>
+					<c:if test="${load=='placed'}">
+						<span>You do not have any orders!</span>
+						</br>
+						<span>Check out <a
+							href="${pageContext.request.contextPath}/PostingController?action=listPostings">List
+								Postings</a>!!!
+						</span>
+					</c:if>
+				</c:if>
 
 				<c:if test="${fn:length(orders)!=0}">
 					<div>

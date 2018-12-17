@@ -80,12 +80,10 @@ textarea {
 							name="description" placeholder="${order.description}"></textarea></td>
 				</tr>
 			</table>
-	</div>
-	</br>
-	<button class="btn" type="submit" name="action" value="skip">Cancel</button>
-	<button class="btn" type="submit" name="action" value="update">Update
-		Order</button>
-	</form>
+			</br>
+			<button class="btn" type="submit" name="action" value="skip">Cancel</button>
+			<button class="btn" type="submit" name="action" value="update">Update Order</button>
+		</form>
 	</div>
 </body>
 </html>

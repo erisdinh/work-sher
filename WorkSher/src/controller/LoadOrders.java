@@ -24,14 +24,12 @@ public class LoadOrders extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("in LoadOrders");
 
 		// get request session
 		HttpSession session = request.getSession();
 
 		// get parameters and attributes from request
 		String load = (String) session.getAttribute("load");
-		System.out.println("load:" + load);
 
 		User user = (User) session.getAttribute("currentUser");
 
@@ -40,13 +38,11 @@ public class LoadOrders extends HttpServlet {
 		// if load is received, load all received orders
 		if (load.equals("received")) {
 			String searchBy = request.getParameter("searchBy");
-			System.out.println("SearchBy: " + searchBy);
 			
 			if (searchBy == null || searchBy.isEmpty()) {
 				orders = OrderDAO.getReceivedOrders(user.getUserid());
 			} else if (searchBy.equals("jobCategory")) {
 				String jobCategory = request.getParameter("category");
-				System.out.println(jobCategory);
 				orders = OrderDAO.searchReceivedOrdersByJobCategory(user.getUserid(), jobCategory);
 			} else if (searchBy.equals("title")) {
 				String title = request.getParameter("title");
@@ -61,13 +57,11 @@ public class LoadOrders extends HttpServlet {
 			// if load is requested, load all requested orders
 		} else if (load.equals("placed")) {
 			String searchBy = request.getParameter("searchBy");
-			System.out.println("SearchBy: " + searchBy);
 			
 			if (searchBy == null || searchBy.isEmpty()) {
 				orders = OrderDAO.getPlacedOrders(user.getUserid());
 			} else if (searchBy.equals("jobCategory")) {
 				String jobCategory = request.getParameter("category");
-				System.out.println(jobCategory);
 				orders = OrderDAO.searchPlacedOrdersByJobCategory(user.getUserid(), jobCategory);
 			} else if (searchBy.equals("title")) {
 				String title = request.getParameter("title");
@@ -83,12 +77,10 @@ public class LoadOrders extends HttpServlet {
 		} else if (load.equals("all")) {
 
 			String searchBy = request.getParameter("searchBy");
-			System.out.println("SearchBy: " + searchBy);
 			if (searchBy == null || searchBy.isEmpty()) {
 				orders = OrderDAO.getAllOrders();
 			} else if (searchBy.equals("jobCategory")) {
 				String jobCategory = request.getParameter("category");
-				System.out.println(jobCategory);
 				orders = OrderDAO.searchOrdersByJobCategory(jobCategory);
 			} else if (searchBy.equals("title")) {
 				String title = request.getParameter("title");
@@ -104,16 +96,9 @@ public class LoadOrders extends HttpServlet {
 		session.setAttribute("orders", orders);
 
 		int numberOfOrderPage = (int) Math.ceil((orders.size() / 5.0));
-		System.out.println("NumberofOrderPage:" + numberOfOrderPage);
 
 		session.setAttribute("ordersSize", orders.size());
 		session.setAttribute("numberOfOrderPages", numberOfOrderPage);
 		response.sendRedirect("viewOrders.jsp");
-
-		System.out.println("Orders size:" + orders.size());
-		for (int i = 0; i < orders.size(); i++) {
-			System.out.println("Order:" + orders.get(i).getOrderid());
-			System.out.println("Posting:" + orders.get(i).getPosting().getPostingId());
-		}
 	}
 }
