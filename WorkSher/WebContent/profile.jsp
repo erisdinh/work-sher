@@ -53,6 +53,42 @@ h3 {
 	font-size: 0.8em;
 	padding-top: 1%;
 }
+
+.btn {
+	height: 1.5em;
+	padding: 2%;
+	font-weight: lighter;
+}
+
+.btn:visited, .btn:hover {
+	color: white;
+	text-decoration: none;
+}
+
+.reviews-table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+tr.rev-rating img {
+	width: 80px;
+}
+
+.rev-rating td {
+	margin-top: 1%;
+	margin-bottom: 1%;
+	font-weight: bold;
+	font-size: 1.25em;
+}
+
+.rev-rating p {
+	vertical-align: middle;
+}
+
+.rev-manage td {
+	padding-bottom: 2%;
+}
+
 </style>
 </head>
 <body>
@@ -86,25 +122,24 @@ h3 {
 			<c:otherwise>
 				<table class="reviews-table">
 					<c:forEach var="review" items="${reviews}" varStatus="status">
-						<tr>
-							<td>
-								From: <a href="LoadProfile?userId=${review.fromUserId}"><c:out value="${review.fromUsername}" /></a>
-								</td>
-							<td><img src="images/${review.reviewImgUrl}" width="50px" /></td>
-							<td><c:out value="${review.reviewDate}" /></td>
+						<tr class = "rev-rating">
+							<td><p><img src="images/${review.reviewImgUrl}"/> ${review.reviewRating}</p></td>
+						</tr>
+						<tr class = "rev-from">
+							<td><a href="LoadProfile?userId=${review.fromUserId}"><c:out value="${review.fromUsername}" /></a> on <c:out value="${review.reviewDate}" /></td>							
+						</tr>
+						<tr class = "rev-body">
+							<td><c:out value="${review.reviewText}" /></td>
+						</tr>
+						<tr class = "rev-manage">
+						<td>
 							<c:if test="${review.fromUserId == currentUser.userid}">
-							<td>
-								<a href="ReviewController?action=edit&reviewId=${review.reviewId}&fromUserId=${review.fromUserId}&referrer=profile&forUserId=${review.forUserId}">Edit</a>
-							</td>
+							<a href="ReviewController?action=edit&reviewId=${review.reviewId}&fromUserId=${review.fromUserId}&referrer=profile&forUserId=${review.forUserId}" class="btn">Edit</a>			
 							</c:if>
 							<c:if test="${review.fromUserId == currentUser.userid || currentUser.role.equals('admin')}">
-							<td>
-								<a href="ReviewController?action=delete&reviewId=${review.reviewId}&fromUserId=${review.fromUserId}&referrer=profile&forUserId=${review.forUserId}">Delete</a>
-							</td>
+							<a href="ReviewController?action=delete&reviewId=${review.reviewId}&fromUserId=${review.fromUserId}&referrer=profile&forUserId=${review.forUserId}" class="btn">Delete</a>
 							</c:if>
-						</tr>
-						<tr>
-							<td><c:out value="${review.reviewText}" /></td>
+						</td>
 						</tr>
 					</c:forEach>
 				</table>
