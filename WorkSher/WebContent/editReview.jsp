@@ -6,27 +6,58 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Edit Review</title>
+<link rel="stylesheet" href="css/main.css" type="text/css">
+<style>
+	h2 {
+		text-align: center;
+	}
+	
+	#submit {
+	display: block;
+	width: 20%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+form {
+	width: 70%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+label {
+	width: 30%;
+	margin: 0.5%;
+}
+
+input[type=number], input[type=textarea] {
+	width: 50%;
+	margin: 0.5%;
+}
+
+</style>
 </head>
 <body>
-	<h1>Edit Review</h1>
+	<h2>Edit Review</h2>
 	
-	Editing review for: ${review.forUsername}
+	<label id="review-username">Editing review for:</label> ${review.forUsername}
 	<br>
-	Posting: <a href="PostingController?action=view&postingId=${posting.postingId}">${posting.title}</a>
+	<label id="review-posting">Posting:</label> ${posting.title}
 	<br>
-	Order #: <a href="LoadOrder?orderid=${review.orderId}">${review.orderId}</a>
+	<label id="review-order">Order #:</label> ${review.orderId}
+	<br>
 	<form action="ReviewController" method="post">
 		<input type="hidden" name="reviewId" value="${review.reviewId}" />
 		<input type="hidden" name="action" value="edit" />
 		<input type="hidden" name="referrer" value="${referrer}" />
-		Rating:
+		<label id="rating-label">Rating:</label>
+		<br>
 		<input type="number" min="1" max="5" name="reviewRating" step="0.5" value="${review.reviewRating}" required />
 		<br>
-		Review:
-		<br>
+		<label id="review-rating">Review:</label>
 		<textarea rows="5" cols="50" name="reviewText" placeholder="Enter review text here!">${review.reviewText}</textarea>
 		<br>
-		<input type="submit" value="Edit Review" />
+		<input type="submit" value="Edit Review" class="btn" />
 	</form>
 </body>
 </html>
