@@ -64,11 +64,14 @@ public class ManageAccount extends HttpServlet {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("currentUser");
 		
+		// If user is deleting their own account
 		if (action.equalsIgnoreCase("delete")) {
 			UserDAO.deleteUser(user);
 			session.removeAttribute("currentUser");
 			feedback = "Thank you for using WorkSher. Your account has been deleted.";
-		} else if (action.equalsIgnoreCase("admdelete")) {
+		
+		// If admin is deleting another user
+		} else if (action.equalsIgnoreCase("admdelete") && UserDAO.authorizeUser(user)) {
 			long userId = Long.parseLong(request.getParameter("userId"));
 			user = UserDAO.getUserById(userId);
 			UserDAO.deleteUser(user);

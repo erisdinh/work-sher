@@ -27,15 +27,27 @@ public class RegisterUser extends HttpServlet {
 		String password = request.getParameter("password");
 		String name = request.getParameter("name");
 		String email = request.getParameter("email");
+		String url;
 		
-		// Store the data in a User object
-		User user = new User(username, password, name, email);
+		// If the username is not taken
+		if (!UserDAO.checkUsername(username)) {
+			// Store the data in a User object
+			User user = new User(username, password, name, email);
 
-		// Add to database
-		UserDAO.addUser(user);
+			// Add to database
+			UserDAO.addUser(user);
+			
+			// Log user in after they have registered
+			url = "Login";
+			
+		// Take them back to register if the username is taken
+		} else {
+			url = "register.jsp";
+			String feedback = "ERROR: That username is already taken. Please choose another one.";
+			request.setAttribute("feedback", feedback);
+		}
 		
-		// Log user in after they have registered
-		RequestDispatcher rd = request.getRequestDispatcher("Login");
+		RequestDispatcher rd = request.getRequestDispatcher(url);
 		rd.forward(request, response);
 	}
 }

@@ -53,13 +53,15 @@ input[type=submit] {
 <body>
 <h1>WorkSher</h1>
 <section>
-<p>Please enter your information below to register for the WorkSher service. By joining the WorkSher skills exchange service, you agree to abide by the Policies and Procedures as outlined by Sheridan College.</p>
+<p>Please enter your information below to register for the WorkSher service. By joining the WorkSher skills exchange service, you agree to abide by the Policies and Procedures as outlined by Sheridan College.
+</p>
+<center><p class = "feedback">${feedback}</p></center>
 <form action="RegisterUser" method="POST">
-	<label for="username">Username: </label><input type="text" id="username" name="username"><br>
-	<label for="password">Password: </label><input type="password" id="password" name="password"><br>
-	<label for="password2">Re-enter Password: </label><input type="password" id="password2" name="password2"><br>
-	<label for="name">Full name: </label><input type="text" id="name" name="name"><br>
-	<label for="email">Email: </label><input type="text" id="email" name="email"><br>
+	<label for="username">Username: </label><input type="text" id="username" name="username" required><br>
+	<label for="password">Password: </label><input type="password" id="password" name="password" required><br>
+	<label for="password2">Re-enter Password: </label><input type="password" id="password2" name="password2" required><br>
+	<label for="name">Full name: </label><input type="text" id="name" name="name" required><br>
+	<label for="email">Email: </label><input type="text" id="email" name="email" required><br>
 	<input type="submit" value="Register">
 </form>
 </section>

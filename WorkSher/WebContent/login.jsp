@@ -49,13 +49,6 @@ input[type=submit] {
 	margin-right: auto;
 }
 
-.feedback {
-	color: #FC3C3C;
-	font-size: 0.75em;
-	font-style: italic;
-	display: block;
-}
-
 .other {
 	text-align: center; 
 }
