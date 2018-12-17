@@ -318,10 +318,9 @@ public class OrderDAO {
 		}
 	}
 
-	public static ArrayList<Order> searchReceivedOrdersByJobCategory(long tempRequestUserId, String jobCategory) {
+	public static ArrayList<Order> searchReceivedOrdersByJobCategory(long tempPostUserId, String jobCategory) {
 		System.out.println("searchReceivedOrders");
 		ArrayList<Order> receivedOrders = new ArrayList<>();
-
 		Connection connection = null;
 		ResultSet rs = null;
 
@@ -329,9 +328,9 @@ public class OrderDAO {
 
 			connection = DBUtil.getConnection();
 			PreparedStatement pstmt = connection.prepareStatement(
-					"select * from orders where requestOrderUser_id = ? and posting_id in (select posting_id from posting where jobCategory = ?) order by order_id desc");
+					"select * from orders where postOrderUser_id = ? and posting_id in (select posting_id from posting where jobCategory = ?) order by order_id desc");
 
-			pstmt.setLong(1, tempRequestUserId);
+			pstmt.setLong(1, tempPostUserId);
 			pstmt.setString(2, jobCategory);
 
 			rs = pstmt.executeQuery();
@@ -370,9 +369,8 @@ public class OrderDAO {
 		return receivedOrders;
 	}
 
-	public static ArrayList<Order> searchPlacedOrdersByJobCategory(long tempPostUserId, String jobCategory) {
-		ArrayList<Order> placedOrder = new ArrayList<>();
-
+	public static ArrayList<Order> searchPlacedOrdersByJobCategory(long tempRequestUserId, String jobCategory) {
+		ArrayList<Order> placedOrders = new ArrayList<>();
 		Connection connection = null;
 		ResultSet rs = null;
 
@@ -380,9 +378,9 @@ public class OrderDAO {
 
 			connection = DBUtil.getConnection();
 			PreparedStatement pstmt = connection.prepareStatement(
-					"select * from orders where postOrderUser_id = ? and posting_id in (select posting_id from posting where jobCategory = ?) order by order_id desc");
+					"select * from orders where requestOrderUser_id = ? and posting_id in (select posting_id from posting where jobCategory = ?) order by order_id desc");
 
-			pstmt.setLong(1, tempPostUserId);
+			pstmt.setLong(1, tempRequestUserId);
 			pstmt.setString(2, jobCategory);
 
 			rs = pstmt.executeQuery();
@@ -409,7 +407,7 @@ public class OrderDAO {
 				order.setDateCompleted(rs.getDate("dateCompleted"));
 				order.setStatus(rs.getString("status"));
 
-				placedOrder.add(order);
+				placedOrders.add(order);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -417,7 +415,7 @@ public class OrderDAO {
 			DBUtil.closeConnection(connection);
 		}
 
-		return placedOrder;
+		return placedOrders;
 	}
 
 	public static ArrayList<Order> searchReceivedOrdersByTitle(long tempPostUserId, String title) {

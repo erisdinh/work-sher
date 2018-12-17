@@ -95,8 +95,8 @@ table {
 
 #pageButton {
 	position: absolute;
-	right: 10%; 
-    bottom: 3%;
+	right: 10%;
+	bottom: 3%;
 }
 </style>
 </head>
@@ -140,41 +140,40 @@ table {
 					</c:if>
 				</c:if>
 
-				<c:if test="${fn:length(orders)!=0}">
-					<div class="search">
-						<form action="LoadOrders">
-							<div id="searchDiv">
-								<span>Search by: </span> <select name="searchBy" id="searchBy">
-									<option value="search"></option>
-									<option value="jobCategory">Job Category</option>
-									<option value="title">Title</option>
-									<option value="status">Status</option>
+				<div class="search">
+					<form action="LoadOrders">
+						<div id="searchDiv">
+							<span>Search by: </span> <select name="searchBy" id="searchBy">
+								<option value="search"></option>
+								<option value="jobCategory">Job Category</option>
+								<option value="title">Title</option>
+								<option value="status">Status</option>
+							</select>
+							<div class="search" id="jobCategory" style="display: none">
+								<select name="category">
+									<c:forEach items="${categories}" var="category">
+										<option id="category" value="${category.jobCategoryId}">${category.jobCategoryDesc}</option>
+									</c:forEach>
 								</select>
-								<div class="search" id="jobCategory" style="display: none">
-									<select name="category">
-										<c:forEach items="${categories}" var="category">
-											<option id="category" value="${category.jobCategoryId}">${category.jobCategoryDesc}</option>
-										</c:forEach>
-									</select>
-								</div>
-								<div class="search" id="title" style="display: none">
-									<input type="text" name="title"
-										placeholder="Enter posting title here" />
-								</div>
-								<div class="search" id="statusDiv" style="display: none">
-									<select name="status">
-										<option value="Pending">Pending</option>
-										<option value="Cancelled">Cancelled</option>
-										<option value="Approved">Approved</option>
-										<option value="Rejected">Rejected</option>
-										<option value="Completed">Completed</option>
-									</select>
-								</div>
-								<input style="display: none" type="submit" id="searchButton"
-									name="searchButton" value="Go" />
 							</div>
-						</form>
-						<script>
+							<div class="search" id="title" style="display: none">
+								<input type="text" name="title"
+									placeholder="Enter posting title here" />
+							</div>
+							<div class="search" id="statusDiv" style="display: none">
+								<select name="status">
+									<option value="Pending">Pending</option>
+									<option value="Cancelled">Cancelled</option>
+									<option value="Approved">Approved</option>
+									<option value="Rejected">Rejected</option>
+									<option value="Completed">Completed</option>
+								</select>
+							</div>
+							<input style="display: none" type="submit" id="searchButton"
+								name="searchButton" value="Go" />
+						</div>
+					</form>
+					<script>
 							var searchBy = document.getElementById("searchBy");
 							var jobCategory = document
 									.getElementById("jobCategory");
@@ -212,7 +211,9 @@ table {
 												}
 											});
 						</script>
-					</div>
+				</div>
+
+				<c:if test="${fn:length(orders)!=0}">
 					<div>
 						<table>
 							<tr>
