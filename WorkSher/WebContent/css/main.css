@@ -49,6 +49,13 @@ input[type=submit], .btn {
 	padding-top: 1%;
 }
 
+.feedback {
+	color: #FC3C3C;
+	font-size: 0.75em;
+	font-style: italic;
+	display: block;
+}
+
 .prev-button-form {
 	float: left;
 }

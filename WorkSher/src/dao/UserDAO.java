@@ -25,9 +25,6 @@ public class UserDAO {
 			pStmt.setDate(5, new java.sql.Date (user.getDateJoined().getTime()));
 			pStmt.setString(6, user.getRole());
 			
-			/* TO DO:
-			 * - Make sure usernames are unique before updating
-			 */
 			pStmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -36,7 +33,7 @@ public class UserDAO {
 		}
 	}
 
-	// Method to change the user's role
+	// Method to "delete" the user from the database, this deactivates their account
 	public static void deleteUser(User user) {
 		try {
 			conn = DBUtil.getConnection();
@@ -157,5 +154,28 @@ public class UserDAO {
 		}
 		
 		return isAdmin;
+	}
+	
+	public static boolean checkUsername(String username) {		
+		boolean usernameTaken = false;
+		
+		try {
+			conn = DBUtil.getConnection();			
+			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM users WHERE username = ?");			
+			pstmt.setString(1, username);
+			ResultSet rs = pstmt.executeQuery();
+						
+			if (rs.next()) {
+				usernameTaken = true;
+			} else {
+				usernameTaken = false;
+			}	
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.closeConnection(conn);
+		}
+		
+		return usernameTaken;
 	}
 }
