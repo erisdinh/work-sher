@@ -218,7 +218,6 @@ public class ReviewDAO {
 	}
 	
 	public static boolean checkIfReviewExists(long fromUserId, long orderId) {
-		System.out.println("checkIfReviewExists");
 		boolean exists = false;
 		
 		try {
@@ -231,7 +230,7 @@ public class ReviewDAO {
 			ResultSet rs = stmt.executeQuery();
 			
 			exists = rs.next();
-			System.out.println("checkIfReviewExists: " + exists);
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

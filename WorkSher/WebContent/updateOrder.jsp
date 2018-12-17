@@ -21,31 +21,32 @@
 			<table border=1>
 				<tr>
 					<td>PostingID:</td>
-					<td>${posting.postingId}</td>
+					<td>${order.posting.postingId}</td>
 				</tr>
 				<tr>
 					<td>Posted User:</td>
-					<td>${posting.username}</td>
+					<td>${order.posting.username}</td>
 				</tr>
 				<tr>
 					<td>Category:</td>
-					<td>${posting.jobCategory }</td>
+					<td>${order.posting.jobCategory }</td>
 				</tr>
 				<tr>
 					<td>Posting Description:</td>
-					<td>${posting.description}</td>
+					<td>${order.posting.description}</td>
 				</tr>
 				<tr>
 					<td>Compensation:</td>
-					<td>${posting.compensation}</td>
+					<td>${order.posting.compensation}</td>
 				</tr>
 				<tr>
 					<td>Order Description:</td>
-					<td><textarea style="resize:none;width: 400px;height:150px;" name="description" placeholder="Enter your order description here..."></textarea></td>
+					<td><textarea style="resize:none;width: 400px;height:150px;" name="description" placeholder="${order.description}"></textarea></td>
 				</tr>
 			</table>
 		</div>
 		</br>
+		<button type="submit" name="action" value="skip">Cancel</button>
 		<button type="submit" name="action" value="update">Update Order</button>
 	</form>
 </body>

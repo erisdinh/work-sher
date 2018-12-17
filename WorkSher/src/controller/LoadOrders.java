@@ -106,6 +106,5 @@ public class LoadOrders extends HttpServlet {
 			System.out.println("Order:" + orders.get(i).getOrderid());
 			System.out.println("Posting:" + orders.get(i).getPosting().getPostingId());
 		}
-
 	}
 }
