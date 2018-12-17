@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title><c:if test="${forUserId != null}">
+<title>WorkSher | <c:if test="${forUserId != null}">
 		User Reviews for ${reviews[0].forUsername}	
 	</c:if> <c:if test="${fromUserId != null}">
 		User Reviews from ${currentUser.username}
@@ -31,6 +31,7 @@
 						</c:if>
 						</td>
 						<td><img src="images/${review.reviewImgUrl}" width="50px" /></td>
+						<td><a href="PostingController?action=view&postingId=${review.postingId}">${review.postingTitle}</a>
 						<td><c:out value="${review.reviewDate}" /></td>
 							<c:if test="${review.fromUserId == currentUser.userid}">
 							<td>

@@ -19,6 +19,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.servlet.RequestDispatcher;
@@ -33,7 +34,9 @@ import javax.servlet.http.Part;
 
 import model.User;
 import dao.PostingDAO;
+import dao.ReviewDAO;
 import model.Posting;
+import model.Review;
 
 /**
  * Servlet implementation class PostingController
@@ -141,7 +144,8 @@ public class PostingController extends HttpServlet {
 			if (action.equalsIgnoreCase("edit")) {
 				forward = INSERT_OR_EDIT;
 			} else {
-
+				List<Review> reviews = ReviewDAO.getReviewsByPostingId(postingId);
+				request.setAttribute("reviews", reviews);
 				forward = VIEW;
 			}
 		} else {
