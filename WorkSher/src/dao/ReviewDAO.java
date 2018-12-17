@@ -21,7 +21,7 @@ public class ReviewDAO {
 			conn = DBUtil.getConnection();
 			
 			PreparedStatement stmt = conn.prepareStatement("INSERT INTO reviews (for_user_id, from_user_id, order_id, review_rating, review_text) "
-					+ "VALUES (?, ?, ?, ?, ?, ?)");
+					+ "VALUES (?, ?, ?, ?, ?)");
 			stmt.setLong(1, review.getForUserId());
 			stmt.setLong(2, review.getFromUserId());
 			stmt.setLong(3, review.getOrderId());
