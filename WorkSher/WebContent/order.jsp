@@ -109,11 +109,14 @@
 				<c:if test="${order.status=='Approved'}">
 					<button type="submit" value="complete" name="action">Complete</button>
 				</c:if>
-				<c:if test="${order.status=='Completed'}">
-					<button type="submit" value="review" name="action">Review</button>
-				</c:if>
 			</c:if>
-		</form>
+		</c:if>
+	</form>
+	<c:if test="${order.status=='Completed'}">
+		<form action="ReviewController">
+		<button type="submit" name="action" value="leaveReview">Review</button>
+			</form>
+	</c:if>
 		<c:if test="${currentUser.role=='admin' && param.action!='delete'}">
 			<form action="ManageOrder">
 				<c:if test="${order.status=='Pending'}">

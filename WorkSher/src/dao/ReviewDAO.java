@@ -20,13 +20,14 @@ public class ReviewDAO {
 		try {
 			conn = DBUtil.getConnection();
 			
-			PreparedStatement stmt = conn.prepareStatement("INSERT INTO reviews (for_user_id, from_user_id, posting_id, review_rating, review_text) "
-					+ "VALUES (?, ?, ?, ?, ?");
+			PreparedStatement stmt = conn.prepareStatement("INSERT INTO reviews (for_user_id, from_user_id, order_id, posting_id, review_rating, review_text) "
+					+ "VALUES (?, ?, ?, ?, ?, ?)");
 			stmt.setLong(1, review.getForUserId());
 			stmt.setLong(2, review.getFromUserId());
-			stmt.setLong(3, review.getPostingId());
-			stmt.setDouble(4, review.getReviewRating());
-			stmt.setString(5, review.getReviewText());
+			stmt.setLong(3, review.getOrderId());
+			stmt.setLong(4, review.getPostingId());
+			stmt.setDouble(5, review.getReviewRating());
+			stmt.setString(6, review.getReviewText());
 			stmt.executeUpdate();
 		
 		} catch (SQLException e) {
@@ -202,6 +203,30 @@ public class ReviewDAO {
 		}
 		
 		return reviews;
+	}
+	
+	public static boolean checkIfReviewExists(long fromUserId, long orderId) {
+		boolean exists = false;
+		
+		try {
+			conn = DBUtil.getConnection();
+			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM reviews WHERE from_user_id=? AND order_id=?");
+			
+			stmt.setLong(1, fromUserId);
+			stmt.setLong(2, orderId);
+			
+			ResultSet rs = stmt.executeQuery();
+			
+			exists = rs.next();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBUtil.closeConnection(conn);
+		}
+		
+		
+		return exists;
 	}
 
 }
