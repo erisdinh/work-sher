@@ -49,5 +49,6 @@
 		<button type="submit" name="action" value="skip">Cancel</button>
 		<button type="submit" name="action" value="update">Update Order</button>
 	</form>
+	<jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>

@@ -1,0 +1,19 @@
+footer {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	height: 3em; width : 100%;
+	background-color: #393E46;
+	color: white;
+	text-align: center;
+	width: 100%;
+}
+
+.footer a {
+	color: #00ADB5;
+}
+
+.footer {
+  margin: auto;
+  padding: 15px;
+}

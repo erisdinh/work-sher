@@ -43,10 +43,12 @@
 						<span>You do not have any orders!!!</span>
 					</c:if>
 					<c:if test="${load=='placed'}">
-						<span>You have not made any orders.</span></br>
+						<span>You have not made any orders.</span>
+						</br>
 						<span>Check out <a
 							href="${pageContext.request.contextPath}/PostingController?action=listPostings">List
-								Postings</a>!!!</span>
+								Postings</a>!!!
+						</span>
 					</c:if>
 				</c:if>
 
@@ -185,5 +187,6 @@
 			</div>
 		</c:otherwise>
 	</c:choose>
+	<jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>

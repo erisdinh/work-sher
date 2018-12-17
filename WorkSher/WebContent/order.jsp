@@ -20,6 +20,7 @@
 
 	<jsp:include page="nav.jsp"></jsp:include>
 	
+	<
 	<c:if test="${orderMessage!=null}"> 
 		<span>${orderMessage}</span>
 	</c:if>
@@ -146,5 +147,6 @@
 			</form>
 		</c:if>
 	</c:if>
+	<jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>

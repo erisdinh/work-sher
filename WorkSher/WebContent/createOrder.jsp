@@ -50,5 +50,6 @@
 		<button type="submit" name="action" value="create">Create
 			Order</button>
 	</form>
+	<jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>
