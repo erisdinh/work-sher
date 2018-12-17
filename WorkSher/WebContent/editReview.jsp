@@ -41,7 +41,7 @@ input[type=number], textarea {
 }
 
 form {
-	width: 40%;
+	width: 50%;
 	margin-left: auto;
 	margin-right: auto;
 }
