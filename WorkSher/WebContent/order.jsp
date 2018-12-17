@@ -2,14 +2,20 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ page import="dao.ReviewDAO"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>WorkSher | Order Information | ${currentUser.username}</title>
+<title>WorkSher | Order Information</title>
 </head>
 <body>
+	<%
+		boolean exist = ReviewDAO.checkIfReviewExist();
+		request.setAttribute("reviewExist", exist);
+	%>
+	
 	<jsp:include page="nav.jsp"></jsp:include>
 	<h1>Order Information:</h1>
 	<table border=1>
@@ -103,11 +109,14 @@
 				<c:if test="${order.status=='Approved'}">
 					<button type="submit" value="complete" name="action">Complete</button>
 				</c:if>
-				<c:if test="${order.status=='Completed'}">
-					<button type="submit" value="review" name="action">Review</button>
-				</c:if>
 			</c:if>
-		</form>
+		</c:if>
+	</form>
+	<c:if test="${order.status=='Completed'}">
+		<form action="ReviewController">
+		<button type="submit" name="action" value="leaveReview">Review</button>
+			</form>
+	</c:if>
 		<c:if test="${currentUser.role=='admin' && param.action!='delete'}">
 			<form action="ManageOrder">
 				<c:if test="${order.status=='Pending'}">

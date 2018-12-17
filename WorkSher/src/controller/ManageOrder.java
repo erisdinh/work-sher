@@ -48,10 +48,6 @@ public class ManageOrder extends HttpServlet {
 
 			response.sendRedirect("updateOrder.jsp");
 
-		} else if (action.equals("review")) {
-
-			response.sendRedirect("leaveReview.jsp");
-
 		} else if (action.equals("reject")) {
 
 			order.setStatus("Rejected");

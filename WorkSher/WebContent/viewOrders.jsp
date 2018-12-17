@@ -4,13 +4,13 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ page import="java.util.List"%>
-<%@ page import="model.User, model.JobCategory, dao.PostingDAO"%>
+<%@ page import="model.JobCategory, dao.PostingDAO"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>WorkSher | View Orders | ${currentUser.username}</title>
+<title>WorkSher | View Orders</title>
 </head>
 <body>
 	<%
@@ -20,7 +20,8 @@
 	<jsp:include page="nav.jsp"></jsp:include>
 	<c:choose>
 		<c:when test="${param.initial=='true'}">
-			<jsp:forward page="/LoadOrders?load=${param.load}" />
+			<c:set var="load" scope="session" value="${param.load }"/>
+			<jsp:forward page="/LoadOrders?load=${load}"/>
 		</c:when>
 		<c:otherwise>
 			<h1>Manage Orders</h1>
@@ -34,7 +35,9 @@
 			</div>
 			<div class="search">
 				<form action="LoadOrders">
+					<span>Search by: </span>
 					<select name="searchBy" id="searchBy">
+						<option value="search"></option>
 						<option value="jobCategory">Job Category</option>
 						<option value="title">Title</option>
 						<option value="status">Status</option>
@@ -42,8 +45,7 @@
 					<div class="search" id="jobCategory" style="display: none">
 						<select name="category">
 							<c:forEach items="${categories}" var="category">
-								<option id="category"
-									value="${category.jobCategoryId}">${category.jobCategoryDesc}</option>
+								<option id="category" value="${category.jobCategoryId}">${category.jobCategoryDesc}</option>
 							</c:forEach>
 						</select>
 					</div>

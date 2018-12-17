@@ -419,7 +419,7 @@ public class OrderDAO {
 
 	public static ArrayList<Order> searchReceivedOrdersByTitle(long tempPostUserId, String title) {
 		ArrayList<Order> receivedOrders = new ArrayList<>();
-
+		title = "%" + title + "%";
 		Connection connection = null;
 		ResultSet rs = null;
 
@@ -469,7 +469,7 @@ public class OrderDAO {
 
 	public static ArrayList<Order> searchPlacedOrdersByTitle(long tempRequestUserId, String title) {
 		ArrayList<Order> placedOrders = new ArrayList<>();
-
+		title = "%" + title + "%";
 		Connection connection = null;
 		ResultSet rs = null;
 
@@ -676,8 +676,9 @@ public class OrderDAO {
 
 			connection = DBUtil.getConnection();
 			PreparedStatement pstmt = connection.prepareStatement(
-					"select * from orders where posting_id in (select posting_id from posting where title like '%?%') order by order_id desc");
+					"select * from orders where posting_id in (select posting_id from posting where title like ?) order by order_id desc");
 
+			title = "%" + title + "%";
 			pstmt.setString(1, title);
 
 			rs = pstmt.executeQuery();

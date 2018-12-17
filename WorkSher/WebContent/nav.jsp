@@ -41,7 +41,7 @@
 		<div class="drop-menu">
 			<div class="menu-title">Reviews</div>
 			<div class="menu-items">
-				<a href="ReviewController?action=load&fromUserId=${currentUser.userid}" class="menu-item">View Reviews</a>
+				<a href="ReviewController?action=load&fromUserId=${currentUser.userid}&referrer=reviews" class="menu-item">View Reviews</a>
 			</div>
 		</div>
 		<div id="search-bar">
