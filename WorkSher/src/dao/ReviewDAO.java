@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.Date;
 
 import model.Review;
+import model.User;
 import util.DBUtil;
 
 public class ReviewDAO {
@@ -52,7 +53,7 @@ public class ReviewDAO {
 		}
 	}
 
-	public static void deleteReviewByReviewId(int reviewId) {
+	public static void deleteReviewById(long reviewId) {
 		try {
 			conn = DBUtil.getConnection();
 			
@@ -78,12 +79,17 @@ public class ReviewDAO {
 			
 			if (rs.next()) {
 				review.setReviewId(rs.getLong("review_id"));
-				review.setForUserId(rs.getLong("user_id"));
+				review.setForUserId(rs.getLong("for_user_id"));
 				review.setFromUserId(rs.getLong("from_user_id"));
 				review.setReviewDate(new Date(rs.getDate("review_date").getTime()));
+				review.setOrderId(rs.getLong("order_id"));
 				review.setPostingId(rs.getLong("posting_id"));
 				review.setReviewRating(rs.getDouble("review_rating"));
 				review.setReviewText(rs.getString("review_text"));
+				
+				User user = UserDAO.getUserById(review.getForUserId());
+				review.setForUsername(user.getUsername());
+				
 			}
 			
 		} catch (SQLException e) {
@@ -116,8 +122,12 @@ public class ReviewDAO {
 				review.setReviewDate(new Date(rs.getDate("review_date").getTime()));
 				review.setReviewRating(rs.getDouble("review_rating"));
 				review.setReviewText(rs.getString("review_text"));
+				
+				User user = UserDAO.getUserById(review.getFromUserId());
+				review.setFromUsername(user.getUsername());
 				reviews.add(review);
 			}
+		
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -149,6 +159,9 @@ public class ReviewDAO {
 				review.setReviewDate(new Date(rs.getDate("review_date").getTime()));
 				review.setReviewRating(rs.getDouble("review_rating"));
 				review.setReviewText(rs.getString("review_text"));
+				
+				User user = UserDAO.getUserById(review.getForUserId());
+				review.setForUsername(user.getUsername());
 				reviews.add(review);
 			}
 		} catch (SQLException e) {

@@ -68,6 +68,10 @@ public class ManageAccount extends HttpServlet {
 			UserDAO.deleteUser(user);
 			session.setAttribute("currentUser", null);
 			feedback = "Thank you for using WorkSher. Your account has been deleted.";
+		} else if (action.equalsIgnoreCase("admdelete")) {
+			long userId = Long.parseLong(request.getParameter("userId"));
+			user = UserDAO.getUserById(userId);
+			UserDAO.deleteUser(user);
 		}
 		
 		request.setAttribute("feedback", feedback);

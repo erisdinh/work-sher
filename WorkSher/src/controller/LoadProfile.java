@@ -36,14 +36,15 @@ public class LoadProfile extends HttpServlet {
 		User user = UserDAO.getUserById(userId);
 		ArrayList<Posting> postings = (ArrayList<Posting>) PostingDAO.getPostingsByUserId(userId);
 		List<Review> reviews = ReviewDAO.getReviewsByForUserId(userId);
-		reviews = reviews.subList(0, reviews.size());
 		
 		request.setAttribute("user", user);
 		request.setAttribute("postings", postings);
-		
-		// Review needs to be session-scope for it to work with pages (Danielle)
-		HttpSession session = request.getSession();
-		session.setAttribute("reviews", reviews);
+		request.setAttribute("numReviews", reviews.size());
+		if (reviews.size() > 5) {
+			reviews = reviews.subList(0, 5);
+		}
+
+		request.setAttribute("reviews", reviews);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("profile.jsp");
 		rd.forward(request, response);		

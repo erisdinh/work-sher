@@ -35,10 +35,7 @@ form {
 }
 
 label {
-	display: block;
 	width: 35%;
-	float: left;
-	clear: left;
 }
 
 input[type=text], input[type=password] {

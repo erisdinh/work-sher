@@ -50,7 +50,7 @@ public class ManageOrder extends HttpServlet {
 
 		} else if (action.equals("review")) {
 
-			response.sendRedirect("leavereview.jsp");
+			response.sendRedirect("leaveReview.jsp");
 
 		} else if (action.equals("reject")) {
 
